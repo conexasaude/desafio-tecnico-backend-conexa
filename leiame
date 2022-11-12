@@ -1,0 +1,18 @@
+Olá, seja bem-vindo!
+
+
+Para testar essa aplicação é necessário criar um BD no MySQL com o nome:
+desafioconexasaude
+
+A porta que foi setada no application.properties é a 3366.
+
+Foi criada uma coleção para testar a aplicação utilizando o postman, segue link para download:
+https://drive.google.com/file/d/1G5qEEeAFl5PeJ5_QJsV4LR0Y6hvvldgX/view?usp=sharing
+
+
+A aplicação foi desenvolvida utilizando:
+Spring Tool Suite: 4.14.0
+MySQL Workbench: 8.0
+
+Foram criadas regras que validam todos os campos dos request bodies de acordo com o que foi pedido.
+Agora é só testar!
