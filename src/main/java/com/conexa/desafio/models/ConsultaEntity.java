@@ -1,10 +1,16 @@
 package com.conexa.desafio.models;
 
 import jakarta.persistence.*;
+import lombok.Builder;
+import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
+
+@Data
 @Entity
+@Builder
 @Table(name = "consulta")
 public class ConsultaEntity {
     @Id
@@ -12,9 +18,10 @@ public class ConsultaEntity {
     private Integer id;
 
     @Column(name = "dataHora")
-    private Date dataHora;
+    @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
+    private LocalDateTime dataHora;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "consulta_paciente", nullable = false)
     private PacienteEntity paciente;
 }

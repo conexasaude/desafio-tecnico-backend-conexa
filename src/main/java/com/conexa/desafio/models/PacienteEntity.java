@@ -1,10 +1,14 @@
 package com.conexa.desafio.models;
 
 import jakarta.persistence.*;
+import lombok.Builder;
+import lombok.Data;
 
 import java.util.Set;
 
+@Data
 @Entity
+@Builder
 @Table(name = "paciente")
 public class PacienteEntity {
     @Id
