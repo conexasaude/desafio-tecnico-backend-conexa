@@ -1,6 +1,7 @@
 package com.conexa.desafio.repository;
 
 import com.conexa.desafio.models.TokenEntity;
+import com.conexa.desafio.models.UsuarioEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -15,4 +16,6 @@ public interface TokenRepository extends JpaRepository<TokenEntity, Integer> {
     Boolean existsByToken(String token);
 
     void deleteByToken(String token);
+
+    void deleteByUsuario(UsuarioEntity usuario);
 }

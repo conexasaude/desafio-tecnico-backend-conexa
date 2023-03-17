@@ -54,6 +54,7 @@ public class UsuarioController {
   }
 
   @PostMapping("/login")
+  @Transactional
   public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
     try {
       Authentication authentication =
@@ -64,6 +65,7 @@ public class UsuarioController {
       String token = jwtGenerator.generateToken(authentication);
       UsuarioEntity usuario = usuarioService.buscarPorEmail(loginRequest.getEmail());
       TokenEntity tokenEntity = TokenEntity.builder().usuario(usuario).token(token).build();
+      tokenService.removerTokenDoUsuario(usuario);
       tokenService.salvarToken(tokenEntity);
       return ResponseEntity.ok().body(new LoginResponse(token));
     } catch (BadCredentialsException badCredentialsException){

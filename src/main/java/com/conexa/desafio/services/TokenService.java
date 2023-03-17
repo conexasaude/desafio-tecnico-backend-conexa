@@ -1,6 +1,7 @@
 package com.conexa.desafio.services;
 
 import com.conexa.desafio.models.TokenEntity;
+import com.conexa.desafio.models.UsuarioEntity;
 
 public interface TokenService {
 
@@ -9,4 +10,6 @@ public interface TokenService {
     void removerToken(String token);
 
     Boolean tokenJaExiste(String token);
+
+    void removerTokenDoUsuario(UsuarioEntity usuario);
 }
