@@ -9,7 +9,7 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UsuarioLogInDto {
+public class LoginRequest {
 
     @NotNull
     @NotEmpty

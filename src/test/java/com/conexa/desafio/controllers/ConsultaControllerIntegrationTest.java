@@ -2,8 +2,8 @@ package com.conexa.desafio.controllers;
 
 import com.conexa.desafio.payload.ConsultaRequest;
 import com.conexa.desafio.payload.LoginResponse;
-import com.conexa.desafio.payload.UsuarioLogInDto;
-import com.conexa.desafio.payload.UsuarioSignUpDto;
+import com.conexa.desafio.payload.LoginRequest;
+import com.conexa.desafio.payload.SignupRequest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -34,7 +34,7 @@ class ConsultaControllerIntegrationTest {
 
     @Test
     void deveAgendarConsultaComSucessoQuandoOTokenForValido() throws URISyntaxException, JsonProcessingException {
-        UsuarioSignUpDto usuario = UsuarioSignUpDto.builder()
+        SignupRequest usuario = SignupRequest.builder()
                 .email("medico@email.com")
                 .senha("teste")
                 .confirmacaoSenha("teste")
@@ -46,7 +46,7 @@ class ConsultaControllerIntegrationTest {
         ResponseEntity<String> signupResponse = restTemplate.postForEntity(new URI("/api/v1/signup"),
                 usuario, String.class);
         assertEquals(HttpStatusCode.valueOf(HttpStatus.CREATED.value()), signupResponse.getStatusCode());
-        UsuarioLogInDto loginRequest = UsuarioLogInDto.builder()
+        LoginRequest loginRequest = LoginRequest.builder()
                 .email("medico@email.com")
                 .senha("teste")
                 .build();

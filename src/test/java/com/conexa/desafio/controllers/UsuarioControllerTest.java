@@ -2,8 +2,8 @@ package com.conexa.desafio.controllers;
 
 import com.conexa.desafio.models.UsuarioEntity;
 import com.conexa.desafio.payload.LoginResponse;
-import com.conexa.desafio.payload.UsuarioLogInDto;
-import com.conexa.desafio.payload.UsuarioSignUpDto;
+import com.conexa.desafio.payload.LoginRequest;
+import com.conexa.desafio.payload.SignupRequest;
 import com.conexa.desafio.security.JwtGenerator;
 import com.conexa.desafio.services.TokenService;
 import com.conexa.desafio.services.UsuarioService;
@@ -56,7 +56,7 @@ class UsuarioControllerTest {
 
     @Test
     public void deveRetornarSucessoQuandoARequisicaoForRealizadaComDadosValidos() throws Exception {
-        UsuarioSignUpDto signUpRequest = UsuarioSignUpDto.builder()
+        SignupRequest signUpRequest = SignupRequest.builder()
                 .email("test@email.com")
                 .senha("test")
                 .confirmacaoSenha("test")
@@ -73,7 +73,7 @@ class UsuarioControllerTest {
 
     @Test
     public void deveRetornar400QuandoOUsuarioJaExiste() throws Exception {
-        UsuarioSignUpDto signUpRequest = UsuarioSignUpDto.builder()
+        SignupRequest signUpRequest = SignupRequest.builder()
                 .email("test@email.com")
                 .senha("test")
                 .confirmacaoSenha("test")
@@ -90,7 +90,7 @@ class UsuarioControllerTest {
 
     @Test
     public void deveRetornar500QuandoAlgumErroInesperadoOcorrer() throws Exception {
-        UsuarioSignUpDto signUpRequest = UsuarioSignUpDto.builder()
+        SignupRequest signUpRequest = SignupRequest.builder()
                 .email("test@email.com")
                 .senha("test")
                 .confirmacaoSenha("test")
@@ -110,7 +110,7 @@ class UsuarioControllerTest {
     public void deveRetornarOTokenQuandoRealizarOLoginComSucesso() throws Exception {
         UsuarioEntity usuarioEntity = UsuarioEntity.builder().build();
 
-        UsuarioLogInDto loginRequest = UsuarioLogInDto.builder()
+        LoginRequest loginRequest = LoginRequest.builder()
                 .email("test@email.com")
                 .senha("test")
                 .build();
@@ -131,7 +131,7 @@ class UsuarioControllerTest {
     public void deveRetornarUnauthorizedQuandoAsCredenciaisForemInvalidas() throws Exception {
         UsuarioEntity usuarioEntity = UsuarioEntity.builder().build();
 
-        UsuarioLogInDto loginRequest = UsuarioLogInDto.builder()
+        LoginRequest loginRequest = LoginRequest.builder()
                 .email("test@email.com")
                 .senha("test")
                 .build();
@@ -149,7 +149,7 @@ class UsuarioControllerTest {
     public void deveRetornarInternalServerErrorQuandoAlgumErroInesperadoAcontecer() throws Exception {
         UsuarioEntity usuarioEntity = UsuarioEntity.builder().build();
 
-        UsuarioLogInDto loginRequest = UsuarioLogInDto.builder()
+        LoginRequest loginRequest = LoginRequest.builder()
                 .email("test@email.com")
                 .senha("test")
                 .build();

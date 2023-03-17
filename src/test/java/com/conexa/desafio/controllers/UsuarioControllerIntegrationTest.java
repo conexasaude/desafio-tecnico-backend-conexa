@@ -1,8 +1,8 @@
 package com.conexa.desafio.controllers;
 
 import com.conexa.desafio.payload.LoginResponse;
-import com.conexa.desafio.payload.UsuarioLogInDto;
-import com.conexa.desafio.payload.UsuarioSignUpDto;
+import com.conexa.desafio.payload.LoginRequest;
+import com.conexa.desafio.payload.SignupRequest;
 import com.conexa.desafio.security.JwtGenerator;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +31,7 @@ public class UsuarioControllerIntegrationTest {
 
     @Test
     void deveCriarUsuarioQuandoAsCredenciaisForemValidas() throws Exception {
-        UsuarioSignUpDto usuario = UsuarioSignUpDto.builder()
+        SignupRequest usuario = SignupRequest.builder()
                 .email("medico@email.com")
                 .senha("teste")
                 .confirmacaoSenha("teste")
@@ -49,7 +49,7 @@ public class UsuarioControllerIntegrationTest {
     @Test
     void deveRetornarBadRequestQuandoUsuarioJaExiste() throws Exception {
         //TODO: implementar validacao de senha, cpf e telefone na request
-        UsuarioSignUpDto usuario = UsuarioSignUpDto.builder()
+        SignupRequest usuario = SignupRequest.builder()
                 .email("medico@email.com")
                 .senha("teste")
                 .confirmacaoSenha("teste")
@@ -69,7 +69,7 @@ public class UsuarioControllerIntegrationTest {
 
     @Test
     void deveRetornarUmTokenValidoQuandoAsCredenciaisForemValidas() throws Exception {
-        UsuarioSignUpDto usuario = UsuarioSignUpDto.builder()
+        SignupRequest usuario = SignupRequest.builder()
                 .email("medico@email.com")
                 .senha("teste")
                 .confirmacaoSenha("teste")
@@ -81,7 +81,7 @@ public class UsuarioControllerIntegrationTest {
         ResponseEntity<String> signupResponse = restTemplate.postForEntity(new URI("/api/v1/signup"),
                 usuario, String.class);
         assertEquals(HttpStatusCode.valueOf(HttpStatus.CREATED.value()), signupResponse.getStatusCode());
-        UsuarioLogInDto loginRequest = UsuarioLogInDto.builder()
+        LoginRequest loginRequest = LoginRequest.builder()
                 .email("medico@email.com")
                 .senha("teste")
                 .build();
@@ -96,7 +96,7 @@ public class UsuarioControllerIntegrationTest {
 
     @Test
     void deveRetornarUnauthorizedQuandoAsCredenciaisForemInvalidas() throws Exception {
-        UsuarioSignUpDto usuario = UsuarioSignUpDto.builder()
+        SignupRequest usuario = SignupRequest.builder()
                 .email("medico@email.com")
                 .senha("teste1")
                 .confirmacaoSenha("teste1")
@@ -108,7 +108,7 @@ public class UsuarioControllerIntegrationTest {
         ResponseEntity<String> signupResponse = restTemplate.postForEntity(new URI("/api/v1/signup"),
                 usuario, String.class);
         assertEquals(HttpStatusCode.valueOf(HttpStatus.CREATED.value()), signupResponse.getStatusCode());
-        UsuarioLogInDto loginRequest = UsuarioLogInDto.builder()
+        LoginRequest loginRequest = LoginRequest.builder()
                 .email("medico@email.com")
                 .senha("teste")
                 .build();
@@ -119,7 +119,7 @@ public class UsuarioControllerIntegrationTest {
 
     @Test
     void deveDeslogarUsuarioQuandoOTokenForValido() throws Exception {
-        UsuarioSignUpDto usuario = UsuarioSignUpDto.builder()
+        SignupRequest usuario = SignupRequest.builder()
                 .email("medico@email.com")
                 .senha("teste")
                 .confirmacaoSenha("teste")
@@ -131,7 +131,7 @@ public class UsuarioControllerIntegrationTest {
         ResponseEntity<String> signupResponse = restTemplate.postForEntity(new URI("/api/v1/signup"),
                 usuario, String.class);
         assertEquals(HttpStatusCode.valueOf(HttpStatus.CREATED.value()), signupResponse.getStatusCode());
-        UsuarioLogInDto loginRequest = UsuarioLogInDto.builder()
+        LoginRequest loginRequest = LoginRequest.builder()
                 .email("medico@email.com")
                 .senha("teste")
                 .build();
