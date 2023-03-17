@@ -18,7 +18,7 @@ public class ConsultaEntity {
     private Integer id;
 
     @Column(name = "dataHora")
-    @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime dataHora;
 
     @ManyToOne(cascade = CascadeType.ALL)

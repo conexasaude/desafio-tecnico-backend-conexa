@@ -2,6 +2,7 @@ package com.conexa.desafio.payload;
 
 import com.conexa.desafio.models.ConsultaEntity;
 import com.conexa.desafio.models.PacienteEntity;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -20,7 +21,8 @@ import java.time.LocalDateTime;
 public class ConsultaRequest {
 
   @JsonProperty("dataHora")
-  @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
+  @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+  @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   private LocalDateTime dataHora;
 
   @JsonProperty("paciente")
