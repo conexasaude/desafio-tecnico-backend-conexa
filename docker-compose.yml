@@ -8,8 +8,8 @@ services:
       context: .
     ports:
       - "8080:8080"
-    volumes:
-      - ./src:/desafio/src/
+#    volumes: # volumes seriam usados apenas em versões sem builds do jar (simples alteração no dockerfile)
+#      - ./src:/desafio/src/
     networks:
       - desafio-mysql
     depends_on:
