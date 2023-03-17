@@ -38,8 +38,10 @@ public class SecurityConfig {
         .and()
         .authorizeHttpRequests(
             (requests) ->
-                requests.requestMatchers(HttpMethod.POST).permitAll()
-                        .anyRequest().authenticated())
+                requests.requestMatchers(HttpMethod.POST, "/api/v1/signup").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/login").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/logoff").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/attendance").authenticated())
         .httpBasic();
     http.addFilterBefore(jwtAuthFilter(), UsernamePasswordAuthenticationFilter.class);
     return http.build();

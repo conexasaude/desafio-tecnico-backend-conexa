@@ -13,7 +13,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.net.URI;
-import java.util.Date;
+import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -37,7 +37,7 @@ public class UsuarioControllerIntegrationTest {
                 .confirmacaoSenha("teste")
                 .especialidade("Cardiologista")
                 .cpf("101.202.303-11")
-                .dataNascimento(new Date())
+                .dataNascimento(LocalDate.now())
                 .telefone("(21) 3232-6565")
                 .build();
         ResponseEntity<String> response = restTemplate.postForEntity(new URI("/api/v1/signup"),
@@ -55,7 +55,7 @@ public class UsuarioControllerIntegrationTest {
                 .confirmacaoSenha("teste")
                 .especialidade("Cardiologista")
                 .cpf("101.202.303-11")
-                .dataNascimento(new Date())
+                .dataNascimento(LocalDate.now())
                 .telefone("(21) 3232-6565")
                 .build();
         ResponseEntity<String> response1 = restTemplate.postForEntity(new URI("/api/v1/signup"),
@@ -75,7 +75,7 @@ public class UsuarioControllerIntegrationTest {
                 .confirmacaoSenha("teste")
                 .especialidade("Cardiologista")
                 .cpf("101.202.303-11")
-                .dataNascimento(new Date())
+                .dataNascimento(LocalDate.now())
                 .telefone("(21) 3232-6565")
                 .build();
         ResponseEntity<String> signupResponse = restTemplate.postForEntity(new URI("/api/v1/signup"),
@@ -102,7 +102,7 @@ public class UsuarioControllerIntegrationTest {
                 .confirmacaoSenha("teste1")
                 .especialidade("Cardiologista")
                 .cpf("101.202.303-11")
-                .dataNascimento(new Date())
+                .dataNascimento(LocalDate.now())
                 .telefone("(21) 3232-6565")
                 .build();
         ResponseEntity<String> signupResponse = restTemplate.postForEntity(new URI("/api/v1/signup"),
@@ -125,7 +125,7 @@ public class UsuarioControllerIntegrationTest {
                 .confirmacaoSenha("teste")
                 .especialidade("Cardiologista")
                 .cpf("101.202.303-11")
-                .dataNascimento(new Date())
+                .dataNascimento(LocalDate.now())
                 .telefone("(21) 3232-6565")
                 .build();
         ResponseEntity<String> signupResponse = restTemplate.postForEntity(new URI("/api/v1/signup"),
@@ -150,14 +150,14 @@ public class UsuarioControllerIntegrationTest {
     }
 
     @Test
-    void deveRetornarBadRequestQuandoOTokenForInvalido() {
+    void deveRetornarUnauthorizedQuandoOTokenForInvalido() {
         String testToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtZWRpY29AZW1haWwuY29tIiwiaWF0IjoxNjc4OTgzNDgzLCJleHAiOjE2Nzg5ODQzODN9.7OzsjKb63COaau6X8mbO5N1xX6F0jpvnYGG2jRE-9sfDjWhrCe7SakBx5Hm2osr4YHanAqn2_YrplwL9sZwWhg";
         HttpHeaders headers = new HttpHeaders();
         headers.setBearerAuth(testToken);
         HttpEntity<String> entity = new HttpEntity<>("body", headers);
         ResponseEntity<String> logoffResponse =
                 restTemplate.exchange("/api/v1/logoff", HttpMethod.POST, entity, String.class);
-        assertEquals(HttpStatusCode.valueOf(HttpStatus.BAD_REQUEST.value()), logoffResponse.getStatusCode());
+        assertEquals(HttpStatusCode.valueOf(HttpStatus.UNAUTHORIZED.value()), logoffResponse.getStatusCode());
     }
 
 }

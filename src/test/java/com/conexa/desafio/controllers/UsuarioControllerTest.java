@@ -21,7 +21,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -62,7 +62,7 @@ class UsuarioControllerTest {
                 .confirmacaoSenha("test")
                 .cpf("111.111.111-11")
                 .especialidade("teste")
-                .dataNascimento(new Date())
+                .dataNascimento(LocalDate.now())
                 .build();
 
         doReturn(false).when(usuarioService).usuarioJaExiste(any());
@@ -79,7 +79,7 @@ class UsuarioControllerTest {
                 .confirmacaoSenha("test")
                 .cpf("111.111.111-11")
                 .especialidade("teste")
-                .dataNascimento(new Date())
+                .dataNascimento(LocalDate.now())
                 .build();
 
         doReturn(true).when(usuarioService).usuarioJaExiste(any());
@@ -96,7 +96,7 @@ class UsuarioControllerTest {
                 .confirmacaoSenha("test")
                 .cpf("111.111.111-11")
                 .especialidade("teste")
-                .dataNascimento(new Date())
+                .dataNascimento(LocalDate.now())
                 .build();
 
         doReturn(false).when(usuarioService).usuarioJaExiste(any());
@@ -172,21 +172,10 @@ class UsuarioControllerTest {
     }
 
     @Test
-    public void deveRetornar400QuandoOLogoutEhSolicitadoParaUmUsuarioQueNaoEstaLogado() throws Exception {
-        String testToken = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtZWRpY29AZW1haWwuY29tIiwiaWF0IjoxNjc4OTgzNDgzLCJleHAiOjE2Nzg5ODQzODN9.7OzsjKb63COaau6X8mbO5N1xX6F0jpvnYGG2jRE-9sfDjWhrCe7SakBx5Hm2osr4YHanAqn2_YrplwL9sZwWhg";
-
-        doReturn(false).when(tokenService).tokenJaExiste(any());
-
-        ResponseEntity<String> response = usuarioController.logoff(testToken);
-        assertEquals(HttpStatusCode.valueOf(HttpStatus.BAD_REQUEST.value()), response.getStatusCode());
-        assertEquals("O usuário não está logado!", response.getBody());
-    }
-
-    @Test
     public void deveRetornar500QuandoAlgumErroInesperadoOcorrerAoInvalidarOToken() throws Exception {
         String testToken = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtZWRpY29AZW1haWwuY29tIiwiaWF0IjoxNjc4OTgzNDgzLCJleHAiOjE2Nzg5ODQzODN9.7OzsjKb63COaau6X8mbO5N1xX6F0jpvnYGG2jRE-9sfDjWhrCe7SakBx5Hm2osr4YHanAqn2_YrplwL9sZwWhg";
 
-        doThrow(RuntimeException.class).when(tokenService).tokenJaExiste(any());
+        doThrow(RuntimeException.class).when(tokenService).removerToken(any());
 
         ResponseEntity<String> response = usuarioController.logoff(testToken);
         assertEquals(HttpStatusCode.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()), response.getStatusCode());

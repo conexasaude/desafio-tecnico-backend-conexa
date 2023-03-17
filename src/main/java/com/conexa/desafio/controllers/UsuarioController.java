@@ -77,12 +77,8 @@ public class UsuarioController {
   @Transactional
   public ResponseEntity<String> logoff(@RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
     try {
-      String tokenWithoutPrefix = token.substring(PREFIX.length() + 1);
-      if (tokenService.tokenJaExiste(tokenWithoutPrefix)){
-        tokenService.removerToken(tokenWithoutPrefix);
-        return ResponseEntity.ok().build();
-      }
-      return ResponseEntity.badRequest().body("O usuário não está logado!");
+      tokenService.removerToken(token.substring(PREFIX.length() + 1));
+      return ResponseEntity.ok().build();
     } catch (Exception e) {
       return ResponseEntity.internalServerError().body(e.getMessage());
     }
