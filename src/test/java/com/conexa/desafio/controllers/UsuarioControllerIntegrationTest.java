@@ -1,5 +1,6 @@
 package com.conexa.desafio.controllers;
 
+import com.conexa.desafio.helpers.TestDataHelper;
 import com.conexa.desafio.payload.BaseResponse;
 import com.conexa.desafio.payload.LoginRequest;
 import com.conexa.desafio.payload.SignupRequest;
@@ -13,16 +14,16 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.net.URI;
-import java.time.LocalDate;
+import java.net.URISyntaxException;
 import java.util.LinkedHashMap;
 
+import static com.conexa.desafio.helpers.TestDataHelper.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ActiveProfiles("test")
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class UsuarioControllerIntegrationTest {
-  // TODO: refatorar o código
 
   @Autowired private TestRestTemplate restTemplate;
 
@@ -30,42 +31,55 @@ public class UsuarioControllerIntegrationTest {
 
   @Test
   void deveRetornarUmTokenValidoQuandoAsCredenciaisForemValidas() throws Exception {
-    SignupRequest usuario =
-        SignupRequest.builder()
-            .email("medico@email.com")
-            .senha("teste")
-            .confirmacaoSenha("teste")
-            .especialidade("Cardiologista")
-            .cpf("704.377.720-80")
-            .dataNascimento(LocalDate.now().minusYears(20))
-            .telefone("(21) 3232-6565")
-            .build();
-    ResponseEntity<BaseResponse> signupResponse =
-        restTemplate.postForEntity(new URI("/api/v1/signup"), usuario, BaseResponse.class);
-    assertEquals(
-        HttpStatusCode.valueOf(HttpStatus.CREATED.value()), signupResponse.getStatusCode());
-    LoginRequest loginRequest =
-        LoginRequest.builder().email("medico@email.com").senha("teste").build();
-    ResponseEntity<BaseResponse> loginResponse =
-        restTemplate.postForEntity(new URI("/api/v1/login"), loginRequest, BaseResponse.class);
-    assertEquals(HttpStatusCode.valueOf(HttpStatus.OK.value()), loginResponse.getStatusCode());
-    String token = ((LinkedHashMap<String, String>) loginResponse.getBody().getPayload()).get("token");
-    assertNotNull(token);
-    assertFalse(token.isBlank());
-    assertFalse(token.isEmpty());
+    String token = cadastraEFazLogin();
     assertTrue(jwtGenerator.validarToken(token));
   }
 
   @Test
-  void deveRetornarUnauthorizedQuandoOTokenForInvalido() {
-    String testToken =
-        "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtZWRpY29AZW1haWwuY29tIiwiaWF0IjoxNjc4OTgzNDgzLCJleHAiOjE2Nzg5ODQzODN9.7OzsjKb63COaau6X8mbO5N1xX6F0jpvnYGG2jRE-9sfDjWhrCe7SakBx5Hm2osr4YHanAqn2_YrplwL9sZwWhg";
-    HttpHeaders headers = new HttpHeaders();
-    headers.setBearerAuth(testToken);
-    HttpEntity<String> entity = new HttpEntity<>("body", headers);
+  void deveRealizarLogoffComSucessoQuandoReceberTokenValido() throws URISyntaxException {
+    String token = cadastraEFazLogin();
+    HttpEntity<String> entity = constroiHttpEntity(token, "body");
     ResponseEntity<BaseResponse> logoffResponse =
-        restTemplate.exchange("/api/v1/logoff", HttpMethod.POST, entity, BaseResponse.class);
+            restTemplate.exchange(LOGOFF_ROUTE, HttpMethod.POST, entity, BaseResponse.class);
+    assertEquals(
+            HttpStatusCode.valueOf(HttpStatus.OK.value()), logoffResponse.getStatusCode());
+  }
+
+  @Test
+  void deveRetornarUnauthorizedQuandoOTokenForInvalido() {
+    HttpEntity<String> entity = constroiHttpEntity(TOKEN_TEST_COM_PREFIXO, "body");
+    ResponseEntity<BaseResponse> logoffResponse =
+        restTemplate.exchange(LOGOFF_ROUTE, HttpMethod.POST, entity, BaseResponse.class);
     assertEquals(
         HttpStatusCode.valueOf(HttpStatus.UNAUTHORIZED.value()), logoffResponse.getStatusCode());
+  }
+
+  @Test
+  void deveRetornarUnauthorizedQuandoNaoInformarOToken() {
+    HttpEntity<String> entity = constroiHttpEntity(null, "body");
+    ResponseEntity<BaseResponse> logoffResponse =
+            restTemplate.exchange(LOGOFF_ROUTE, HttpMethod.POST, entity, BaseResponse.class);
+    assertEquals(
+            HttpStatusCode.valueOf(HttpStatus.UNAUTHORIZED.value()), logoffResponse.getStatusCode());
+  }
+
+  private String cadastraEFazLogin() throws URISyntaxException {
+    SignupRequest usuario =
+            TestDataHelper.deserializeObject(SIGNUP_VALIDO_REQUEST, SignupRequest.class);
+    ResponseEntity<BaseResponse> signupResponse =
+            restTemplate.postForEntity(new URI(SIGNUP_ROUTE), usuario, BaseResponse.class);
+    assertEquals(
+            HttpStatusCode.valueOf(HttpStatus.CREATED.value()), signupResponse.getStatusCode());
+    LoginRequest loginRequest =
+            TestDataHelper.deserializeObject(LOGIN_VALIDO_REQUEST, LoginRequest.class);
+    ResponseEntity<BaseResponse> loginResponse =
+            restTemplate.postForEntity(new URI(LOGIN_ROUTE), loginRequest, BaseResponse.class);
+    assertEquals(HttpStatusCode.valueOf(HttpStatus.OK.value()), loginResponse.getStatusCode());
+    String token =
+            ((LinkedHashMap<String, String>) loginResponse.getBody().getPayload()).get("token");
+    assertNotNull(token);
+    assertFalse(token.isBlank());
+    assertFalse(token.isEmpty());
+    return token;
   }
 }

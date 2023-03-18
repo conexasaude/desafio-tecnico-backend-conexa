@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1")
 public class ConsultaController {
 
-  @Autowired private ConsultaService consultaService;
+  @Autowired
+  private ConsultaService consultaService;
+
 
   @PostMapping(value = "/attendance", consumes = "application/json")
   public ResponseEntity<BaseResponse> agendarConsulta(@RequestBody @Valid ConsultaRequest request) {

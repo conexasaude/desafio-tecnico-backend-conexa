@@ -1,10 +1,5 @@
 package com.conexa.desafio.controllers;
 
-import com.conexa.desafio.models.UsuarioEntity;
-import com.conexa.desafio.payload.BaseResponse;
-import com.conexa.desafio.payload.LoginResponse;
-import com.conexa.desafio.payload.LoginRequest;
-import com.conexa.desafio.payload.SignupRequest;
 import com.conexa.desafio.security.JwtGenerator;
 import com.conexa.desafio.services.TokenService;
 import com.conexa.desafio.services.UsuarioService;
@@ -13,171 +8,193 @@ import org.junit.jupiter.api.Test;
 import org.mockito.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
-import org.springframework.http.ResponseEntity;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.*;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.web.method.annotation.AuthenticationPrincipalArgumentResolver;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.time.LocalDate;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static com.conexa.desafio.helpers.TestDataHelper.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ActiveProfiles("test")
+@WebMvcTest(UsuarioController.class)
 class UsuarioControllerTest {
 
-  @Autowired private MockMvc mvc;
+  @Autowired private MockMvc mockMvc;
 
-  @InjectMocks private UsuarioController usuarioController;
+  @Autowired private UsuarioController usuarioController;
 
-  @Spy private ModelMapper modelMapper;
+  @MockBean private ModelMapper modelMapper;
 
-  @Mock private UsuarioService usuarioService;
+  @MockBean private UsuarioService usuarioService;
 
-  @Spy private AuthenticationManager authenticationManager;
+  @MockBean private AuthenticationManager authenticationManager;
 
-  @Mock private JwtGenerator jwtGenerator;
+  @MockBean private JwtGenerator jwtGenerator;
 
-  @Mock private TokenService tokenService;
+  @MockBean private TokenService tokenService;
 
   @BeforeEach
   void beforeEach() {
     MockitoAnnotations.openMocks(this);
     ReflectionTestUtils.setField(usuarioController, "PREFIX", "Bearer");
+    mockMvc =
+        MockMvcBuilders.standaloneSetup(usuarioController)
+            .setCustomArgumentResolvers(new AuthenticationPrincipalArgumentResolver())
+            .build();
   }
 
   @Test
   public void deveRetornarSucessoQuandoARequisicaoForRealizadaComDadosValidos() throws Exception {
-    SignupRequest signUpRequest =
-        SignupRequest.builder()
-            .email("test@email.com")
-            .senha("test")
-            .confirmacaoSenha("test")
-            .cpf("111.111.111-11")
-            .especialidade("teste")
-            .dataNascimento(LocalDate.now())
-            .build();
-
     doReturn(false).when(usuarioService).usuarioJaExiste(any());
 
-    ResponseEntity<BaseResponse> response = usuarioController.adicionaUsuario(signUpRequest);
-    assertEquals(HttpStatusCode.valueOf(HttpStatus.CREATED.value()), response.getStatusCode());
+    mockMvc.perform(MockMvcRequestBuilders.post(SIGNUP_ROUTE)
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(SIGNUP_VALIDO_REQUEST))
+            .andExpect(status().isCreated());
   }
 
   @Test
-  public void deveRetornar400QuandoOUsuarioJaExiste() throws Exception {
-    SignupRequest signUpRequest =
-        SignupRequest.builder()
-            .email("test@email.com")
-            .senha("test")
-            .confirmacaoSenha("test")
-            .cpf("111.111.111-11")
-            .especialidade("teste")
-            .dataNascimento(LocalDate.now())
-            .build();
-
+  public void deveRetornarBadRequestQuandoOUsuarioJaExiste() throws Exception {
     doReturn(true).when(usuarioService).usuarioJaExiste(any());
-
-    ResponseEntity<BaseResponse> response = usuarioController.adicionaUsuario(signUpRequest);
-    assertEquals(HttpStatusCode.valueOf(HttpStatus.BAD_REQUEST.value()), response.getStatusCode());
+    mockMvc.perform(MockMvcRequestBuilders.post(SIGNUP_ROUTE)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(SIGNUP_VALIDO_REQUEST))
+            .andExpect(status().isBadRequest());
   }
 
   @Test
-  public void deveRetornar500QuandoAlgumErroInesperadoOcorrer() throws Exception {
-    SignupRequest signUpRequest =
-        SignupRequest.builder()
-            .email("test@email.com")
-            .senha("test")
-            .confirmacaoSenha("test")
-            .cpf("111.111.111-11")
-            .especialidade("teste")
-            .dataNascimento(LocalDate.now())
-            .build();
-
+  public void deveRetornarInternalServerErrorQuandoAlgumErroInesperadoOcorrer() throws Exception {
     doReturn(false).when(usuarioService).usuarioJaExiste(any());
     doThrow(RuntimeException.class).when(modelMapper).map(any(), any());
+    mockMvc.perform(MockMvcRequestBuilders.post(SIGNUP_ROUTE)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(SIGNUP_VALIDO_REQUEST))
+            .andExpect(status().isInternalServerError());
+  }
 
-    ResponseEntity<BaseResponse> response = usuarioController.adicionaUsuario(signUpRequest);
-    assertEquals(
-        HttpStatusCode.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()), response.getStatusCode());
+  @Test
+  public void deveRetornarBadRequestQuandoAsSenhasForemDistintas() throws Exception {
+    doReturn(false).when(usuarioService).usuarioJaExiste(any());
+    mockMvc.perform(MockMvcRequestBuilders.post(SIGNUP_ROUTE)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(SIGNUP_SENHAS_DISTINTAS_REQUEST))
+            .andExpect(status().isBadRequest())
+            .andExpect(jsonPath("$.code").value(400))
+            .andExpect(jsonPath("$.message").value("As senhas não são iguais!"));
+  }
+
+  @Test
+  public void deveRetornarBadRequestQuandoAlgumCampoForInvalido() throws Exception {
+    doReturn(false).when(usuarioService).usuarioJaExiste(any());
+    mockMvc.perform(MockMvcRequestBuilders.post(SIGNUP_ROUTE)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(CAMPOS_INVALIDOS_SIGNUP_REQUEST))
+            .andExpect(status().isBadRequest());
+  }
+
+  @Test
+  public void deveRetornarBadRequestQuandoOCpfForInvalido() throws Exception {
+    doReturn(false).when(usuarioService).usuarioJaExiste(any());
+    mockMvc.perform(MockMvcRequestBuilders.post(SIGNUP_ROUTE)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(CPF_INVALIDO_SIGNUP_REQUEST))
+            .andExpect(status().isBadRequest());
+  }
+
+  @Test
+  public void deveRetornarBadRequestQuandoADataDeNascimentoForMaiorQueODiaDoCadastro() throws Exception {
+    doReturn(false).when(usuarioService).usuarioJaExiste(any());
+    mockMvc.perform(MockMvcRequestBuilders.post(SIGNUP_ROUTE)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(DATA_NASCIMENTO_INVALIDA_SIGNUP_REQUEST))
+            .andExpect(status().isBadRequest());
+  }
+
+  @Test
+  public void deveRetornarBadRequestQuandoOTelefoneForInvalido() throws Exception {
+    doReturn(false).when(usuarioService).usuarioJaExiste(any());
+    mockMvc.perform(MockMvcRequestBuilders.post(SIGNUP_ROUTE)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(TELEFONE_INVALIDO_SIGNUP_REQUEST))
+            .andExpect(status().isBadRequest());
   }
 
   @Test
   public void deveRetornarOTokenQuandoRealizarOLoginComSucesso() throws Exception {
-    UsuarioEntity usuarioEntity = UsuarioEntity.builder().build();
-
-    LoginRequest loginRequest =
-        LoginRequest.builder().email("test@email.com").senha("test").build();
-
     doReturn("tokenValido").when(jwtGenerator).generateToken(any());
-    doReturn(usuarioEntity).when(usuarioService).buscarPorEmail(any());
+    doReturn(null).when(usuarioService).buscarPorEmail(any());
+    doNothing().when(tokenService).removerTokenDoUsuario(any());
     doReturn(null).when(tokenService).salvarToken(any());
-
-    ResponseEntity<BaseResponse> response = usuarioController.login(loginRequest);
-    assertEquals(HttpStatusCode.valueOf(HttpStatus.OK.value()), response.getStatusCode());
-    String token = ((LoginResponse) response.getBody().getPayload()).getToken();
-    assertNotNull(token);
-    assertFalse(token.isBlank());
-    assertFalse(token.isEmpty());
-    assertEquals("tokenValido", token);
+    mockMvc.perform(MockMvcRequestBuilders.post(LOGIN_ROUTE)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(LOGIN_VALIDO_REQUEST))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.code").value(200))
+            .andExpect(jsonPath("$.message").value("OK"))
+            .andExpect(jsonPath("$.payload.token").value("tokenValido"));
   }
 
   @Test
   public void deveRetornarUnauthorizedQuandoAsCredenciaisForemInvalidas() throws Exception {
-    UsuarioEntity usuarioEntity = UsuarioEntity.builder().build();
-
-    LoginRequest loginRequest =
-        LoginRequest.builder().email("test@email.com").senha("test").build();
-
     doThrow(BadCredentialsException.class).when(authenticationManager).authenticate(any());
-    doReturn("tokenValido").when(jwtGenerator).generateToken(any());
-    doReturn(usuarioEntity).when(usuarioService).buscarPorEmail(any());
-    doReturn(null).when(tokenService).salvarToken(any());
-
-    ResponseEntity<BaseResponse> response = usuarioController.login(loginRequest);
-    assertEquals(HttpStatusCode.valueOf(HttpStatus.UNAUTHORIZED.value()), response.getStatusCode());
+    mockMvc.perform(MockMvcRequestBuilders.post(LOGIN_ROUTE)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(SENHA_INVALIDA_LOGIN_REQUEST))
+            .andExpect(status().isUnauthorized());
   }
 
   @Test
   public void deveRetornarInternalServerErrorQuandoAlgumErroInesperadoAcontecer() throws Exception {
-    UsuarioEntity usuarioEntity = UsuarioEntity.builder().build();
+    doThrow(new RuntimeException("erro inesperado")).when(authenticationManager).authenticate(any());
+    mockMvc.perform(MockMvcRequestBuilders.post(LOGIN_ROUTE)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(SENHA_INVALIDA_LOGIN_REQUEST))
+            .andExpect(status().isInternalServerError())
+            .andExpect(jsonPath("$.code").value(500))
+            .andExpect(jsonPath("$.message").value("erro inesperado"));
+  }
 
-    LoginRequest loginRequest =
-        LoginRequest.builder().email("test@email.com").senha("test").build();
-
-    doThrow(RuntimeException.class).when(authenticationManager).authenticate(any());
-
-    ResponseEntity<BaseResponse> response = usuarioController.login(loginRequest);
-    assertEquals(
-        HttpStatusCode.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()), response.getStatusCode());
+  @Test
+  public void deveRetornarBadRequestQuandoAlgumCampoDoLoginForInvalido() throws Exception {
+    mockMvc.perform(MockMvcRequestBuilders.post(LOGIN_ROUTE)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(CAMPOS_INVALIDOS_LOGIN_REQUEST))
+            .andExpect(status().isBadRequest());
   }
 
   @Test
   public void deveRemoverOTokenComSucessoQuandoOTokenEhValido() throws Exception {
-    String testToken =
-        "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtZWRpY29AZW1haWwuY29tIiwiaWF0IjoxNjc4OTgzNDgzLCJleHAiOjE2Nzg5ODQzODN9.7OzsjKb63COaau6X8mbO5N1xX6F0jpvnYGG2jRE-9sfDjWhrCe7SakBx5Hm2osr4YHanAqn2_YrplwL9sZwWhg";
-
     doReturn(true).when(tokenService).tokenJaExiste(any());
     doNothing().when(tokenService).removerToken(any());
-
-    ResponseEntity<BaseResponse> response = usuarioController.logoff(testToken);
-    assertEquals(HttpStatusCode.valueOf(HttpStatus.OK.value()), response.getStatusCode());
+    mockMvc.perform(MockMvcRequestBuilders.post(LOGOFF_ROUTE)
+                    .header(HttpHeaders.AUTHORIZATION, TOKEN_TEST_COM_PREFIXO))
+            .andExpect(status().isOk());
   }
 
   @Test
-  public void deveRetornar500QuandoAlgumErroInesperadoOcorrerAoInvalidarOToken() throws Exception {
-    String testToken =
-        "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtZWRpY29AZW1haWwuY29tIiwiaWF0IjoxNjc4OTgzNDgzLCJleHAiOjE2Nzg5ODQzODN9.7OzsjKb63COaau6X8mbO5N1xX6F0jpvnYGG2jRE-9sfDjWhrCe7SakBx5Hm2osr4YHanAqn2_YrplwL9sZwWhg";
-
-    doThrow(RuntimeException.class).when(tokenService).removerToken(any());
-
-    ResponseEntity<BaseResponse> response = usuarioController.logoff(testToken);
-    assertEquals(
-        HttpStatusCode.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()), response.getStatusCode());
+  public void deveRetornarInternalServerErrorQuandoAlgumErroInesperadoOcorrerAoInvalidarOToken() throws Exception {
+    doThrow(new RuntimeException("erro inesperado")).when(tokenService).removerToken(any());
+    mockMvc.perform(MockMvcRequestBuilders.post(LOGOFF_ROUTE)
+                    .header(HttpHeaders.AUTHORIZATION, TOKEN_TEST_COM_PREFIXO))
+            .andExpect(status().isInternalServerError())
+            .andExpect(jsonPath("$.code").value(500))
+            .andExpect(jsonPath("$.message").value("erro inesperado"));
   }
+//
+//  @Test
+//  public void deveRetornarUnauthorizedQuandoSolicitaLogoffSemToken() throws Exception {
+//    mockMvc.perform(MockMvcRequestBuilders.post(LOGOFF_ROUTE))
+//            .andExpect(status().isUnauthorized());
+//  }
 }
