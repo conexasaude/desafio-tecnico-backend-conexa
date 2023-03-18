@@ -1,5 +1,6 @@
 package com.conexa.desafio.controllers;
 
+import com.conexa.desafio.payload.BaseResponse;
 import com.conexa.desafio.payload.ConsultaRequest;
 import com.conexa.desafio.services.ConsultaService;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,48 +22,43 @@ import static org.mockito.Mockito.doThrow;
 @ActiveProfiles("test")
 class ConsultaControllerTest {
 
-    @InjectMocks
-    private ConsultaController consultaController;
+  @InjectMocks private ConsultaController consultaController;
 
-    @Spy
-    private ConsultaService consultaService;
+  @Spy private ConsultaService consultaService;
 
+  @BeforeEach
+  void beforeEach() {
+    MockitoAnnotations.openMocks(this);
+  }
 
-    @BeforeEach
-    void beforeEach(){
-        MockitoAnnotations.openMocks(this);
-    }
+  @Test
+  void deveRetornarSucessoQuandoARequisicaoForValida() {
+    ConsultaRequest request =
+        ConsultaRequest.builder()
+            .dataHora(LocalDateTime.now().plusDays(10))
+            .paciente(
+                ConsultaRequest.Paciente.builder().nome("João Castro").cpf("101.202.303").build())
+            .build();
 
-    @Test
-    void deveRetornarSucessoQuandoARequisicaoForValida(){
-        ConsultaRequest request = ConsultaRequest.builder()
-                .dataHora(LocalDateTime.now().plusDays(10))
-                .paciente(ConsultaRequest.Paciente.builder()
-                        .nome("João Castro")
-                        .cpf("101.202.303")
-                        .build())
-                .build();
+    ResponseEntity<BaseResponse> response = consultaController.agendarConsulta(request);
 
-        ResponseEntity<String> response = consultaController.agendarConsulta(request);
+    assertEquals(HttpStatusCode.valueOf(HttpStatus.OK.value()), response.getStatusCode());
+  }
 
-        assertEquals(HttpStatusCode.valueOf(HttpStatus.OK.value()), response.getStatusCode());
-    }
+  @Test
+  void deveRetornarInternalServerErroQuandoAlgumErroInesperadoOcorrer() {
+    ConsultaRequest request =
+        ConsultaRequest.builder()
+            .dataHora(LocalDateTime.now().plusDays(10))
+            .paciente(
+                ConsultaRequest.Paciente.builder().nome("João Castro").cpf("101.202.303").build())
+            .build();
 
-    @Test
-    void deveRetornarInternalServerErroQuandoAlgumErroInesperadoOcorrer(){
-        ConsultaRequest request = ConsultaRequest.builder()
-                .dataHora(LocalDateTime.now().plusDays(10))
-                .paciente(ConsultaRequest.Paciente.builder()
-                        .nome("João Castro")
-                        .cpf("101.202.303")
-                        .build())
-                .build();
+    doThrow(RuntimeException.class).when(consultaService).salvarConsulta(any());
 
-        doThrow(RuntimeException.class).when(consultaService).salvarConsulta(any());
+    ResponseEntity<BaseResponse> response = consultaController.agendarConsulta(request);
 
-        ResponseEntity<String> response = consultaController.agendarConsulta(request);
-
-        assertEquals(HttpStatusCode.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()), response.getStatusCode());
-    }
-
+    assertEquals(
+        HttpStatusCode.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()), response.getStatusCode());
+  }
 }

@@ -2,6 +2,7 @@ package com.conexa.desafio.controllers;
 
 import com.conexa.desafio.models.TokenEntity;
 import com.conexa.desafio.models.UsuarioEntity;
+import com.conexa.desafio.payload.BaseResponse;
 import com.conexa.desafio.payload.LoginResponse;
 import com.conexa.desafio.payload.LoginRequest;
 import com.conexa.desafio.payload.SignupRequest;
@@ -40,22 +41,25 @@ public class UsuarioController {
   String PREFIX;
 
   @PostMapping(value = "/signup", consumes = "application/json")
-  public ResponseEntity<String> adicionaUsuario(@RequestBody SignupRequest signupRequest) {
+  public ResponseEntity<BaseResponse> adicionaUsuario(@RequestBody SignupRequest signupRequest) {
     if (usuarioService.usuarioJaExiste(signupRequest.getEmail())) {
-      return ResponseEntity.badRequest().body("O usuário já existe!");
+      return ResponseEntity.badRequest()
+          .body(BaseResponse.buildBaseResponse(HttpStatus.BAD_REQUEST));
     }
-    try{
+    try {
       UsuarioEntity usuarioEntityRequest = modelMapper.map(signupRequest, UsuarioEntity.class);
       usuarioService.criaUsuario(usuarioEntityRequest);
-      return ResponseEntity.created(null).build();
-    }catch (Exception e){
-      return ResponseEntity.internalServerError().body(e.getMessage());
+      return new ResponseEntity<>(
+          BaseResponse.buildBaseResponse(HttpStatus.CREATED), HttpStatus.CREATED);
+    } catch (Exception e) {
+      return ResponseEntity.internalServerError()
+          .body(BaseResponse.buildBaseResponse(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage()));
     }
   }
 
   @PostMapping("/login")
   @Transactional
-  public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
+  public ResponseEntity<BaseResponse> login(@RequestBody LoginRequest loginRequest) {
     try {
       Authentication authentication =
           authenticationManager.authenticate(
@@ -67,22 +71,26 @@ public class UsuarioController {
       TokenEntity tokenEntity = TokenEntity.builder().usuario(usuario).token(token).build();
       tokenService.removerTokenDoUsuario(usuario);
       tokenService.salvarToken(tokenEntity);
-      return ResponseEntity.ok().body(new LoginResponse(token));
-    } catch (BadCredentialsException badCredentialsException){
-      return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-    } catch (Exception e){
-      return ResponseEntity.internalServerError().build();
+      return ResponseEntity.ok(
+          BaseResponse.buildBaseResponse(HttpStatus.OK, new LoginResponse(token)));
+    } catch (BadCredentialsException badCredentialsException) {
+      return new ResponseEntity<>(BaseResponse.buildBaseResponse(HttpStatus.UNAUTHORIZED), HttpStatus.UNAUTHORIZED);
+    } catch (Exception e) {
+      return ResponseEntity.internalServerError()
+          .body(BaseResponse.buildBaseResponse(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage()));
     }
   }
 
   @PostMapping("/logoff")
   @Transactional
-  public ResponseEntity<String> logoff(@RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
+  public ResponseEntity<BaseResponse> logoff(
+      @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
     try {
       tokenService.removerToken(token.substring(PREFIX.length() + 1));
-      return ResponseEntity.ok().build();
+      return ResponseEntity.ok(BaseResponse.buildBaseResponse(HttpStatus.OK));
     } catch (Exception e) {
-      return ResponseEntity.internalServerError().body(e.getMessage());
+      return ResponseEntity.internalServerError()
+          .body(BaseResponse.buildBaseResponse(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage()));
     }
   }
 }

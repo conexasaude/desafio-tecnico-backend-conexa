@@ -1,6 +1,7 @@
 package com.conexa.desafio.controllers;
 
 import com.conexa.desafio.models.UsuarioEntity;
+import com.conexa.desafio.payload.BaseResponse;
 import com.conexa.desafio.payload.LoginResponse;
 import com.conexa.desafio.payload.LoginRequest;
 import com.conexa.desafio.payload.SignupRequest;
@@ -30,154 +31,153 @@ import static org.mockito.Mockito.*;
 @ActiveProfiles("test")
 class UsuarioControllerTest {
 
-    @Autowired
-    private MockMvc mvc;
+  @Autowired private MockMvc mvc;
 
-    @InjectMocks
-    private UsuarioController usuarioController;
+  @InjectMocks private UsuarioController usuarioController;
 
-    @Spy
-    private ModelMapper modelMapper;
+  @Spy private ModelMapper modelMapper;
 
-    @Mock
-    private UsuarioService usuarioService;
+  @Mock private UsuarioService usuarioService;
 
-    @Spy private AuthenticationManager authenticationManager;
+  @Spy private AuthenticationManager authenticationManager;
 
-    @Mock private JwtGenerator jwtGenerator;
+  @Mock private JwtGenerator jwtGenerator;
 
-    @Mock private TokenService tokenService;
+  @Mock private TokenService tokenService;
 
-    @BeforeEach
-    void beforeEach(){
-        MockitoAnnotations.openMocks(this);
-        ReflectionTestUtils.setField(usuarioController, "PREFIX", "Bearer");
-    }
+  @BeforeEach
+  void beforeEach() {
+    MockitoAnnotations.openMocks(this);
+    ReflectionTestUtils.setField(usuarioController, "PREFIX", "Bearer");
+  }
 
-    @Test
-    public void deveRetornarSucessoQuandoARequisicaoForRealizadaComDadosValidos() throws Exception {
-        SignupRequest signUpRequest = SignupRequest.builder()
-                .email("test@email.com")
-                .senha("test")
-                .confirmacaoSenha("test")
-                .cpf("111.111.111-11")
-                .especialidade("teste")
-                .dataNascimento(LocalDate.now())
-                .build();
+  @Test
+  public void deveRetornarSucessoQuandoARequisicaoForRealizadaComDadosValidos() throws Exception {
+    SignupRequest signUpRequest =
+        SignupRequest.builder()
+            .email("test@email.com")
+            .senha("test")
+            .confirmacaoSenha("test")
+            .cpf("111.111.111-11")
+            .especialidade("teste")
+            .dataNascimento(LocalDate.now())
+            .build();
 
-        doReturn(false).when(usuarioService).usuarioJaExiste(any());
+    doReturn(false).when(usuarioService).usuarioJaExiste(any());
 
-        ResponseEntity<String> response = usuarioController.adicionaUsuario(signUpRequest);
-        assertEquals(HttpStatusCode.valueOf(HttpStatus.CREATED.value()), response.getStatusCode());
-    }
+    ResponseEntity<BaseResponse> response = usuarioController.adicionaUsuario(signUpRequest);
+    assertEquals(HttpStatusCode.valueOf(HttpStatus.CREATED.value()), response.getStatusCode());
+  }
 
-    @Test
-    public void deveRetornar400QuandoOUsuarioJaExiste() throws Exception {
-        SignupRequest signUpRequest = SignupRequest.builder()
-                .email("test@email.com")
-                .senha("test")
-                .confirmacaoSenha("test")
-                .cpf("111.111.111-11")
-                .especialidade("teste")
-                .dataNascimento(LocalDate.now())
-                .build();
+  @Test
+  public void deveRetornar400QuandoOUsuarioJaExiste() throws Exception {
+    SignupRequest signUpRequest =
+        SignupRequest.builder()
+            .email("test@email.com")
+            .senha("test")
+            .confirmacaoSenha("test")
+            .cpf("111.111.111-11")
+            .especialidade("teste")
+            .dataNascimento(LocalDate.now())
+            .build();
 
-        doReturn(true).when(usuarioService).usuarioJaExiste(any());
+    doReturn(true).when(usuarioService).usuarioJaExiste(any());
 
-        ResponseEntity<String> response = usuarioController.adicionaUsuario(signUpRequest);
-        assertEquals(HttpStatusCode.valueOf(HttpStatus.BAD_REQUEST.value()), response.getStatusCode());
-    }
+    ResponseEntity<BaseResponse> response = usuarioController.adicionaUsuario(signUpRequest);
+    assertEquals(HttpStatusCode.valueOf(HttpStatus.BAD_REQUEST.value()), response.getStatusCode());
+  }
 
-    @Test
-    public void deveRetornar500QuandoAlgumErroInesperadoOcorrer() throws Exception {
-        SignupRequest signUpRequest = SignupRequest.builder()
-                .email("test@email.com")
-                .senha("test")
-                .confirmacaoSenha("test")
-                .cpf("111.111.111-11")
-                .especialidade("teste")
-                .dataNascimento(LocalDate.now())
-                .build();
+  @Test
+  public void deveRetornar500QuandoAlgumErroInesperadoOcorrer() throws Exception {
+    SignupRequest signUpRequest =
+        SignupRequest.builder()
+            .email("test@email.com")
+            .senha("test")
+            .confirmacaoSenha("test")
+            .cpf("111.111.111-11")
+            .especialidade("teste")
+            .dataNascimento(LocalDate.now())
+            .build();
 
-        doReturn(false).when(usuarioService).usuarioJaExiste(any());
-        doThrow(RuntimeException.class).when(modelMapper).map(any(), any());
+    doReturn(false).when(usuarioService).usuarioJaExiste(any());
+    doThrow(RuntimeException.class).when(modelMapper).map(any(), any());
 
-        ResponseEntity<String> response = usuarioController.adicionaUsuario(signUpRequest);
-        assertEquals(HttpStatusCode.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()), response.getStatusCode());
-    }
+    ResponseEntity<BaseResponse> response = usuarioController.adicionaUsuario(signUpRequest);
+    assertEquals(
+        HttpStatusCode.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()), response.getStatusCode());
+  }
 
-    @Test
-    public void deveRetornarOTokenQuandoRealizarOLoginComSucesso() throws Exception {
-        UsuarioEntity usuarioEntity = UsuarioEntity.builder().build();
+  @Test
+  public void deveRetornarOTokenQuandoRealizarOLoginComSucesso() throws Exception {
+    UsuarioEntity usuarioEntity = UsuarioEntity.builder().build();
 
-        LoginRequest loginRequest = LoginRequest.builder()
-                .email("test@email.com")
-                .senha("test")
-                .build();
+    LoginRequest loginRequest =
+        LoginRequest.builder().email("test@email.com").senha("test").build();
 
-        doReturn("tokenValido").when(jwtGenerator).generateToken(any());
-        doReturn(usuarioEntity).when(usuarioService).buscarPorEmail(any());
-        doReturn(null).when(tokenService).salvarToken(any());
+    doReturn("tokenValido").when(jwtGenerator).generateToken(any());
+    doReturn(usuarioEntity).when(usuarioService).buscarPorEmail(any());
+    doReturn(null).when(tokenService).salvarToken(any());
 
-        ResponseEntity<LoginResponse> response = usuarioController.login(loginRequest);
-        assertEquals(HttpStatusCode.valueOf(HttpStatus.OK.value()), response.getStatusCode());
-        assertNotNull(response.getBody().getToken());
-        assertFalse(response.getBody().getToken().isBlank());
-        assertFalse(response.getBody().getToken().isEmpty());
-        assertEquals("tokenValido", response.getBody().getToken());
-    }
+    ResponseEntity<BaseResponse> response = usuarioController.login(loginRequest);
+    assertEquals(HttpStatusCode.valueOf(HttpStatus.OK.value()), response.getStatusCode());
+    String token = ((LoginResponse) response.getBody().getPayload()).getToken();
+    assertNotNull(token);
+    assertFalse(token.isBlank());
+    assertFalse(token.isEmpty());
+    assertEquals("tokenValido", token);
+  }
 
-    @Test
-    public void deveRetornarUnauthorizedQuandoAsCredenciaisForemInvalidas() throws Exception {
-        UsuarioEntity usuarioEntity = UsuarioEntity.builder().build();
+  @Test
+  public void deveRetornarUnauthorizedQuandoAsCredenciaisForemInvalidas() throws Exception {
+    UsuarioEntity usuarioEntity = UsuarioEntity.builder().build();
 
-        LoginRequest loginRequest = LoginRequest.builder()
-                .email("test@email.com")
-                .senha("test")
-                .build();
+    LoginRequest loginRequest =
+        LoginRequest.builder().email("test@email.com").senha("test").build();
 
-        doThrow(BadCredentialsException.class).when(authenticationManager).authenticate(any());
-        doReturn("tokenValido").when(jwtGenerator).generateToken(any());
-        doReturn(usuarioEntity).when(usuarioService).buscarPorEmail(any());
-        doReturn(null).when(tokenService).salvarToken(any());
+    doThrow(BadCredentialsException.class).when(authenticationManager).authenticate(any());
+    doReturn("tokenValido").when(jwtGenerator).generateToken(any());
+    doReturn(usuarioEntity).when(usuarioService).buscarPorEmail(any());
+    doReturn(null).when(tokenService).salvarToken(any());
 
-        ResponseEntity<LoginResponse> response = usuarioController.login(loginRequest);
-        assertEquals(HttpStatusCode.valueOf(HttpStatus.UNAUTHORIZED.value()), response.getStatusCode());
-    }
+    ResponseEntity<BaseResponse> response = usuarioController.login(loginRequest);
+    assertEquals(HttpStatusCode.valueOf(HttpStatus.UNAUTHORIZED.value()), response.getStatusCode());
+  }
 
-    @Test
-    public void deveRetornarInternalServerErrorQuandoAlgumErroInesperadoAcontecer() throws Exception {
-        UsuarioEntity usuarioEntity = UsuarioEntity.builder().build();
+  @Test
+  public void deveRetornarInternalServerErrorQuandoAlgumErroInesperadoAcontecer() throws Exception {
+    UsuarioEntity usuarioEntity = UsuarioEntity.builder().build();
 
-        LoginRequest loginRequest = LoginRequest.builder()
-                .email("test@email.com")
-                .senha("test")
-                .build();
+    LoginRequest loginRequest =
+        LoginRequest.builder().email("test@email.com").senha("test").build();
 
-        doThrow(RuntimeException.class).when(authenticationManager).authenticate(any());
+    doThrow(RuntimeException.class).when(authenticationManager).authenticate(any());
 
-        ResponseEntity<LoginResponse> response = usuarioController.login(loginRequest);
-        assertEquals(HttpStatusCode.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()), response.getStatusCode());
-    }
+    ResponseEntity<BaseResponse> response = usuarioController.login(loginRequest);
+    assertEquals(
+        HttpStatusCode.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()), response.getStatusCode());
+  }
 
-    @Test
-    public void deveRemoverOTokenComSucessoQuandoOTokenEhValido() throws Exception {
-        String testToken = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtZWRpY29AZW1haWwuY29tIiwiaWF0IjoxNjc4OTgzNDgzLCJleHAiOjE2Nzg5ODQzODN9.7OzsjKb63COaau6X8mbO5N1xX6F0jpvnYGG2jRE-9sfDjWhrCe7SakBx5Hm2osr4YHanAqn2_YrplwL9sZwWhg";
+  @Test
+  public void deveRemoverOTokenComSucessoQuandoOTokenEhValido() throws Exception {
+    String testToken =
+        "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtZWRpY29AZW1haWwuY29tIiwiaWF0IjoxNjc4OTgzNDgzLCJleHAiOjE2Nzg5ODQzODN9.7OzsjKb63COaau6X8mbO5N1xX6F0jpvnYGG2jRE-9sfDjWhrCe7SakBx5Hm2osr4YHanAqn2_YrplwL9sZwWhg";
 
-        doReturn(true).when(tokenService).tokenJaExiste(any());
-        doNothing().when(tokenService).removerToken(any());
+    doReturn(true).when(tokenService).tokenJaExiste(any());
+    doNothing().when(tokenService).removerToken(any());
 
-        ResponseEntity<String> response = usuarioController.logoff(testToken);
-        assertEquals(HttpStatusCode.valueOf(HttpStatus.OK.value()), response.getStatusCode());
-    }
+    ResponseEntity<BaseResponse> response = usuarioController.logoff(testToken);
+    assertEquals(HttpStatusCode.valueOf(HttpStatus.OK.value()), response.getStatusCode());
+  }
 
-    @Test
-    public void deveRetornar500QuandoAlgumErroInesperadoOcorrerAoInvalidarOToken() throws Exception {
-        String testToken = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtZWRpY29AZW1haWwuY29tIiwiaWF0IjoxNjc4OTgzNDgzLCJleHAiOjE2Nzg5ODQzODN9.7OzsjKb63COaau6X8mbO5N1xX6F0jpvnYGG2jRE-9sfDjWhrCe7SakBx5Hm2osr4YHanAqn2_YrplwL9sZwWhg";
+  @Test
+  public void deveRetornar500QuandoAlgumErroInesperadoOcorrerAoInvalidarOToken() throws Exception {
+    String testToken =
+        "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtZWRpY29AZW1haWwuY29tIiwiaWF0IjoxNjc4OTgzNDgzLCJleHAiOjE2Nzg5ODQzODN9.7OzsjKb63COaau6X8mbO5N1xX6F0jpvnYGG2jRE-9sfDjWhrCe7SakBx5Hm2osr4YHanAqn2_YrplwL9sZwWhg";
 
-        doThrow(RuntimeException.class).when(tokenService).removerToken(any());
+    doThrow(RuntimeException.class).when(tokenService).removerToken(any());
 
-        ResponseEntity<String> response = usuarioController.logoff(testToken);
-        assertEquals(HttpStatusCode.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()), response.getStatusCode());
-    }
+    ResponseEntity<BaseResponse> response = usuarioController.logoff(testToken);
+    assertEquals(
+        HttpStatusCode.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()), response.getStatusCode());
+  }
 }
