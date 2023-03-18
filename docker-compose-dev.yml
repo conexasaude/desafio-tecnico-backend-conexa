@@ -6,9 +6,11 @@ services:
     image: desafio-img
     build:
       context: .
-      dockerfile: docker/Dockerfile
+      dockerfile: docker/dev/Dockerfile
     ports:
       - "8080:8080"
+    volumes:
+      - ./src:/desafio/src/
     networks:
       - desafio-mysql
     depends_on:
