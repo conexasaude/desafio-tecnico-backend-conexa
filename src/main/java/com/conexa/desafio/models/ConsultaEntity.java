@@ -24,4 +24,8 @@ public class ConsultaEntity {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "consulta_paciente", nullable = false)
     private PacienteEntity paciente;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "consulta_medico", nullable = false)
+    private UsuarioEntity medico;
 }

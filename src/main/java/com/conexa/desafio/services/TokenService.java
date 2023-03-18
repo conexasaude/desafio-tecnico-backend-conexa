@@ -12,4 +12,6 @@ public interface TokenService {
     Boolean tokenJaExiste(String token);
 
     void removerTokenDoUsuario(UsuarioEntity usuario);
+
+    UsuarioEntity buscarUsuarioPorToken(String token);
 }

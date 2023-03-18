@@ -7,6 +7,7 @@ import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -44,5 +45,8 @@ public class UsuarioEntity {
 
     @OneToOne(optional = false, mappedBy = "usuario")
     private TokenEntity token;
+
+    @OneToMany(mappedBy = "medico")
+    private Set<ConsultaEntity> consultas;
 
 }

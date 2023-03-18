@@ -1,6 +1,8 @@
 package com.conexa.desafio.controllers;
 
 import com.conexa.desafio.services.ConsultaService;
+import com.conexa.desafio.services.PacienteService;
+import com.conexa.desafio.services.TokenService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
@@ -19,6 +21,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
 
 import static org.mockito.Mockito.doThrow;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ActiveProfiles("test")
@@ -34,6 +37,11 @@ class ConsultaControllerTest {
   @MockBean
   private ConsultaService consultaService;
 
+  @MockBean
+  private TokenService tokenService;
+
+  @MockBean
+  private PacienteService pacienteService;
 
   @BeforeEach
   void beforeEach() {
@@ -48,11 +56,17 @@ class ConsultaControllerTest {
   void deveRetornarOkQuandoOsDadosDaConsultaForemValidos() throws Exception {
 
     doReturn(null).when(consultaService).salvarConsulta(any());
+    doReturn(null).when(tokenService).buscarUsuarioPorToken(any());
+    doReturn(false).when(pacienteService).pacienteJaExiste(any());
 
     mockMvc.perform(MockMvcRequestBuilders.post(ATTENDANCE_ROUTE)
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(CONSULTA_VALIDA_REQUEST))
-            .andExpect(status().isOk());
+                    .content(CONSULTA_VALIDA_REQUEST)
+                    .header(HttpHeaders.AUTHORIZATION, TOKEN_TEST_COM_PREFIXO))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.code").value(200))
+            .andExpect(jsonPath("$.message").value("OK"))
+            .andExpect(jsonPath("$.payload.paciente.nome").value("João Castro"));
   }
 
   @Test
@@ -75,11 +89,13 @@ class ConsultaControllerTest {
 
   @Test
   void deveRetornarInternalServerErrorQuandoAlgumErroInesperadoOcorrer() throws Exception {
-    doThrow(RuntimeException.class).when(consultaService).salvarConsulta(any());
+    doThrow(new RuntimeException("erro inesperado")).when(consultaService).salvarConsulta(any());
     mockMvc.perform(MockMvcRequestBuilders.post(ATTENDANCE_ROUTE)
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(CONSULTA_VALIDA_REQUEST))
+                    .content(CONSULTA_VALIDA_REQUEST)
+                    .header(HttpHeaders.AUTHORIZATION, TOKEN_TEST_COM_PREFIXO))
             .andExpect(status().isInternalServerError())
-            .andReturn();
+            .andExpect(jsonPath("$.code").value(500))
+            .andExpect(jsonPath("$.message").value("erro inesperado"));
   }
 }

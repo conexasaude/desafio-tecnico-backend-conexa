@@ -6,14 +6,13 @@ import com.conexa.desafio.repository.TokenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class TokenServiceImpl implements TokenService{
 
     @Autowired
     private TokenRepository tokenRepository;
-
-    @Autowired
-    private UsuarioService usuarioService;
 
     @Override
     public TokenEntity salvarToken(TokenEntity token) {
@@ -33,5 +32,11 @@ public class TokenServiceImpl implements TokenService{
     @Override
     public void removerTokenDoUsuario(UsuarioEntity usuarioEntity) {
         tokenRepository.deleteByUsuario(usuarioEntity);
+    }
+
+    @Override
+    public UsuarioEntity buscarUsuarioPorToken(String token) {
+        Optional<TokenEntity> byToken = tokenRepository.findByToken(token);
+        return byToken.map(TokenEntity::getUsuario).orElse(null);
     }
 }

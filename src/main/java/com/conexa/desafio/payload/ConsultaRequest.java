@@ -2,6 +2,7 @@ package com.conexa.desafio.payload;
 
 import com.conexa.desafio.models.ConsultaEntity;
 import com.conexa.desafio.models.PacienteEntity;
+import com.conexa.desafio.models.UsuarioEntity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -26,7 +27,7 @@ public class ConsultaRequest {
   @Future(message = "{data.consulta.invalid}")
   @JsonProperty("dataHora")
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-  @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
   private LocalDateTime dataHora;
 
   @JsonProperty("paciente")
@@ -53,7 +54,7 @@ public class ConsultaRequest {
     private String cpf;
   }
 
-  public ConsultaEntity convertToEntity() {
+  public ConsultaEntity convertToEntity(UsuarioEntity usuario) {
     return ConsultaEntity.builder()
         .dataHora(this.getDataHora())
         .paciente(
@@ -61,6 +62,7 @@ public class ConsultaRequest {
                 .nome(this.getPaciente().getNome())
                 .cpf(this.getPaciente().getCpf())
                 .build())
+        .medico(usuario)
         .build();
   }
 }
