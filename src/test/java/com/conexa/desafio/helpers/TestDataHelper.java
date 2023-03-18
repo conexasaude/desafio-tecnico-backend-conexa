@@ -58,7 +58,11 @@ public class TestDataHelper {
   public static final String TOKEN_TEST_SEM_PREFIXO =
       "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtZWRpY29AZW1haWwuY29tIiwiaWF0IjoxNjc4OTgzNDgzLCJleHAiOjE2Nzg5ODQzODN9.7OzsjKb63COaau6X8mbO5N1xX6F0jpvnYGG2jRE-9sfDjWhrCe7SakBx5Hm2osr4YHanAqn2_YrplwL9sZwWhg";
 
+  public static final String DADOS_PACIENTE =
+      "{\"nome\":\"Nome distinto\",\"cpf\":\"432.576.720-71\"}";
+
   public static final ObjectMapper objectMapper = new ObjectMapper();
+
 
   public static <T> String serializeObject(T object) {
     try {

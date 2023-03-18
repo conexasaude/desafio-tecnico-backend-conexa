@@ -1,5 +1,8 @@
 package com.conexa.desafio.controllers;
 
+import com.conexa.desafio.helpers.TestDataHelper;
+import com.conexa.desafio.models.ConsultaEntity;
+import com.conexa.desafio.models.PacienteEntity;
 import com.conexa.desafio.services.ConsultaService;
 import com.conexa.desafio.services.PacienteService;
 import com.conexa.desafio.services.TokenService;
@@ -97,5 +100,21 @@ class ConsultaControllerTest {
             .andExpect(status().isInternalServerError())
             .andExpect(jsonPath("$.code").value(500))
             .andExpect(jsonPath("$.message").value("erro inesperado"));
+  }
+
+  @Test
+  void deveRetornarOPacienteEncontradoSeJaExistirRegistroNoBanco() throws Exception {
+    doReturn(null).when(tokenService).buscarUsuarioPorToken(any());
+    doReturn(true).when(pacienteService).pacienteJaExiste(any());
+    PacienteEntity paciente = TestDataHelper.deserializeObject(DADOS_PACIENTE, PacienteEntity.class);
+    doReturn(paciente).when(pacienteService).buscarPacientePorNome(any());
+    mockMvc.perform(MockMvcRequestBuilders.post(ATTENDANCE_ROUTE)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(CONSULTA_VALIDA_REQUEST)
+                    .header(HttpHeaders.AUTHORIZATION, TOKEN_TEST_COM_PREFIXO))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.code").value(200))
+            .andExpect(jsonPath("$.message").value("OK"))
+            .andExpect(jsonPath("$.payload.paciente.nome").value("Nome distinto"));
   }
 }
