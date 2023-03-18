@@ -69,6 +69,10 @@ public class UsuarioController {
   @Transactional
   public ResponseEntity<BaseResponse> login(@RequestBody @Valid LoginRequest loginRequest) {
     try {
+      if (!usuarioService.usuarioJaExiste(loginRequest.getEmail())) {
+        return ResponseEntity.badRequest()
+            .body(BaseResponse.buildBaseResponse(HttpStatus.BAD_REQUEST));
+      }
       Authentication authentication =
           authenticationManager.authenticate(
               new UsernamePasswordAuthenticationToken(

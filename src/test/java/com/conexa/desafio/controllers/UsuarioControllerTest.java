@@ -132,6 +132,7 @@ class UsuarioControllerTest {
 
   @Test
   public void deveRetornarOTokenQuandoRealizarOLoginComSucesso() throws Exception {
+    doReturn(true).when(usuarioService).usuarioJaExiste(any());
     doReturn("tokenValido").when(jwtGenerator).generateToken(any());
     doReturn(null).when(usuarioService).buscarPorEmail(any());
     doNothing().when(tokenService).removerTokenDoUsuario(any());
@@ -147,6 +148,7 @@ class UsuarioControllerTest {
 
   @Test
   public void deveRetornarUnauthorizedQuandoAsCredenciaisForemInvalidas() throws Exception {
+    doReturn(true).when(usuarioService).usuarioJaExiste(any());
     doThrow(BadCredentialsException.class).when(authenticationManager).authenticate(any());
     mockMvc.perform(MockMvcRequestBuilders.post(LOGIN_ROUTE)
                     .contentType(MediaType.APPLICATION_JSON)
@@ -155,7 +157,17 @@ class UsuarioControllerTest {
   }
 
   @Test
+  public void deveRetornarBadRequestQuandoTentarAutenticacaoParaUsuarioInexistente() throws Exception {
+    doReturn(false).when(usuarioService).usuarioJaExiste(any());
+    mockMvc.perform(MockMvcRequestBuilders.post(LOGIN_ROUTE)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(LOGIN_VALIDO_REQUEST))
+            .andExpect(status().isBadRequest());
+  }
+
+  @Test
   public void deveRetornarInternalServerErrorQuandoAlgumErroInesperadoAcontecer() throws Exception {
+    doReturn(true).when(usuarioService).usuarioJaExiste(any());
     doThrow(new RuntimeException("erro inesperado")).when(authenticationManager).authenticate(any());
     mockMvc.perform(MockMvcRequestBuilders.post(LOGIN_ROUTE)
                     .contentType(MediaType.APPLICATION_JSON)
@@ -191,10 +203,4 @@ class UsuarioControllerTest {
             .andExpect(jsonPath("$.code").value(500))
             .andExpect(jsonPath("$.message").value("erro inesperado"));
   }
-//
-//  @Test
-//  public void deveRetornarUnauthorizedQuandoSolicitaLogoffSemToken() throws Exception {
-//    mockMvc.perform(MockMvcRequestBuilders.post(LOGOFF_ROUTE))
-//            .andExpect(status().isUnauthorized());
-//  }
 }
