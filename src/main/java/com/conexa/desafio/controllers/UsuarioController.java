@@ -10,6 +10,7 @@ import com.conexa.desafio.security.JwtGenerator;
 import com.conexa.desafio.services.TokenService;
 import com.conexa.desafio.services.UsuarioService;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -41,12 +42,19 @@ public class UsuarioController {
   String PREFIX;
 
   @PostMapping(value = "/signup", consumes = "application/json")
-  public ResponseEntity<BaseResponse> adicionaUsuario(@RequestBody SignupRequest signupRequest) {
+  public ResponseEntity<BaseResponse> adicionaUsuario(
+      @RequestBody @Valid SignupRequest signupRequest) {
     if (usuarioService.usuarioJaExiste(signupRequest.getEmail())) {
       return ResponseEntity.badRequest()
           .body(BaseResponse.buildBaseResponse(HttpStatus.BAD_REQUEST));
     }
     try {
+      if (!signupRequest.getSenha().equals(signupRequest.getConfirmacaoSenha())) {
+        return ResponseEntity.badRequest()
+            .body(
+                BaseResponse.buildBaseResponse(
+                    HttpStatus.BAD_REQUEST, "As senhas não são iguais!"));
+      }
       UsuarioEntity usuarioEntityRequest = modelMapper.map(signupRequest, UsuarioEntity.class);
       usuarioService.criaUsuario(usuarioEntityRequest);
       return new ResponseEntity<>(
@@ -59,7 +67,7 @@ public class UsuarioController {
 
   @PostMapping("/login")
   @Transactional
-  public ResponseEntity<BaseResponse> login(@RequestBody LoginRequest loginRequest) {
+  public ResponseEntity<BaseResponse> login(@RequestBody @Valid LoginRequest loginRequest) {
     try {
       Authentication authentication =
           authenticationManager.authenticate(
@@ -74,7 +82,8 @@ public class UsuarioController {
       return ResponseEntity.ok(
           BaseResponse.buildBaseResponse(HttpStatus.OK, new LoginResponse(token)));
     } catch (BadCredentialsException badCredentialsException) {
-      return new ResponseEntity<>(BaseResponse.buildBaseResponse(HttpStatus.UNAUTHORIZED), HttpStatus.UNAUTHORIZED);
+      return new ResponseEntity<>(
+          BaseResponse.buildBaseResponse(HttpStatus.UNAUTHORIZED), HttpStatus.UNAUTHORIZED);
     } catch (Exception e) {
       return ResponseEntity.internalServerError()
           .body(BaseResponse.buildBaseResponse(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage()));

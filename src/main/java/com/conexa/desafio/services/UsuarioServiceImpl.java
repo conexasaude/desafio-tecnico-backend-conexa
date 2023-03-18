@@ -25,7 +25,6 @@ public class UsuarioServiceImpl implements UsuarioService{
     @Override
     public UsuarioEntity buscarPorEmail(String email) {
         return usuarioRepository.findByEmail(email);
-        //TODO: validação quando usuário for nulo
     }
 
     @Override

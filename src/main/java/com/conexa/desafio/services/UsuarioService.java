@@ -6,7 +6,6 @@ public interface UsuarioService {
 
     UsuarioEntity criaUsuario(UsuarioEntity usuarioEntity);
 
-    //TODO: implementar tratamento de exceção
     UsuarioEntity buscarPorEmail(String email);
 
     Boolean usuarioJaExiste(String email);

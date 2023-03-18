@@ -5,10 +5,12 @@ import com.conexa.desafio.models.PacienteEntity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.br.CPF;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
@@ -20,9 +22,10 @@ import java.time.LocalDateTime;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ConsultaRequest {
 
+  @Future(message = "{data.consulta.invalid}")
   @JsonProperty("dataHora")
-  @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+  @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
   private LocalDateTime dataHora;
 
   @JsonProperty("paciente")
@@ -31,9 +34,16 @@ public class ConsultaRequest {
   @Data
   @Builder
   public static class Paciente {
+    @NotNull(message = "{nome.not.null}")
+    @NotEmpty(message = "{nome.not.empty}")
+    @NotBlank(message = "{nome.not.blank}")
     @JsonProperty("nome")
     private String nome;
 
+    @CPF(message = "{cpf.invalid}")
+    @NotNull(message = "{cpf.not.null}")
+    @NotEmpty(message = "{cpf.not.empty}")
+    @NotBlank(message = "{cpf.not.blank}")
     @JsonProperty("cpf")
     private String cpf;
   }

@@ -37,8 +37,8 @@ class ConsultaControllerIntegrationTest {
             .senha("teste")
             .confirmacaoSenha("teste")
             .especialidade("Cardiologista")
-            .cpf("101.202.303-11")
-            .dataNascimento(LocalDate.now())
+            .cpf("704.377.720-80")
+            .dataNascimento(LocalDate.now().minusYears(40))
             .telefone("(21) 3232-6565")
             .build();
     ResponseEntity<BaseResponse> signupResponse =
