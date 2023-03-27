@@ -23,8 +23,6 @@ public class ValidateDateTimeActivity implements BaseActivity<AttendanceDTO, Voi
 
         return null;
 
-
     }
-
 
 }

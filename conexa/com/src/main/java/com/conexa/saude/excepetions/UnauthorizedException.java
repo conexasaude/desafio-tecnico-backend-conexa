@@ -1,31 +1,18 @@
 package com.conexa.saude.excepetions;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-@ResponseStatus(HttpStatus.UNAUTHORIZED)
+@Getter
+@NoArgsConstructor
 public class UnauthorizedException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
-
-    private final String message;
-
+    private String message;
 
     public UnauthorizedException(String message) {
 		super();
 		this.message = message;
 	}
-
-    @Override
-	public String getMessage() {
-		return message;
-	}
-	
-
-	@Override
-	public Throwable fillInStackTrace() {
-		return this;
-	}
-	
-
 }
+

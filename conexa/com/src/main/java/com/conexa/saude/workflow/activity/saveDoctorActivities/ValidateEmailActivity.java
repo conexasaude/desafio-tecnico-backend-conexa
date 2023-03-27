@@ -2,7 +2,6 @@ package com.conexa.saude.workflow.activity.saveDoctorActivities;
 
 import javax.mail.internet.InternetAddress;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.conexa.saude.excepetions.BadRequestException;

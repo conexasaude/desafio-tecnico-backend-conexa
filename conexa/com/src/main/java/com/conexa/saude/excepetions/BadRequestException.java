@@ -1,25 +1,18 @@
 package com.conexa.saude.excepetions;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-
-@ResponseStatus(value=HttpStatus.NOT_FOUND,reason="No such Order")
+@Getter
+@NoArgsConstructor
 public class BadRequestException extends RuntimeException {
 	
 	private static final long serialVersionUID = 1L;
-    private final String message;
-    
+    private String message;
 
     public BadRequestException(String message) {
 		super();
 		this.message = message;
 	}
-
-    @Override
-	public String getMessage() {
-		return message;
-	}
-	
 
 }
