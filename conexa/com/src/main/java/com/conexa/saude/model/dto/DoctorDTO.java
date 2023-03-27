@@ -36,7 +36,7 @@ public class DoctorDTO {
 	private String cpf;
 	
     @NotNull
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "dd/MM/yyyy")
 	private Date dataNascimento;
 	
     @NotBlank

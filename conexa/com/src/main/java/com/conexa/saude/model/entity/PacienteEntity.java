@@ -15,7 +15,7 @@ import lombok.RequiredArgsConstructor;
 @AttributeOverride(name = "id", column = @Column(name = "id_paciente"))
 @EqualsAndHashCode(callSuper = true)
 @RequiredArgsConstructor
-public class Paciente extends BaseEntity {
+public class PacienteEntity extends BaseEntityEntity {
 
 	@Column(name = "nome", length = 50, unique = true, nullable = false)
 	private String nome;

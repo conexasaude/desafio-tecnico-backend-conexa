@@ -3,12 +3,11 @@ package com.conexa.saude.workflow.activity.saveDoctorActivities;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.conexa.saude.excepetions.BadRequestException;
 import com.conexa.saude.model.dto.DoctorDTO;
-import com.conexa.saude.model.entity.Doctor;
+import com.conexa.saude.model.entity.DoctorEntity;
 import com.conexa.saude.repositories.DoctorRepository;
 import com.conexa.saude.workflow.activity.generics.BaseActivity;
 
@@ -22,13 +21,13 @@ public class ValidateCpfAndEmailExistsActivity implements BaseActivity<DoctorDTO
     private DoctorRepository repository;
 
     public Void doExecute(DoctorDTO doctorDTO) {
-        Optional<Doctor> doctorBymail = repository.findByEmail(doctorDTO.getEmail());
+        Optional<DoctorEntity> doctorBymail = repository.findByEmail(doctorDTO.getEmail());
 
         if(doctorBymail.isPresent()){
             throw new BadRequestException("Email ja cadastrado.");
         }
 
-        Optional<Doctor> doctorByCpf = repository.findByCpf(doctorDTO.getCpf());
+        Optional<DoctorEntity> doctorByCpf = repository.findByCpf(doctorDTO.getCpf());
 
         if(doctorByCpf.isPresent()){
             throw new BadRequestException("Cpf ja cadastrado.");

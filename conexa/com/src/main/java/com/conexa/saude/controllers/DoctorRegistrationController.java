@@ -21,17 +21,11 @@ public class DoctorRegistrationController {
     @Autowired
     private SaveDoctorWorkFlow saveDoctorWorkflow;
 
-
     @PostMapping("/signup")
     public ResponseEntity<?> cadastrarMedico(@Valid @RequestBody DoctorDTO doctorDTO) {
-        try{
-            saveDoctorWorkflow.doExecute(doctorDTO);
-            return new ResponseEntity<>(HttpStatus.CREATED);
-        }catch(Exception e) {
-            throw e;
-        }
-        
-        
+       
+        saveDoctorWorkflow.doExecute(doctorDTO);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
 }

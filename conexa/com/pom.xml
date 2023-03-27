@@ -57,21 +57,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
-		<!-- <dependency>
-    	<groupId>org.springframework.security</groupId>
-    		<artifactId>spring-security-core</artifactId>
-    		<version>5.1.5.RELEASE</version>
-		</dependency>	 -->
-		<!-- <dependency>
-			<groupId>org.springframework.security</groupId>
-    		<artifactId>spring-security-web</artifactId>
-    		<version>5.1.5.RELEASE</version>
-		</dependency> -->
-		<!-- <dependency>
-			<groupId>org.springframework.security</groupId>
-    		<artifactId>spring-security-config</artifactId>
-    		<version>5.1.5.RELEASE</version>
-		</dependency> -->
 		<dependency>
 			<groupId>com.auth0</groupId>
     		<artifactId>java-jwt</artifactId>
@@ -103,7 +88,7 @@
 		 <dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-			<version>8.0.25</version>
+			<version>8.0.31</version>
 		</dependency>
 		<dependency>
 			<groupId>br.com.caelum.stella</groupId> 

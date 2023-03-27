@@ -19,17 +19,17 @@ import lombok.RequiredArgsConstructor;
 @AttributeOverride(name = "id", column = @Column(name = "id_attendance"))
 @EqualsAndHashCode(callSuper = true)
 @RequiredArgsConstructor
-public class Attendance extends BaseEntity {
+public class AttendanceEntity extends BaseEntityEntity {
 
 	@Column(name = "data_hora", nullable = false)
 	private Date dataHora;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "id_paciente")
-	private Paciente paciente;
+	private PacienteEntity paciente;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "id_medico")
-	private Doctor doctor;
+	private DoctorEntity doctor;
     
 }

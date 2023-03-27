@@ -2,7 +2,6 @@ package com.conexa.saude.workflow.activity.RegisterAttendenceActivities;
 
 import java.util.Date;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.conexa.saude.excepetions.BadRequestException;

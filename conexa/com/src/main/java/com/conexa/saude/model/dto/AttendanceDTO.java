@@ -2,7 +2,7 @@ package com.conexa.saude.model.dto;
 
 import java.util.Date;
 
-import com.conexa.saude.model.entity.Doctor;
+import com.conexa.saude.model.entity.DoctorEntity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -24,7 +24,7 @@ public class AttendanceDTO {
     private String emailDoctor;
     
     @JsonIgnore
-    private Doctor doctor;
+    private DoctorEntity doctor;
     
 }
 

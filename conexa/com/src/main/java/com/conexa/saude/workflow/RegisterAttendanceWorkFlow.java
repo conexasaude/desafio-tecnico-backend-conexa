@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import com.conexa.saude.excepetions.NotFoundException;
 import com.conexa.saude.model.dto.AttendanceDTO;
 import com.conexa.saude.model.dto.PacientDTO;
-import com.conexa.saude.model.entity.Doctor;
+import com.conexa.saude.model.entity.DoctorEntity;
 import com.conexa.saude.repositories.DoctorRepository;
 import com.conexa.saude.workflow.activity.RegisterAttendenceActivities.SaveAttendanceActivity;
 import com.conexa.saude.workflow.activity.RegisterAttendenceActivities.SavePacientActivity;
@@ -50,7 +50,7 @@ public class RegisterAttendanceWorkFlow implements BaseActivity <AttendanceDTO, 
         PacientDTO paciente = savePacientActivity.doExecute(attendanceDTO.getPaciente());
 
         attendanceDTO.setPaciente(paciente);
-        Doctor doctor = doctorRepository.findByEmail(attendanceDTO.getEmailDoctor()).orElseThrow(() -> new NotFoundException("Doutor nao encontrado."));
+        DoctorEntity doctor = doctorRepository.findByEmail(attendanceDTO.getEmailDoctor()).orElseThrow(() -> new NotFoundException("Doutor nao encontrado."));
         attendanceDTO.setDoctor(doctor);
         saveAttendanceActivity.doExecute(attendanceDTO);
 

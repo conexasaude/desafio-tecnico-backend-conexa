@@ -6,11 +6,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.conexa.saude.model.dto.AttendanceDTO;
-import com.conexa.saude.model.entity.Attendance;
+import com.conexa.saude.model.entity.AttendanceEntity;
 
 @Repository
-public interface AttendanceReepository extends JpaRepository<Attendance, String> {
+public interface AttendanceReepository extends JpaRepository<AttendanceEntity, String> {
 
-    Optional<Attendance> findByPaciente(AttendanceDTO attendanceDTO);
+    Optional<AttendanceEntity> findByPaciente(AttendanceDTO attendanceDTO);
 
 }

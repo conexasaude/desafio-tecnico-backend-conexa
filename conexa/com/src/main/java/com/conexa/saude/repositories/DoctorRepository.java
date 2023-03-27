@@ -5,13 +5,13 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.conexa.saude.model.entity.Doctor;
+import com.conexa.saude.model.entity.DoctorEntity;
 
 @Repository
-public interface DoctorRepository extends JpaRepository<Doctor, String> {
+public interface DoctorRepository extends JpaRepository<DoctorEntity, String> {
 
-    Optional<Doctor> findByEmail(String email);
+    Optional<DoctorEntity> findByEmail(String email);
 
-    Optional<Doctor> findByCpf(String cpf);
+    Optional<DoctorEntity> findByCpf(String cpf);
 
 }

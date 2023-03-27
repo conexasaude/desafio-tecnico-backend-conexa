@@ -2,7 +2,7 @@ package com.conexa.saude.configurations.security;
 
 import com.conexa.saude.constants.AuthoritiesEnum;
 import com.conexa.saude.excepetions.UnauthorizedException;
-import com.conexa.saude.model.entity.Doctor;
+import com.conexa.saude.model.entity.DoctorEntity;
 import com.conexa.saude.repositories.DoctorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -22,7 +22,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Doctor doctor = doctorRepository.findByEmail(username).orElseThrow(() -> new UnauthorizedException(String.format("Usuario %s não encontrado", username)));
+        DoctorEntity doctor = doctorRepository.findByEmail(username).orElseThrow(() -> new UnauthorizedException(String.format("Usuario %s não encontrado", username)));
 
         // por enquanto só tem a role de medico, pode adicionar controle de roles no futuro
         return User.builder()

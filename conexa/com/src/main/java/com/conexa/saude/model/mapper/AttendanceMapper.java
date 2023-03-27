@@ -3,14 +3,14 @@ package com.conexa.saude.model.mapper;
 import org.mapstruct.Mapper;
 
 import com.conexa.saude.model.dto.AttendanceDTO;
-import com.conexa.saude.model.entity.Attendance;
+import com.conexa.saude.model.entity.AttendanceEntity;
 
 
 @Mapper(componentModel = "spring")
 public interface AttendanceMapper {
 
-    Attendance toAttendance(AttendanceDTO attendanceDTO); 
+    AttendanceEntity toAttendance(AttendanceDTO attendanceDTO); 
 
-    AttendanceDTO toAttendanceDTO(Attendance attendance);
+    AttendanceDTO toAttendanceDTO(AttendanceEntity attendance);
     
 }

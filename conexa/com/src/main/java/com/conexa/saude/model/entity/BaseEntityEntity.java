@@ -10,7 +10,7 @@ import lombok.Data;
 
 @MappedSuperclass
 @Data
-public abstract class BaseEntity {
+public abstract class BaseEntityEntity {
     
     @Id
 	@GeneratedValue(generator = "uuid2")

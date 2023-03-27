@@ -15,7 +15,7 @@ public class LogOffWorkFlow implements BaseActivity <String, Void> {
     private SaveInvalidTokenActivity saveTokenActivity;
 
     @Autowired
-    InvalidTokenRepository repository;
+    private InvalidTokenRepository repository;
     
 
     @Override

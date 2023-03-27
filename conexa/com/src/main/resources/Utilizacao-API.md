@@ -21,12 +21,30 @@ curl --location 'http://localhost:8080/api/v1/signup' \
 curl --location 'http://localhost:8080/api/v1/login' \
 --header 'Content-Type: application/json' \
 --data-raw '{       
-    "email": "testetuulio@email.com",
+    "email": "tuluio@email.com",
     "senha": "111222333"
-}'
+} '
 
 ## /attendance 
 
+curl --location 'http://localhost:8080/api/v1/attendance' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0dWx1aW9AZW1haWwuY29tIiwiaWF0IjoxNjc5ODY4MDg4LCJleHAiOjE2Nzk4NzE2ODh9.gvez2Cd9Uj0xmMDc65onylD24auDj_eY0VMrfZ4MP_gjlEmCosyUeZtNChU9Wuah_pvwDxQUdFDiaem4U_1zfQ' \
+--header 'Content-Type: application/json' \
+--data '{
+
+  "dataHora": "2023-08-02 09:00:00",
+  "paciente": {
+    "nome": "João Castro",
+    "cpf": "239.127.120-42"
+  }
+}'
+
+
+## /logoff
+
+curl --location --request POST 'http://localhost:8080/api/v1/logoff' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0dWx1aW9AZW1haWwuY29tIiwiaWF0IjoxNjc5ODY4MDg4LCJleHAiOjE2Nzk4NzE2ODh9.gvez2Cd9Uj0xmMDc65onylD24auDj_eY0VMrfZ4MP_gjlEmCosyUeZtNChU9Wuah_pvwDxQUdFDiaem4U_1zfQ' \
+--data ''
 
 ## Para criação das tabelas, tem o arquivo create_tables.sql
 
