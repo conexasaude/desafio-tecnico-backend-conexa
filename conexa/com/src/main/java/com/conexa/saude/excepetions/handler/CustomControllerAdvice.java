@@ -15,7 +15,7 @@ class CustomControllerAdvice {
 
     @ExceptionHandler(BadRequestException.class)
     public ResponseEntity<ExceptionDTO> handleBadRequestExceptions(Exception e) {
-        var badRequestException = (BadRequestException) e; 
+        var badRequestException = (BadRequestException) e;
         return handle(e, HttpStatus.BAD_REQUEST, badRequestException.getMessage());
     }
 
@@ -24,7 +24,6 @@ class CustomControllerAdvice {
         var unauthorizedException = (UnauthorizedException) e;
         return handle(e, HttpStatus.UNAUTHORIZED, unauthorizedException.getMessage());
     }
-
 
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<ExceptionDTO> handleNotFoundExceptions(Exception e) {
@@ -40,10 +39,9 @@ class CustomControllerAdvice {
 
     private ResponseEntity<ExceptionDTO> handle(Exception e, HttpStatus status, String message) {
 
-        for(int i = 0; i < e.getStackTrace().length; i++) {
+        for (int i = 0; i < e.getStackTrace().length; i++) {
             System.out.println(e.getStackTrace()[i].toString());
         }
-     
 
         return new ResponseEntity<>(ExceptionDTO.builder()
                 .status(status.value())

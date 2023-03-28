@@ -12,14 +12,14 @@ public class ValidateEmailActivity implements BaseActivity<String, Void> {
 
     @Override
     public Void doExecute(String email) {
-        try{ 
-            InternetAddress internetAddress = new InternetAddress(email); 
-            internetAddress.validate(); 
-        }catch(Exception e){ 
+        try {
+            InternetAddress internetAddress = new InternetAddress(email);
+            internetAddress.validate();
+        } catch (Exception e) {
             throw new BadRequestException(String.format("Email invalido: %s", email));
-        } 
-        
+        }
+
         return null;
     }
-    
+
 }

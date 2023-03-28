@@ -27,10 +27,8 @@ public class LoginDoctorWorkFlowTest {
         LoginDTO loginDTO = new LoginDTO();
 
         target.doExecute(loginDTO);
-        
+
         verify(activity, times(1)).doExecute(Mockito.any(LoginDTO.class));
 
     }
 }
-
-

@@ -1,5 +1,4 @@
-package  com.conexa.saude.model.entity;
-
+package com.conexa.saude.model.entity;
 
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.Column;
@@ -19,13 +18,12 @@ import lombok.RequiredArgsConstructor;
 @EqualsAndHashCode(callSuper = true)
 @RequiredArgsConstructor
 @AllArgsConstructor
-public class PacienteEntity extends BaseEntityEntity {
+public class PacienteEntity extends BaseEntity {
 
 	@Column(name = "nome", length = 50, unique = true, nullable = false)
 	private String nome;
-	
-	@Column(name = "cpf",  length = 11, unique = true, nullable = false)
+
+	@Column(name = "cpf", length = 11, unique = true, nullable = false)
 	private String cpf;
-	
-    
+
 }

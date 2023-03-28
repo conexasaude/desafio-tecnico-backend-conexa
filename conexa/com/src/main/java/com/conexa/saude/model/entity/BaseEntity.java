@@ -1,4 +1,4 @@
-package  com.conexa.saude.model.entity;
+package com.conexa.saude.model.entity;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -10,9 +10,9 @@ import lombok.Data;
 
 @MappedSuperclass
 @Data
-public abstract class BaseEntityEntity {
-    
-    @Id
+public abstract class BaseEntity {
+
+	@Id
 	@GeneratedValue(generator = "uuid2")
 	@GenericGenerator(name = "uuid2", strategy = "uuid2")
 	@Column(length = 36)

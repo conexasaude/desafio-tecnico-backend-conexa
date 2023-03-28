@@ -1,4 +1,4 @@
-package com.conexa.saude.workflow.activity.RegisterAttendenceActivities;
+package com.conexa.saude.workflow.activity.registerAttendenceActivities;
 
 import java.util.Date;
 
@@ -12,13 +12,14 @@ import com.conexa.saude.workflow.activity.generics.BaseActivity;
 public class ValidateDateTimeActivity implements BaseActivity<AttendanceDTO, Void> {
 
     @Override
-    public Void doExecute(AttendanceDTO attendanceDTO) { 
+    public Void doExecute(AttendanceDTO attendanceDTO) {
         Date actual = new Date();
 
         var infoPacient = attendanceDTO.getDataHora();
 
-        if(infoPacient.before(actual)){
-            throw new BadRequestException(String.format("Horario informado invalido, favor verificar se a data esta no futuro: %s", infoPacient));
+        if (infoPacient.before(actual)) {
+            throw new BadRequestException(String
+                    .format("Horario informado invalido, favor verificar se a data esta no futuro: %s", infoPacient));
         }
 
         return null;

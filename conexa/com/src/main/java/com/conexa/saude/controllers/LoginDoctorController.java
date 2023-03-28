@@ -25,19 +25,18 @@ public class LoginDoctorController {
     @Autowired
     private LoginDoctorWorkFlow loginDoctorWorkflow;
 
-    @Autowired 
+    @Autowired
     private LogOffWorkFlow logOffWorkFlow;
-    
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
+
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseEntity<JwtDto> login(@Valid @RequestBody LoginDTO loginDTO) {
         String token = loginDoctorWorkflow.doExecute(loginDTO);
-       
+
         return ResponseEntity.ok(new JwtDto(token));
-       
+
     }
 
-       
-	@RequestMapping(value = "/logoff", method = RequestMethod.POST)
+    @RequestMapping(value = "/logoff", method = RequestMethod.POST)
     public ResponseEntity<Void> logoff(@RequestHeader(name = AUTHORIZATION) String token) {
 
         logOffWorkFlow.doExecute(token);

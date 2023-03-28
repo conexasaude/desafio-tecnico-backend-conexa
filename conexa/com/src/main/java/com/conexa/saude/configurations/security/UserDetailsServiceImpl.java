@@ -22,9 +22,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        DoctorEntity doctor = doctorRepository.findByEmail(username).orElseThrow(() -> new UnauthorizedException(String.format("Usuario %s não encontrado", username)));
+        DoctorEntity doctor = doctorRepository.findByEmail(username)
+                .orElseThrow(() -> new UnauthorizedException(String.format("Usuario %s não encontrado", username)));
 
-        // por enquanto só tem a role de medico, pode adicionar controle de roles no futuro
+        // por enquanto só tem a role de medico, pode adicionar controle de roles no
+        // futuro
         return User.builder()
                 .username(doctor.getEmail())
                 .password(doctor.getSenha())

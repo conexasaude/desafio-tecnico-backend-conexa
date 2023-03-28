@@ -1,4 +1,4 @@
-package  com.conexa.saude.model.dto;
+package com.conexa.saude.model.dto;
 
 import java.util.Date;
 
@@ -21,28 +21,27 @@ public class DoctorDTO {
 
     @NotBlank
     private String nome;
-    
-    @NotBlank
-	private String email;
 
-	@NotBlank
-	private String senha;
+    @NotBlank
+    private String email;
+
+    @NotBlank
+    private String senha;
 
     @NotBlank
     private String confirmacaoSenha;
-	
+
     @NotBlank
-	private String especialidade;
-	
+    private String especialidade;
+
     @NotBlank
-	private String cpf;
-	
+    private String cpf;
+
     @NotNull
     @JsonFormat(pattern = "dd/MM/yyyy")
-	private Date dataNascimento;
-	
+    private Date dataNascimento;
+
     @NotBlank
-	private String telefone;
-	
-    
+    private String telefone;
+
 }

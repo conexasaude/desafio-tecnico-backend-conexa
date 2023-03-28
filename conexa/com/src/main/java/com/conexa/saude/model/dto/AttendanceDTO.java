@@ -22,9 +22,8 @@ public class AttendanceDTO {
 
     @JsonIgnore
     private String emailDoctor;
-    
+
     @JsonIgnore
     private DoctorEntity doctor;
-    
-}
 
+}

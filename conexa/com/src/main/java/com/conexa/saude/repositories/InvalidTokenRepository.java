@@ -14,11 +14,11 @@ import jakarta.transaction.Transactional;
 @Repository
 public interface InvalidTokenRepository extends JpaRepository<InvalidTokenEntity, String> {
 
-    @Transactional
+	@Transactional
 	@Modifying
 	@Query("DELETE FROM InvalidTokenEntity WHERE expirationDate < CURDATE()")
 	void deleteOldTokens();
 
-    Optional<InvalidTokenEntity> findByToken(String token);
-    
+	Optional<InvalidTokenEntity> findByToken(String token);
+
 }

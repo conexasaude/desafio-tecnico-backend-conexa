@@ -15,7 +15,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class ValidateCpfAndEmailExistsActivity implements BaseActivity<DoctorDTO, Void>{
+public class ValidateCpfAndEmailExistsActivity implements BaseActivity<DoctorDTO, Void> {
 
     @Autowired
     private DoctorRepository repository;
@@ -23,19 +23,18 @@ public class ValidateCpfAndEmailExistsActivity implements BaseActivity<DoctorDTO
     public Void doExecute(DoctorDTO doctorDTO) {
         Optional<DoctorEntity> doctorBymail = repository.findByEmail(doctorDTO.getEmail());
 
-        if(doctorBymail.isPresent()){ 
+        if (doctorBymail.isPresent()) {
             throw new BadRequestException("Email ja cadastrado.");
         }
 
         Optional<DoctorEntity> doctorByCpf = repository.findByCpf(doctorDTO.getCpf());
 
-        if(doctorByCpf.isPresent()){
+        if (doctorByCpf.isPresent()) {
             throw new BadRequestException("Cpf ja cadastrado.");
         }
 
         return null;
-         
+
     }
 
 }
-

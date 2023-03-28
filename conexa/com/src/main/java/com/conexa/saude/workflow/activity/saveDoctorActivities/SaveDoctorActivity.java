@@ -19,13 +19,13 @@ public class SaveDoctorActivity implements BaseActivity<DoctorDTO, DoctorMinimal
 
     @Autowired
     private DoctorRepository doctorRepository;
-    
-	@Autowired
-	private EncriptPasswordActivity encode;
+
+    @Autowired
+    private EncriptPasswordActivity encode;
 
     @Override
-    public DoctorMinimalDTO doExecute(DoctorDTO doctorDTO)  {
-        DoctorEntity doctor = mapper.toMedico(doctorDTO);        
+    public DoctorMinimalDTO doExecute(DoctorDTO doctorDTO) {
+        DoctorEntity doctor = mapper.toMedico(doctorDTO);
         var encodetPassword = encode.doExecute(doctor.getSenha());
 
         doctor.setSenha(encodetPassword);
@@ -34,5 +34,5 @@ public class SaveDoctorActivity implements BaseActivity<DoctorDTO, DoctorMinimal
 
         return mapper.toDoctorMinimal(saveDoctor);
     }
-    
+
 }

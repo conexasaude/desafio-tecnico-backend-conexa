@@ -22,7 +22,6 @@ import static com.conexa.saude.constants.ServiceConstants.*;
 
 public class AuthenticationFilter extends OncePerRequestFilter {
 
-    
     @Autowired
     private TokenProvider jwtTokenProvider;
 
@@ -32,20 +31,19 @@ public class AuthenticationFilter extends OncePerRequestFilter {
     @Autowired
     private VerifyBannedTokensActivity verifyBannedTokensActivity;
 
-    
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, ServletException, IOException {
-       
+
         String token = getJwtfromRequest(request);
         boolean tokenBanned = verifyBannedTokensActivity.doExecute(token);
-            
-        if(!tokenBanned && Objects.nonNull(token)) {
+
+        if (!tokenBanned && Objects.nonNull(token)) {
             var webAuthenticationDetails = new WebAuthenticationDetailsSource().buildDetails(request);
-        
+
             authenticateAndLogin(token, webAuthenticationDetails);
-        }      
-       
+        }
+
         filterChain.doFilter(request, response);
     }
 
@@ -60,8 +58,8 @@ public class AuthenticationFilter extends OncePerRequestFilter {
     }
 
     private Void authenticateAndLogin(String token, WebAuthenticationDetails webAuthenticationDetails) {
-        
-        if (jwtTokenProvider.validate(token)) { 
+
+        if (jwtTokenProvider.validate(token)) {
             String username = jwtTokenProvider.getUsername(token);
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
@@ -73,8 +71,7 @@ public class AuthenticationFilter extends OncePerRequestFilter {
         }
 
         return null;
-        
+
     }
 
-    
 }

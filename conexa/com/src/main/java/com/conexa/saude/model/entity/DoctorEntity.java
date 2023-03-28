@@ -1,4 +1,4 @@
-package  com.conexa.saude.model.entity;
+package com.conexa.saude.model.entity;
 
 import java.util.Date;
 
@@ -20,28 +20,27 @@ import lombok.RequiredArgsConstructor;
 @EqualsAndHashCode(callSuper = true)
 @RequiredArgsConstructor
 @AllArgsConstructor
-public class DoctorEntity extends BaseEntityEntity {
+public class DoctorEntity extends BaseEntity {
 
 	@Column(name = "nome", length = 50)
 	private String nome;
-	
+
 	@Column(name = "email", length = 50, unique = true, nullable = false)
 	private String email;
-	
-	@Column(name = "senha",  length = 240, nullable = false)
+
+	@Column(name = "senha", length = 240, nullable = false)
 	private String senha;
-		
-	@Column(name = "especialidade",  length = 30, nullable = false)
+
+	@Column(name = "especialidade", length = 30, nullable = false)
 	private String especialidade;
-	
-	@Column(name = "cpf",  length = 11, unique = true, nullable = false)
+
+	@Column(name = "cpf", length = 11, unique = true, nullable = false)
 	private String cpf;
-	
+
 	@Column(name = "dt_nascimento", nullable = false)
 	private Date dataNascimento;
-	
-	@Column(name = "telefone",  length = 11, nullable = false) 
+
+	@Column(name = "telefone", length = 11, nullable = false)
 	private String telefone;
-	
-    
+
 }

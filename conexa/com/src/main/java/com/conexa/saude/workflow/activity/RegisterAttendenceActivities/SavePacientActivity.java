@@ -1,4 +1,4 @@
-package com.conexa.saude.workflow.activity.RegisterAttendenceActivities;
+package com.conexa.saude.workflow.activity.registerAttendenceActivities;
 
 import java.util.Optional;
 
@@ -21,12 +21,12 @@ public class SavePacientActivity implements BaseActivity<PacientDTO, PacientDTO>
     private PatientRepository repository;
 
     @Override
-    public PacientDTO doExecute(PacientDTO pacientDTO) { 
+    public PacientDTO doExecute(PacientDTO pacientDTO) {
 
-        PacienteEntity paciente = mapper.toPacient(pacientDTO);  
+        PacienteEntity paciente = mapper.toPacient(pacientDTO);
         Optional<PacienteEntity> existingPacient = repository.findByCpf(pacientDTO.getCpf());
 
-        if(existingPacient.isPresent()){
+        if (existingPacient.isPresent()) {
             return mapper.toPacientDTO(existingPacient.get());
         }
         PacienteEntity savedPacient = repository.save(paciente);
@@ -34,6 +34,5 @@ public class SavePacientActivity implements BaseActivity<PacientDTO, PacientDTO>
         return mapper.toPacientDTO(savedPacient);
 
     }
-
 
 }

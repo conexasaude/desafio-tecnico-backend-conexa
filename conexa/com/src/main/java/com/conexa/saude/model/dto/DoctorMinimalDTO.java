@@ -8,11 +8,11 @@ import lombok.RequiredArgsConstructor;
 public class DoctorMinimalDTO {
 
     private String id;
-    
+
     private String nome;
 
     private String email;
-    
-	private String especialidade;
-    
+
+    private String especialidade;
+
 }

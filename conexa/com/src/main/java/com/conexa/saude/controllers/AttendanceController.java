@@ -18,18 +18,17 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/api/v1")
 public class AttendanceController {
-    
+
     @Autowired
     private RegisterAttendanceWorkFlow registerPacientWorkFlow;
-
 
     @PostMapping("/attendance")
     public ResponseEntity<?> cadastrarMedico(@Valid @RequestBody AttendanceDTO attendanceDTO, Principal principal) {
         String usarname = principal.getName();
-        
+
         attendanceDTO.setEmailDoctor(usarname);
         registerPacientWorkFlow.doExecute(attendanceDTO);
         return new ResponseEntity<>(HttpStatus.CREATED);
-        
+
     }
 }

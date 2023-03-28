@@ -20,7 +20,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableMethodSecurity
 public class SecurityConfig {
 
-
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
 
@@ -52,7 +51,6 @@ public class SecurityConfig {
 
         return http.build();
 
-
     }
 
     private void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -66,6 +64,5 @@ public class SecurityConfig {
             AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
-
 
 }

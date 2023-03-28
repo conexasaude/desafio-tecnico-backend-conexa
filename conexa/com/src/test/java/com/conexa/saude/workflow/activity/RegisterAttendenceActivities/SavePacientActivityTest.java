@@ -1,4 +1,4 @@
-package com.conexa.saude.workflow.activity.RegisterAttendenceActivities;
+package com.conexa.saude.workflow.activity.registerAttendenceActivities;
 
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -29,7 +29,7 @@ public class SavePacientActivityTest {
     private PatientRepository repository;
 
     @InjectMocks
-    private SavePacientActivity target; 
+    private SavePacientActivity target;
 
     @Test
     void pacienteExistTest() {
@@ -47,7 +47,7 @@ public class SavePacientActivityTest {
         verify(repository, times(1)).findByCpf(MOCK_CPF);
         verify(repository, times(0)).save(pacient);
     }
-    
+
     @Test
     void pacienteNotExistTest() {
         var pacient = buildPacienteEntity();
@@ -60,21 +60,21 @@ public class SavePacientActivityTest {
 
         target.doExecute(pacientDTO);
 
-        verify(mapper, times(1)).toPacient(pacientDTO); 
+        verify(mapper, times(1)).toPacient(pacientDTO);
         verify(mapper, times(1)).toPacientDTO(pacient);
-        verify(repository, times(1)).findByCpf(MOCK_CPF); 
+        verify(repository, times(1)).findByCpf(MOCK_CPF);
         verify(repository, times(1)).save(pacient);
     }
-  
+
     private PacientDTO buildPacienteDTO() {
         return PacientDTO.builder()
-        .cpf(MOCK_CPF)
-        .build();
-    } 
+                .cpf(MOCK_CPF)
+                .build();
+    }
 
     private PacienteEntity buildPacienteEntity() {
         return PacienteEntity.builder()
-        .cpf(MOCK_CPF)
-        .build();
-    } 
+                .cpf(MOCK_CPF)
+                .build();
+    }
 }

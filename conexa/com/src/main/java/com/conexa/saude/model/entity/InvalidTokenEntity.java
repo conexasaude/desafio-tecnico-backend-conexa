@@ -18,12 +18,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class InvalidTokenEntity {
-	
+
 	@Id
-    @Column(name = "token", length = 360, unique = true, nullable = false)
+	@Column(name = "token", length = 360, unique = true, nullable = false)
 	private String token;
 
 	@Column(name = "expiration_date", nullable = false)
 	private Date expirationDate;
-    
+
 }

@@ -13,7 +13,6 @@ import com.conexa.saude.workflow.SaveDoctorWorkFlow;
 
 import jakarta.validation.Valid;
 
-
 @RestController
 @RequestMapping("/api/v1")
 public class DoctorRegistrationController {
@@ -23,7 +22,7 @@ public class DoctorRegistrationController {
 
     @PostMapping("/signup")
     public ResponseEntity<?> cadastrarMedico(@Valid @RequestBody DoctorDTO doctorDTO) {
-       
+
         saveDoctorWorkflow.doExecute(doctorDTO);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }

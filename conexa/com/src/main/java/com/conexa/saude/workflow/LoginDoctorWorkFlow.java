@@ -10,7 +10,6 @@ import com.conexa.saude.workflow.activity.loginDoctorActivities.LoginDoctorActiv
 @Service
 public class LoginDoctorWorkFlow implements BaseActivity<LoginDTO, String> {
 
-
     @Autowired
     private LoginDoctorActivity loginDoctorActivity;
 

@@ -1,8 +1,9 @@
-package  com.conexa.saude.model.entity;
+package com.conexa.saude.model.entity;
 
 import java.util.Date;
 
 import jakarta.persistence.AttributeOverride;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -19,7 +20,7 @@ import lombok.RequiredArgsConstructor;
 @AttributeOverride(name = "id", column = @Column(name = "id_attendance"))
 @EqualsAndHashCode(callSuper = true)
 @RequiredArgsConstructor
-public class AttendanceEntity extends BaseEntityEntity {
+public class AttendanceEntity extends BaseEntity {
 
 	@Column(name = "data_hora", nullable = false)
 	private Date dataHora;
@@ -27,9 +28,9 @@ public class AttendanceEntity extends BaseEntityEntity {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "id_paciente")
 	private PacienteEntity paciente;
-	
+
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "id_medico")
 	private DoctorEntity doctor;
-    
+
 }
