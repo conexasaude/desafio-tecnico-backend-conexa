@@ -33,7 +33,6 @@ public class SavePacientActivity implements BaseActivity<PacientDTO, PacientDTO>
 
         return mapper.toPacientDTO(savedPacient);
 
-
     }
 
 

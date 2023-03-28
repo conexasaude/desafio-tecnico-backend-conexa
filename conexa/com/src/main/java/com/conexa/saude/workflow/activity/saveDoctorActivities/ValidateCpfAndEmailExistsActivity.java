@@ -23,7 +23,7 @@ public class ValidateCpfAndEmailExistsActivity implements BaseActivity<DoctorDTO
     public Void doExecute(DoctorDTO doctorDTO) {
         Optional<DoctorEntity> doctorBymail = repository.findByEmail(doctorDTO.getEmail());
 
-        if(doctorBymail.isPresent()){
+        if(doctorBymail.isPresent()){ 
             throw new BadRequestException("Email ja cadastrado.");
         }
 

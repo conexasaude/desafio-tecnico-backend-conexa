@@ -6,17 +6,20 @@ import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
 
-
-@Entity
 @Data
+@Entity
+@Builder
 @Table(name = "Doctor")
 @AttributeOverride(name = "id", column = @Column(name = "id_medico"))
 @EqualsAndHashCode(callSuper = true)
 @RequiredArgsConstructor
+@AllArgsConstructor
 public class DoctorEntity extends BaseEntityEntity {
 
 	@Column(name = "nome", length = 50)
