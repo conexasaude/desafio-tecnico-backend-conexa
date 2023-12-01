@@ -1,54 +1,26 @@
-package com.felipe.model;
+package com.felipe.model.dto.v1;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 import java.util.UUID;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-
-@Entity
-@Table(name = "user_tb")
-public class User implements Serializable {
-
+public class UserDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.UUID)
 	private UUID id;
-	
-	@Column(name = "email", unique = true)
 	private String email;
-	
-	@Column(name = "full_name", nullable = false, length = 160)
 	private String fullName;
-
-	@Column(name = "password")
 	private String password;
-	
-	@Column(name = "specialty")
 	private String specialty;
-	
-	@Column(name = "cpf", nullable = false, length = 14, unique = true)
 	private String cpf;
-	
-	@Column(name = "birth_date")
 	private LocalDate birthDate;
-	
-	@Column(name = "phone", length = 20)
 	private String phone;
 	
-    public User() {
+    public UserDTO() {
     }
     
-    
-    
-	public User(UUID id, String email, String fullName, String password, String specialty, String cpf,
+	public UserDTO(UUID id, String email, String fullName, String password, String specialty, String cpf,
 			LocalDate birthDate, String phone) {
 		this.id = id;
 		this.email = email;
@@ -59,8 +31,6 @@ public class User implements Serializable {
 		this.birthDate = birthDate;
 		this.phone = phone;
 	}
-
-
 
 	public UUID getId() {
 		return id;
@@ -139,7 +109,7 @@ public class User implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		User other = (User) obj;
+		UserDTO other = (UserDTO) obj;
 		return Objects.equals(birthDate, other.birthDate) && Objects.equals(cpf, other.cpf)
 				&& Objects.equals(email, other.email) && Objects.equals(fullName, other.fullName)
 				&& Objects.equals(id, other.id) && Objects.equals(password, other.password)

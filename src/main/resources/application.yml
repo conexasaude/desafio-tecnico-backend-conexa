@@ -1,0 +1,15 @@
+
+spring:
+  application:
+    name: rest-conexa-challenger
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/rest-conexa-challenger?useTimezone=true&serverTimezone=UTC&useSSL=false
+    username: root
+    password: admin123
+  jpa:
+#    open-in-view: false
+    show-sql: false
+    hibernate:
+      ddl-auto: update
+#    database-platform: org.hibernate.dialect.MySQLDialect
