@@ -4,8 +4,18 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import com.felipe.model.User;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.felipe.model.dto.v1.PasswordUpdateDTO;
+import com.felipe.model.dto.v1.UserDTO;
 import com.felipe.service.UserService;
 
 @RestController
@@ -16,29 +26,35 @@ public class UserController {
 	private UserService service;
 
 	@GetMapping
-	public List<User> findAllId() throws Exception {
+	public List<UserDTO> findAllId() throws Exception {
 		return service.findAll();
 	}
-	
+
 	@GetMapping("/{id}")
-	public User findById(@PathVariable(value = "id") String id) throws Exception {
+	public UserDTO findById(@PathVariable(value = "id") String id) throws Exception {
 		return service.findById(id);
 	}
-	
+
 	@PostMapping
-	public User create(@RequestBody User user) throws Exception {
-		return service.create(user);
+	public UserDTO create(@RequestBody UserDTO userDTO) throws Exception {
+		return service.create(userDTO);
 	}
-	
+
 	@PutMapping
-	public User update(@RequestBody User user) throws Exception {
-		return service.update(user);
+	public UserDTO update(@RequestBody UserDTO userDTO) throws Exception {
+		return service.update(userDTO);
 	}
-	
+
+	@PatchMapping("/{id}/password")
+    public ResponseEntity<Void> updatePassword(@PathVariable(value = "id") String id, @RequestBody PasswordUpdateDTO passwordUpdateDTO){
+		service.changePassword(id, passwordUpdateDTO);
+        return ResponseEntity.noContent().build();
+    }
+
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> delete(@PathVariable(value = "id") String id) throws Exception {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
-	
+
 }

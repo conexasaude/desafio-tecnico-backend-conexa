@@ -7,8 +7,12 @@ import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.felipe.exceptions.BadRequestException;
 import com.felipe.exceptions.ResourceNotFoundException;
+import com.felipe.mapper.UserMapper;
 import com.felipe.model.User;
+import com.felipe.model.dto.v1.PasswordUpdateDTO;
+import com.felipe.model.dto.v1.UserDTO;
 import com.felipe.repositories.UserRepository;
 import com.felipe.util.MessageUtils;
 import com.felipe.util.StringUtil;
@@ -20,39 +24,64 @@ public class UserService {
 	@Autowired
 	UserRepository repository;
 
-	public List<User> findAll() {
+	@Autowired
+	UserMapper mapper;
+
+	public List<UserDTO> findAll() {
 		logger.info("Finding All User");
 
-		return repository.findAll();
+		return mapper.toDto(repository.findAll());
 	}
 
-	public User findById(String id) {
+	public UserDTO findById(String id) {
 		logger.info("Finding one user");
 
-		return repository.findById(StringUtil.convertStringToUUID(id)).orElseThrow(() -> new ResourceNotFoundException(MessageUtils.NO_RECORDS_FOUND));
+		return repository.findById(StringUtil.convertStringToUUID(id)).map(mapper::toDto)
+				.orElseThrow(() -> new ResourceNotFoundException(MessageUtils.NO_RECORDS_FOUND));
 	}
 
-	public User create(User user) {
+	public UserDTO create(UserDTO dto) {
 		logger.info("Create one user");
 
-		return repository.save(user);
+		User entity = mapper.toEntity(dto);
+
+		return mapper.toDto(repository.save(entity));
 	}
 
-	public User update(User user) {
+	public UserDTO update(UserDTO dto) {
 		logger.info("Update one user");
-		var entity = repository.findById(user.getId()).orElseThrow(() -> new ResourceNotFoundException(MessageUtils.NO_RECORDS_FOUND));
-		entity.setFullname(Objects.requireNonNullElse(user.getFullname(), entity.getFullname()));
-		entity.setEmail(Objects.requireNonNullElse(user.getEmail(), entity.getEmail()));
-		entity.setSpecialty(Objects.requireNonNullElse(user.getSpecialty(), entity.getSpecialty()));
-		entity.setCpf(Objects.requireNonNullElse(user.getCpf(), entity.getCpf()));
-		entity.setBirthDate(Objects.requireNonNullElse(user.getBirthDate(),entity.getBirthDate()));
-		entity.setPhone(Objects.requireNonNullElse(user.getPhone(), entity.getPhone()));
-		return repository.save(entity);
+
+		User entity = repository.findById(dto.getId())
+				.orElseThrow(() -> new ResourceNotFoundException(MessageUtils.NO_RECORDS_FOUND));
+		entity.setFullname(Objects.requireNonNullElse(dto.getFullname(), entity.getFullname()));
+		entity.setEmail(Objects.requireNonNullElse(dto.getEmail(), entity.getEmail()));
+		entity.setSpecialty(Objects.requireNonNullElse(dto.getSpecialty(), entity.getSpecialty()));
+		entity.setCpf(Objects.requireNonNullElse(dto.getCpf(), entity.getCpf()));
+		entity.setBirthDate(Objects.requireNonNullElse(dto.getBirthDate(), entity.getBirthDate()));
+		entity.setPhone(Objects.requireNonNullElse(dto.getPhone(), entity.getPhone()));
+
+		return mapper.toDto(repository.save(entity));
+	}
+
+	public void changePassword(String id, PasswordUpdateDTO passwordUpdateDTO) {
+		User entity = repository.findById(StringUtil.convertStringToUUID(id))
+				.orElseThrow(() -> new ResourceNotFoundException(MessageUtils.NO_RECORDS_FOUND));
+		if (passwordUpdateDTO.getOldPassword().equals(entity.getPassword())) {
+			if (passwordUpdateDTO.getNewPassword().equals(passwordUpdateDTO.getConfirmNewPassword())) {
+				entity.setPassword(passwordUpdateDTO.getNewPassword());
+				repository.save(entity);
+			} else {
+				throw new BadRequestException("New password and confirm new password is not matches");
+			}
+		} else {
+			throw new BadRequestException("Old password is incorret");
+		}
 	}
 
 	public void delete(String id) {
 		logger.info("Deleting one user");
-		var entity = repository.findById(StringUtil.convertStringToUUID(id)).orElseThrow(() -> new ResourceNotFoundException(MessageUtils.NO_RECORDS_FOUND));
+		User entity = repository.findById(StringUtil.convertStringToUUID(id))
+				.orElseThrow(() -> new ResourceNotFoundException(MessageUtils.NO_RECORDS_FOUND));
 		repository.delete(entity);
 	}
 }
