@@ -19,7 +19,7 @@ import com.felipe.model.dto.v1.UserDTO;
 import com.felipe.service.UserService;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/api/v1/user")
 public class UserController {
 
 	@Autowired
