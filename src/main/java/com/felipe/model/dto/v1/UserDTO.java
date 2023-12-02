@@ -5,16 +5,30 @@ import java.time.LocalDate;
 import java.util.Objects;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
+@JsonPropertyOrder({ "id", "email", "fullname", "specialty", "cpf", "birth_date", "phone" })
 public class UserDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private UUID id;
+	
 	private String email;
+	
 	private String fullName;
+	
+	@JsonIgnore
 	private String password;
+	
 	private String specialty;
+	
 	private String cpf;
+	
+	@JsonProperty("birth_date")
 	private LocalDate birthDate;
+	
 	private String phone;
 	
     public UserDTO() {
