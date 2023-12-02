@@ -3,6 +3,7 @@ package com.felipe.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,13 +27,14 @@ public class UserController {
 	private UserService service;
 
 	@GetMapping
-	public List<UserDTO> findAllId() throws Exception {
-		return service.findAll();
+	public ResponseEntity<List<UserDTO>> findAllId() throws Exception {
+		return new ResponseEntity<>(service.findAll(), HttpStatus.OK);
 	}
 
 	@GetMapping("/{id}")
-	public UserDTO findById(@PathVariable(value = "id") String id) throws Exception {
-		return service.findById(id);
+	public ResponseEntity<UserDTO> findById(@PathVariable(value = "id") String id) throws Exception {
+		return new ResponseEntity<>(service.findById(id), HttpStatus.OK);
+
 	}
 
 	@PostMapping
@@ -46,10 +48,11 @@ public class UserController {
 	}
 
 	@PatchMapping("/{id}/password")
-    public ResponseEntity<Void> updatePassword(@PathVariable(value = "id") String id, @RequestBody PasswordUpdateDTO passwordUpdateDTO){
+	public ResponseEntity<Void> updatePassword(@PathVariable(value = "id") String id,
+			@RequestBody PasswordUpdateDTO passwordUpdateDTO) {
 		service.changePassword(id, passwordUpdateDTO);
-        return ResponseEntity.noContent().build();
-    }
+		return ResponseEntity.noContent().build();
+	}
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> delete(@PathVariable(value = "id") String id) throws Exception {

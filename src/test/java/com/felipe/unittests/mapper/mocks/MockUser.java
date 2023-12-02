@@ -20,7 +20,7 @@ public class MockUser {
 	    
     public List<User> mockEntityList() {
         List<User> users = new ArrayList<User>();
-        for (int i = 0; i < 7; i++) {
+        for (int i = 0; i < 8; i++) {
         	users.add(mockEntity(i));
         }
         return users;
@@ -28,7 +28,7 @@ public class MockUser {
 
     public List<UserDTO> mockDTOList() {
         List<UserDTO> users = new ArrayList<>();
-        for (int i = 0; i < 7; i++) {
+        for (int i = 0; i < 8; i++) {
         	users.add(mockDTO(i));
         }
         return users;
@@ -38,7 +38,7 @@ public class MockUser {
         User user = new User();
         user.setId(UUID.randomUUID());
         user.setEmail("user.email" + number + "@gmail.com");
-        user.setFullname("Full Name Test" + number);
+        user.setFullName("Full Name Test" + number);
         user.setPassword("password01" + number);
         user.setSpecialty("Speciality Test" + number);
         user.setCpf("100.200.300-4" + number);
@@ -49,10 +49,10 @@ public class MockUser {
 
     public UserDTO mockDTO(Integer number) {
         UserDTO user = new UserDTO();
-        user.setId(UUID.randomUUID());
+        user.setKey(UUID.randomUUID());
         user.setEmail("user.email" + number + "@gmail.com");
-        user.setFullname("Full Name Test" + number);
-        user.setPassword("password123");
+        user.setFullName("Full Name Test" + number);
+        user.setPassword("password01" + number);
         user.setSpecialty("Speciality Test" + number);
         user.setCpf("100.200.300-4" + number);
         user.setBirthDate(DateUtil.convertStringToLocalDate("21/05/198" + number));

@@ -8,7 +8,7 @@ spring:
     username: root
     password: admin123
   jpa:
-#    open-in-view: false
+    open-in-view: false
     show-sql: false
     hibernate:
       ddl-auto: update

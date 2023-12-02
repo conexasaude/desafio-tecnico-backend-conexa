@@ -5,18 +5,22 @@ import java.time.LocalDate;
 import java.util.Objects;
 import java.util.UUID;
 
+import org.springframework.hateoas.RepresentationModel;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-@JsonPropertyOrder({ "id", "email", "fullname", "specialty", "cpf", "birth_date", "phone" })
-public class UserDTO implements Serializable {
+@JsonPropertyOrder({ "id", "email", "full_name", "specialty", "cpf", "birth_date", "phone" })
+public class UserDTO extends RepresentationModel<UserDTO> implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	private UUID id;
+	@JsonProperty("id")
+	private UUID key;
 	
 	private String email;
 	
+	@JsonProperty("full_name")
 	private String fullName;
 	
 	@JsonIgnore
@@ -34,9 +38,9 @@ public class UserDTO implements Serializable {
     public UserDTO() {
     }
     
-	public UserDTO(UUID id, String email, String fullName, String password, String specialty, String cpf,
+	public UserDTO(UUID key, String email, String fullName, String password, String specialty, String cpf,
 			LocalDate birthDate, String phone) {
-		this.id = id;
+		this.key = key;
 		this.email = email;
 		this.fullName = fullName;
 		this.password = password;
@@ -45,21 +49,21 @@ public class UserDTO implements Serializable {
 		this.birthDate = birthDate;
 		this.phone = phone;
 	}
-
-	public UUID getId() {
-		return id;
+	
+	public UUID getKey() {
+		return key;
 	}
 
-	public void setId(UUID id) {
-		this.id = id;
+	public void setKey(UUID key) {
+		this.key = key;
 	}
-
-	public String getFullname() {
+	
+	public String getFullName() {
 		return fullName;
 	}
 
-	public void setFullname(String fullname) {
-		this.fullName = fullname;
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
 	}
 
 	public String getEmail() {
@@ -112,21 +116,24 @@ public class UserDTO implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(birthDate, cpf, email, fullName, id, password, phone, specialty);
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + Objects.hash(birthDate, cpf, email, fullName, key, password, phone, specialty);
+		return result;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (obj == null)
+		if (!super.equals(obj))
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
 		UserDTO other = (UserDTO) obj;
 		return Objects.equals(birthDate, other.birthDate) && Objects.equals(cpf, other.cpf)
 				&& Objects.equals(email, other.email) && Objects.equals(fullName, other.fullName)
-				&& Objects.equals(id, other.id) && Objects.equals(password, other.password)
+				&& Objects.equals(key, other.key) && Objects.equals(password, other.password)
 				&& Objects.equals(phone, other.phone) && Objects.equals(specialty, other.specialty);
 	}
 

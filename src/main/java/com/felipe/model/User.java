@@ -46,8 +46,6 @@ public class User implements Serializable {
     public User() {
     }
     
-    
-    
 	public User(UUID id, String email, String fullName, String password, String specialty, String cpf,
 			LocalDate birthDate, String phone) {
 		this.id = id;
@@ -60,8 +58,6 @@ public class User implements Serializable {
 		this.phone = phone;
 	}
 
-
-
 	public UUID getId() {
 		return id;
 	}
@@ -70,12 +66,12 @@ public class User implements Serializable {
 		this.id = id;
 	}
 
-	public String getFullname() {
+	public String getFullName() {
 		return fullName;
 	}
 
-	public void setFullname(String fullname) {
-		this.fullName = fullname;
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
 	}
 
 	public String getEmail() {

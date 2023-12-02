@@ -26,8 +26,8 @@ public class UserMapperTest {
     public void parseEntityToDTOTest() {
         UserDTO output = userMapper.toDto(inputObject.mockEntity());
 
-        assertEquals("user.email0@gmail.com", output.getFullname());
-        assertEquals("Full Name Test0", output.getFullname());
+        assertEquals("user.email0@gmail.com", output.getEmail());
+        assertEquals("Full Name Test0", output.getFullName());
         assertEquals("password010", output.getPassword());
         assertEquals("Speciality Test0", output.getSpecialty());
         assertEquals("100.200.300-40", output.getCpf());
@@ -41,8 +41,8 @@ public class UserMapperTest {
 
         UserDTO outputZero = outputList.get(0);
         
-        assertEquals("user.email0@gmail.com", outputZero.getFullname());
-        assertEquals("Full Name Test0", outputZero.getFullname());
+        assertEquals("user.email0@gmail.com", outputZero.getEmail());
+        assertEquals("Full Name Test0", outputZero.getFullName());
         assertEquals("password010", outputZero.getPassword());
         assertEquals("Speciality Test0", outputZero.getSpecialty());
         assertEquals("100.200.300-40", outputZero.getCpf());
@@ -51,8 +51,8 @@ public class UserMapperTest {
         
         UserDTO outputFour= outputList.get(4);
         
-        assertEquals("user.email4@gmail.com", outputFour.getFullname());
-        assertEquals("Full Name Test4", outputFour.getFullname());
+        assertEquals("user.email4@gmail.com", outputFour.getEmail());
+        assertEquals("Full Name Test4", outputFour.getFullName());
         assertEquals("password014", outputFour.getPassword());
         assertEquals("Speciality Test4", outputFour.getSpecialty());
         assertEquals("100.200.300-44", outputFour.getCpf());
@@ -61,8 +61,8 @@ public class UserMapperTest {
         
         UserDTO outputSeven= outputList.get(7);
         
-        assertEquals("user.email7@gmail.com", outputSeven.getFullname());
-        assertEquals("Full Name Test7", outputSeven.getFullname());
+        assertEquals("user.email7@gmail.com", outputSeven.getEmail());
+        assertEquals("Full Name Test7", outputSeven.getFullName());
         assertEquals("password017", outputSeven.getPassword());
         assertEquals("Speciality Test7", outputSeven.getSpecialty());
         assertEquals("100.200.300-47", outputSeven.getCpf());
@@ -74,8 +74,8 @@ public class UserMapperTest {
     public void parseDTOToEntityTest() {
     	User output = userMapper.toEntity(inputObject.mockDTO());
 
-        assertEquals("user.email0@gmail.com", output.getFullname());
-        assertEquals("Full Name Test0", output.getFullname());
+        assertEquals("user.email0@gmail.com", output.getEmail());
+        assertEquals("Full Name Test0", output.getFullName());
         assertEquals("password010", output.getPassword());
         assertEquals("Speciality Test0", output.getSpecialty());
         assertEquals("100.200.300-40", output.getCpf());
@@ -89,8 +89,8 @@ public class UserMapperTest {
 
         User outputZero = outputList.get(0);
         
-        assertEquals("user.email0@gmail.com", outputZero.getFullname());
-        assertEquals("Full Name Test0", outputZero.getFullname());
+        assertEquals("user.email0@gmail.com", outputZero.getEmail());
+        assertEquals("Full Name Test0", outputZero.getFullName());
         assertEquals("password010", outputZero.getPassword());
         assertEquals("Speciality Test0", outputZero.getSpecialty());
         assertEquals("100.200.300-40", outputZero.getCpf());
@@ -99,8 +99,8 @@ public class UserMapperTest {
         
         User outputFour= outputList.get(4);
         
-        assertEquals("user.email4@gmail.com", outputFour.getFullname());
-        assertEquals("Full Name Test4", outputFour.getFullname());
+        assertEquals("user.email4@gmail.com", outputFour.getEmail());
+        assertEquals("Full Name Test4", outputFour.getFullName());
         assertEquals("password014", outputFour.getPassword());
         assertEquals("Speciality Test4", outputFour.getSpecialty());
         assertEquals("100.200.300-44", outputFour.getCpf());
@@ -109,8 +109,8 @@ public class UserMapperTest {
         
         User outputSeven= outputList.get(7);
         
-        assertEquals("user.email7@gmail.com", outputSeven.getFullname());
-        assertEquals("Full Name Test7", outputSeven.getFullname());
+        assertEquals("user.email7@gmail.com", outputSeven.getEmail());
+        assertEquals("Full Name Test7", outputSeven.getFullName());
         assertEquals("password017", outputSeven.getPassword());
         assertEquals("Speciality Test7", outputSeven.getSpecialty());
         assertEquals("100.200.300-47", outputSeven.getCpf());
