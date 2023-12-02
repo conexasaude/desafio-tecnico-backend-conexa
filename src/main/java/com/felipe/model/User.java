@@ -142,4 +142,12 @@ public class User implements Serializable {
 				&& Objects.equals(phone, other.phone) && Objects.equals(specialty, other.specialty);
 	}
 
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", email=" + email + ", fullName=" + fullName + ", password=" + password
+				+ ", specialty=" + specialty + ", cpf=" + cpf + ", birthDate=" + birthDate + ", phone=" + phone + "]";
+	}
+	
+	
+
 }

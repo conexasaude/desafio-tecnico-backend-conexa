@@ -2,7 +2,6 @@ package com.felipe.unittests.mapper.mocks;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import com.felipe.model.User;
 import com.felipe.model.dto.v1.UserDTO;
@@ -36,7 +35,7 @@ public class MockUser {
 	    
     public User mockEntity(Integer number) {
         User user = new User();
-        user.setId(UUID.randomUUID());
+//        user.setId(UUID.fromString("0c38ae25-0d29-43ad-91d4-73e91309267b"));
         user.setEmail("user.email" + number + "@gmail.com");
         user.setFullName("Full Name Test" + number);
         user.setPassword("password01" + number);
@@ -49,7 +48,7 @@ public class MockUser {
 
     public UserDTO mockDTO(Integer number) {
         UserDTO user = new UserDTO();
-        user.setKey(UUID.randomUUID());
+//        user.setKey(UUID.fromString("1bf6842a-06f6-480d-b766-6e2725e86007"));
         user.setEmail("user.email" + number + "@gmail.com");
         user.setFullName("Full Name Test" + number);
         user.setPassword("password01" + number);

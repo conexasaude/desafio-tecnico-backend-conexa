@@ -26,10 +26,10 @@ public class UserService {
 	private Logger logger = Logger.getLogger(UserService.class.getName());
 
 	@Autowired
-	UserRepository repository;
+	private UserRepository repository;
 
 	@Autowired
-	UserMapper mapper;
+	private UserMapper mapper;
 
 	public List<UserDTO> findAll() {
 		logger.info("Finding All User");
