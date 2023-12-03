@@ -1,42 +1,35 @@
 package com.felipe.unittests.service;
 
-import static org.junit.jupiter.api.Assertions.fail;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.BDDMockito.*;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
-import java.util.Collections;
-import java.util.List;
+
 import java.util.Optional;
-import java.util.UUID;
 import java.util.logging.Logger;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
-import org.junit.jupiter.api.TestInstance.Lifecycle;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.felipe.exceptions.BadRequestException;
 import com.felipe.mapper.UserMapper;
 import com.felipe.model.User;
 import com.felipe.model.dto.v1.UserDTO;
 import com.felipe.repositories.UserRepository;
 import com.felipe.service.UserService;
 import com.felipe.unittests.mapper.mocks.MockUser;
+import com.felipe.util.MessageUtils;
 
 @SpringBootTest
 //@ExtendWith(MockitoExtension.class)
@@ -49,15 +42,15 @@ class UserServiceTest {
 
 //	@Autowired
 	private UserMapper mapper = new UserMapper();
-	
-	@InjectMocks
+
 	@Autowired
+	@InjectMocks
 	private UserService service;
 
 	private UserDTO userDto;
 
 	private User user;
-	
+
 	MockUser inputObject = new MockUser();;
 
 	@BeforeEach
@@ -65,7 +58,6 @@ class UserServiceTest {
 		user = inputObject.mockRandomEntity();
 		userDto = mapper.toDto(user);
 	}
-	
 
 //	@BeforeEach
 //	void setUpMocks() throws Exception {
@@ -106,12 +98,12 @@ class UserServiceTest {
 
 	@DisplayName("JUnit test for Given Users Object when Save User then Return User Object")
 	@Test
-	void testCreate() throws Exception {
+	void testGivenUserObject_whenSaveUser_thenReturnUserObject() throws Exception {
 		logger.info("JUnit test for Given Users Object when Save User then Return User Object");
-		
-		given(repository.findByEmail("example@email.com")).willReturn(Optional.empty());
+
+		given(repository.findByEmail(anyString())).willReturn(Optional.empty());
 		given(repository.save(user)).willReturn(user);
-		
+
 		logger.info(user.toString());
 		logger.info("DTO => " + userDto.toString());
 
@@ -120,8 +112,29 @@ class UserServiceTest {
 
 		assertNotNull(userDtoCreated);
 		assertTrue(!userDtoCreated.getKey().toString().isEmpty());
-        assertEquals(user.getFullName(), userDtoCreated.getFullName());
+		assertEquals(user.getFullName(), userDtoCreated.getFullName());
 
+	}
+
+	@DisplayName("JUnit test for Given Existing Email when Save User then Throws Exception")
+	@Test
+	void testGivenExistingEmail_whenSaveUser_thenThrowsException() throws Exception {
+		logger.info("JUnit test for Given Existing Emai when Save User then Throws Exception");
+
+		// Set the email of the UserDTO to "songpagaciv.2961@example.com"
+		userDto.setEmail("songpagaciv.2961@example.com");
+
+		// Mock the behavior of the repository
+		given(repository.findByEmail("songpagaciv.2961@example.com")).willReturn(Optional.of(user));
+
+		BadRequestException exception = assertThrows(BadRequestException.class, () -> {
+			logger.info("Before service.create");
+			service.create(userDto);
+			logger.info("After service.create");
+		});
+
+		assertEquals("Email " + MessageUtils.RECORDS_ALREADY_EXIST + ": " + userDto.getEmail(), exception.getMessage());
+		verify(repository, never()).save(any(User.class));
 	}
 
 	@Test

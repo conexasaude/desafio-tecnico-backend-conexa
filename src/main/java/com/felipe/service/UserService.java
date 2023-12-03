@@ -5,7 +5,6 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.logging.Logger;
 
@@ -59,11 +58,6 @@ public class UserService {
 	public UserDTO create(UserDTO dto) throws Exception {
 		logger.info("Create one user");
 
-//		Optional<User> foundUser = repository.findByEmail(dto.getEmail());
-//		
-//		if (foundUser.isPresent()) {
-//			throw new BadRequestException("Email " + MessageUtils.RECORDS_ALREADY_EXIST + ": " + dto.getEmail());
-//		}
 		repository.findByEmail(dto.getEmail()).ifPresent(existingUser -> {
 			throw new BadRequestException("Email " + MessageUtils.RECORDS_ALREADY_EXIST + ": " + dto.getEmail());
 		});
