@@ -2,11 +2,12 @@ package com.felipe.unittests.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.*;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
@@ -154,7 +155,7 @@ class UserServiceTest {
 		assertEquals(user.getFullName(), userFound.getFullName());
 	}
 	
-	@DisplayName("JUnit test for Given Object when Update User Then Return Update User Object")
+	@DisplayName("JUnit test for Given User Object when Update User Then Return Update User Object")
 	@Test
 	void testGivenUserObject_whenUpdateUser_thenReturnUpdateUserObject() throws Exception {
 		logger.info("JUnit test for Given Object when Update User Then Return Update User Object");
@@ -162,18 +163,33 @@ class UserServiceTest {
 		given(repository.findById(any(UUID.class))).willReturn(Optional.of(user));
 		given(repository.save(any(User.class))).willReturn(user);
 
+		String newName = "Mauricio Di Paula";
+		String newEmail = "mauricio_dipaula@email.com";
 		logger.info("Before Update => " + userDto.toString());
 
-		user.setFullName("Mauricio Di Paula");
-		user.setEmail("mauricio_dipaula@email.com");
+		user.setFullName(newName);
+		user.setEmail(newEmail);
 		userDto = mapper.toDto(user);
 
 		UserDTO userUpdated = service.update(userDto);
 		logger.info("After Update => " + userDto.toString());
 
 		assertNotNull(userUpdated);
-		assertTrue(!userUpdated.getKey().toString().isEmpty());
-		assertEquals(user.getFullName(), userUpdated.getFullName());
+		assertEquals(newName, userUpdated.getFullName());
+		assertEquals(newEmail, userUpdated.getEmail());
+	}
+	
+	@DisplayName("JUnit test for Given UserID when Delete User then do Nothing")
+	@Test
+	void testGivenUserID_whenDeleteUser_thenDoNothing() throws Exception {
+		logger.info("JUnit test for Given UserID when Delete User then do Nothing");
+
+		given(repository.findById(any(UUID.class))).willReturn(Optional.of(user));
+		willDoNothing().given(repository).delete(user);
+
+		service.delete(user.getId().toString());
+		
+		verify(repository, times(1)).delete(user);
 	}
 
 }
