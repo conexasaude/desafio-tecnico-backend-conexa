@@ -28,19 +28,18 @@ class UserRepositoryTest {
 	@Autowired
 	private UserRepository repository;
 
-	MockUser inputObject;
+	MockUser inputObject = new MockUser();;
+	User user;
 
 	@BeforeEach
 	public void setUp() {
-		inputObject = new MockUser();
+		user = inputObject.mockRandomEntity();
 	}
 
 	@DisplayName("Given User Object when Save then Return Saved User")
 	@Test
 	void testGivenUserObject_whenSave_thenReturnSavedUser() {
 		logger.info("Given User Object when Save then Return Saved User");
-
-		User user = inputObject.mockRandomEntity();
 
 		User createdUser = repository.save(user);
 
@@ -65,7 +64,6 @@ class UserRepositoryTest {
 	void testGivenUserObject_whenFindByID_thenReturnUserObject() {
 		logger.info("Given User Object when findByID then Return User Object");
 
-		User user = inputObject.mockRandomEntity();
 		logger.info(user.toString());
 
 		User createdUser = repository.save(user);
@@ -84,7 +82,6 @@ class UserRepositoryTest {
 	void testGivenUserObject_whenFindByEmail_thenReturnUserObject() {
 		logger.info("Given User Object when findByEmail then Return User Object");
 
-		User user = inputObject.mockRandomEntity();
 		logger.info(user.toString());
 
 		User createdUser = repository.save(user);
@@ -101,7 +98,6 @@ class UserRepositoryTest {
 	void testGivenUserObject_whenUpdateUserReturnUpdateUserObject() {
 		logger.info("Given User Object when Update User then Return Update User Object");
 
-		User user = inputObject.mockRandomEntity();
 		logger.info(user.toString());
 
 		User createdUser = repository.save(user);
@@ -124,7 +120,6 @@ class UserRepositoryTest {
 	void testGivenUserObject_whenDelete_thenRemoveUser() {
 		logger.info("Given User Object when Delete then Remove User");
 
-		User user = inputObject.mockRandomEntity();
 		logger.info(user.toString());
 
 		User createdUser = repository.save(user);
@@ -142,7 +137,6 @@ class UserRepositoryTest {
 	void testGivenFullNameAndSpecialt_whenFindByFullNameAndSpecialty_thenReturnUserObject() {
 		logger.info("Given FullName And Specialt when findByFullNameAndSpecialty then Return User Object");
 
-		User user = inputObject.mockRandomEntity();
 		logger.info(user.toString());
 
 		User createdUser = repository.save(user);
