@@ -59,43 +59,6 @@ class UserServiceTest {
 		userDto = mapper.toDto(user);
 	}
 
-//	@BeforeEach
-//	void setUpMocks() throws Exception {
-//		MockitoAnnotations.openMocks(this);
-//	}
-
-//    @DisplayName("JUnit test for Given Empty Users List when findAll Users then Return Empty Users List")
-//	@Test
-//	void testFindAll() {
-//        when(repository.findAll()).thenReturn(List.of());
-//        given(repository.findAll()).willReturn(Collections.emptyList());
-//		var result = service.findAll();
-//		System.out.println(result.toString());
-//
-//	}
-//
-//	@DisplayName("JUnit test for findById method")
-//	@Test
-//	void testFindById() throws Exception {
-//		UUID userId = UUID.fromString("0c38ae25-0d29-43ad-91d4-73e91309267b");
-//
-//		user.setId(userId);
-//		System.out.println(user.toString());
-//
-//		// Configurar o mock do repositório para retornar o Optional contendo o usuário
-//		// mockado
-//		when(repository.findById(userId)).thenReturn(Optional.of(user));
-//
-//		// Executar o método que está sendo testado
-//		var result = service.findById("0c38ae25-0d29-43ad-91d4-73e91309267b");
-//
-//		// Verificar o resultado do teste
-//		assertNotNull(result);
-//		assertNotNull(result.getKey());
-//		assertNotNull(result.getLinks());
-//		System.out.println(result.toString());
-//	}
-
 	@DisplayName("JUnit test for Given Users Object when Save User then Return User Object")
 	@Test
 	void testGivenUserObject_whenSaveUser_thenReturnUserObject() throws Exception {
