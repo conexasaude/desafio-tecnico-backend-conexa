@@ -57,6 +57,17 @@ public class User implements Serializable {
 		this.birthDate = birthDate;
 		this.phone = phone;
 	}
+	
+	public User(String email, String fullName, String password, String specialty, String cpf,
+			LocalDate birthDate, String phone) {
+		this.email = email;
+		this.fullName = fullName;
+		this.password = password;
+		this.specialty = specialty;
+		this.cpf = cpf;
+		this.birthDate = birthDate;
+		this.phone = phone;
+	}
 
 	public UUID getId() {
 		return id;
