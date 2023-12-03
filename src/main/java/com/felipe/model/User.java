@@ -40,7 +40,7 @@ public class User implements Serializable {
 	@Column(name = "birth_date")
 	private LocalDate birthDate;
 	
-	@Column(name = "phone", length = 20)
+	@Column(name = "phone", length = 45)
 	private String phone;
 	
     public User() {

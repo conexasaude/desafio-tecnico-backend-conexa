@@ -6,8 +6,15 @@ import java.util.List;
 import com.felipe.model.User;
 import com.felipe.model.dto.v1.UserDTO;
 import com.felipe.util.DateUtil;
+import com.felipe.utils.EmailGeneretor;
+import com.felipe.utils.documents.GenerateDocument;
+import com.github.javafaker.Faker;
 
 public class MockUser {
+	
+	private GenerateDocument generateDocument = new GenerateDocument();
+
+	private Faker faker = new Faker();
 	
 	public User mockEntity() {
 		return mockEntity(0);
@@ -57,5 +64,14 @@ public class MockUser {
         user.setBirthDate(DateUtil.convertStringToLocalDate("21/05/198" + number));
         user.setPhone("(21) 3232-656" + number);
         return user;
+    }
+    
+    public User mockRandomEntity() {
+		String fullname = faker.name().fullName();
+		String email = EmailGeneretor.generateEmail(fullname);
+		String cpf = generateDocument.cpf(true);
+		String phone = faker.phoneNumber().phoneNumber();
+		return new User(email, fullname, "senha123", "Pediatra", cpf,
+				DateUtil.convertStringToLocalDate("21/05/1981"), phone);
     }
 }

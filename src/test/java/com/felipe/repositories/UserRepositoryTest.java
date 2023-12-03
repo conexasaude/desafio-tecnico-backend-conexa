@@ -3,9 +3,10 @@ package com.felipe.repositories;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
-import java.util.UUID;
+import java.util.Optional;
 import java.util.logging.Logger;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -17,10 +18,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.felipe.model.User;
 import com.felipe.service.UserService;
 import com.felipe.unittests.mapper.mocks.MockUser;
-import com.felipe.util.DateUtil;
-import com.felipe.utils.EmailGeneretor;
-import com.felipe.utils.documents.GenerateDocument;
-import com.github.javafaker.Faker;
 
 @SpringBootTest
 //@DataJdbcTest
@@ -30,10 +27,6 @@ class UserRepositoryTest {
 
 	@Autowired
 	private UserRepository repository;
-
-	private GenerateDocument generateDocument = new GenerateDocument();
-
-	private Faker faker = new Faker();
 
 	MockUser inputObject;
 
@@ -45,15 +38,16 @@ class UserRepositoryTest {
 	@DisplayName("Given User Object when Save then Return Saved User")
 	@Test
 	void testGivenUserObject_whenSave_thenReturnSavedUser() {
-		User input = inputObject.mockEntity();
-		input.setCpf(generateDocument.cpf(true));
-		input.setEmail(EmailGeneretor.generateEmail(input.getFullName()));
-		User output = repository.save(input);
+		logger.info("Given User Object when Save then Return Saved User");
 
-		logger.info(output.toString());
+		User user = inputObject.mockRandomEntity();
 
-		assertNotNull(output);
-		assertNotNull(output.getId());
+		User createdUser = repository.save(user);
+
+		logger.info(createdUser.toString());
+
+		assertNotNull(createdUser);
+		assertNotNull(createdUser.getId());
 	}
 
 	@DisplayName("Given User List when findAll then Return User List")
@@ -69,20 +63,16 @@ class UserRepositoryTest {
 	@DisplayName("Given User Object when findByID then Return User Object")
 	@Test
 	void testGivenUserObject_whenFindByID_thenReturnUserObject() {
+		logger.info("Given User Object when findByID then Return User Object");
 
-		String fullname = faker.name().fullName();
-		String email = EmailGeneretor.generateEmail(fullname);
-		String cpf = generateDocument.cpf(true);
-		String phone = faker.phoneNumber().phoneNumber();
-		User user = new User(email, fullname, "senha123", "Pediatra", cpf,
-				DateUtil.convertStringToLocalDate("21/05/1981"), phone);
+		User user = inputObject.mockRandomEntity();
 		logger.info(user.toString());
 
 		User createdUser = repository.save(user);
-
 		logger.info(createdUser.toString());
 
-		// buscar pelo uuid gerado pelo banco, pois id "settado" é sobrescrito pela geração de uuid db
+		// buscar pelo uuid gerado pelo banco, pois id "settado" é sobrescrito pela
+		// geração de uuid db
 		User userFound = repository.findById(createdUser.getId()).get();
 
 		assertNotNull(userFound);
@@ -92,17 +82,12 @@ class UserRepositoryTest {
 	@DisplayName("Given User Object when findByEmail then Return User Object")
 	@Test
 	void testGivenUserObject_whenFindByEmail_thenReturnUserObject() {
+		logger.info("Given User Object when findByEmail then Return User Object");
 
-		String fullname = faker.name().fullName();
-		String email = EmailGeneretor.generateEmail(fullname);
-		String cpf = generateDocument.cpf(true);
-		String phone = faker.phoneNumber().phoneNumber();
-		User user = new User(email, fullname, "senha123", "Pediatra", cpf,
-				DateUtil.convertStringToLocalDate("21/05/1981"), phone);
+		User user = inputObject.mockRandomEntity();
 		logger.info(user.toString());
 
 		User createdUser = repository.save(user);
-
 		logger.info(createdUser.toString());
 
 		User userFound = repository.findByEmail(user.getEmail()).get();
@@ -110,31 +95,63 @@ class UserRepositoryTest {
 		assertNotNull(userFound);
 		assertEquals(user.getId(), userFound.getId());
 	}
-	
+
 	@DisplayName("Given User Object when Update User then Return Update User Object")
 	@Test
 	void testGivenUserObject_whenUpdateUserReturnUpdateUserObject() {
+		logger.info("Given User Object when Update User then Return Update User Object");
 
-		String fullname = faker.name().fullName();
-		String email = EmailGeneretor.generateEmail(fullname);
-		String cpf = generateDocument.cpf(true);
-		String phone = faker.phoneNumber().phoneNumber();
-		User user = new User(email, fullname, "senha123", "Pediatra", cpf,
-				DateUtil.convertStringToLocalDate("21/05/1981"), phone);
+		User user = inputObject.mockRandomEntity();
 		logger.info(user.toString());
 
 		User createdUser = repository.save(user);
 		logger.info(createdUser.toString());
 
 		User userFound = repository.findById(createdUser.getId()).get();
-		userFound.setFullName(fullname + "Updated Name");
-		userFound.setEmail(email + ".teste");
+		userFound.setFullName(user.getFullName() + " Updated Name");
+		userFound.setEmail(user.getEmail() + ".teste");
 		logger.info(userFound.toString());
 
 		User updatedUser = repository.save(userFound);
-		
+
 		assertNotNull(updatedUser);
-		assertEquals(fullname + "Updated Name", updatedUser.getFullName());
-		assertEquals(email + ".teste", updatedUser.getEmail());
+		assertEquals(user.getFullName() + " Updated Name", updatedUser.getFullName());
+		assertEquals(user.getEmail() + ".teste", updatedUser.getEmail());
+	}
+
+	@DisplayName("Given User Object when Delete then Remove User")
+	@Test
+	void testGivenUserObject_whenDelete_thenRemoveUser() {
+		logger.info("Given User Object when Delete then Remove User");
+
+		User user = inputObject.mockRandomEntity();
+		logger.info(user.toString());
+
+		User createdUser = repository.save(user);
+		logger.info(createdUser.toString());
+
+		repository.deleteById(createdUser.getId());
+
+		Optional<User> userOptional = repository.findById(createdUser.getId());
+
+		assertTrue(userOptional.isEmpty());
+	}
+	
+	@DisplayName("Given FullName And Specialt when findByFullNameAndSpecialty then Return User Object")
+	@Test
+	void testGivenFullNameAndSpecialt_whenFindByFullNameAndSpecialty_thenReturnUserObject() {
+		logger.info("Given FullName And Specialt when findByFullNameAndSpecialty then Return User Object");
+
+		User user = inputObject.mockRandomEntity();
+		logger.info(user.toString());
+
+		User createdUser = repository.save(user);
+		logger.info(createdUser.toString());
+
+		User userFound = repository.findByFullNameAndSpecialty(user.getFullName(), user.getSpecialty());
+
+		assertNotNull(userFound);
+		assertEquals(user.getFullName(), userFound.getFullName());
+		assertEquals(user.getSpecialty(), userFound.getSpecialty());
 	}
 }
