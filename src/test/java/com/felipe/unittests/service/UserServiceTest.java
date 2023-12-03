@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
@@ -14,6 +13,7 @@ import static org.mockito.Mockito.verify;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.logging.Logger;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -134,19 +134,24 @@ class UserServiceTest {
 		assertEquals(0, usersDtoList.size());
 	}
 
+	@DisplayName("JUnit test for Given UserId when Find By Id Then Return User Object")
 	@Test
-	void testUpdate() {
-		fail("Not yet implemented");
-	}
+	void testGivenUsersId_whenFindById_thenReturnUserObject() throws Exception {
+		logger.info("JUnit test for Given UserId when Find By Id Then Return User Object");
 
-	@Test
-	void testChangePassword() {
-		fail("Not yet implemented");
-	}
+	    //UUID válido para simular
+	    String userIdString = UUID.randomUUID().toString();
+		
+		given(repository.findById(any(UUID.class))).willReturn(Optional.of(user));
 
-	@Test
-	void testDelete() {
-		fail("Not yet implemented");
+
+		UserDTO userDto = service.findById(userIdString);
+		logger.info("FoundByID => " + userDto.toString());
+		logger.info("USER => " + user.toString());
+
+		assertNotNull(userDto);
+		assertTrue(!userDto.getKey().toString().isEmpty());
+		assertEquals(user.getFullName(), userDto.getFullName());
 	}
 
 }
