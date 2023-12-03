@@ -139,19 +139,41 @@ class UserServiceTest {
 	void testGivenUsersId_whenFindById_thenReturnUserObject() throws Exception {
 		logger.info("JUnit test for Given UserId when Find By Id Then Return User Object");
 
-	    //UUID válido para simular
+	    //UUID valid for mocks
 	    String userIdString = UUID.randomUUID().toString();
 		
 		given(repository.findById(any(UUID.class))).willReturn(Optional.of(user));
 
 
-		UserDTO userDto = service.findById(userIdString);
+		UserDTO userFound = service.findById(userIdString);
 		logger.info("FoundByID => " + userDto.toString());
 		logger.info("USER => " + user.toString());
 
-		assertNotNull(userDto);
-		assertTrue(!userDto.getKey().toString().isEmpty());
-		assertEquals(user.getFullName(), userDto.getFullName());
+		assertNotNull(userFound);
+		assertTrue(!userFound.getKey().toString().isEmpty());
+		assertEquals(user.getFullName(), userFound.getFullName());
+	}
+	
+	@DisplayName("JUnit test for Given Object when Update User Then Return Update User Object")
+	@Test
+	void testGivenUserObject_whenUpdateUser_thenReturnUpdateUserObject() throws Exception {
+		logger.info("JUnit test for Given Object when Update User Then Return Update User Object");
+
+		given(repository.findById(any(UUID.class))).willReturn(Optional.of(user));
+		given(repository.save(any(User.class))).willReturn(user);
+
+		logger.info("Before Update => " + userDto.toString());
+
+		user.setFullName("Mauricio Di Paula");
+		user.setEmail("mauricio_dipaula@email.com");
+		userDto = mapper.toDto(user);
+
+		UserDTO userUpdated = service.update(userDto);
+		logger.info("After Update => " + userDto.toString());
+
+		assertNotNull(userUpdated);
+		assertTrue(!userUpdated.getKey().toString().isEmpty());
+		assertEquals(user.getFullName(), userUpdated.getFullName());
 	}
 
 }
