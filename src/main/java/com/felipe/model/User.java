@@ -6,18 +6,20 @@ import java.util.Objects;
 import java.util.UUID;
 
 import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
+import jakarta.persistence.MappedSuperclass;
 
-@Entity
-@Table(name = "user_tb")
-public class User implements Serializable {
+@MappedSuperclass
+@Inheritance(strategy = InheritanceType.JOINED)
+public abstract class User implements Serializable {
 
-	private static final long serialVersionUID = 1L;
 	
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.UUID)
 	private UUID id;
@@ -31,9 +33,6 @@ public class User implements Serializable {
 	@Column(name = "password")
 	private String password;
 	
-	@Column(name = "specialty")
-	private String specialty;
-	
 	@Column(name = "cpf", nullable = false, length = 14, unique = true)
 	private String cpf;
 	
@@ -43,27 +42,27 @@ public class User implements Serializable {
 	@Column(name = "phone", length = 45)
 	private String phone;
 	
-    public User() {
-    }
-    
-	public User(UUID id, String email, String fullName, String password, String specialty, String cpf,
-			LocalDate birthDate, String phone) {
-		this.id = id;
+	public User() {
+		super();
+	}
+
+	public User(String email, String fullName, String password, String cpf, LocalDate birthDate, String phone) {
+		super();
 		this.email = email;
 		this.fullName = fullName;
 		this.password = password;
-		this.specialty = specialty;
 		this.cpf = cpf;
 		this.birthDate = birthDate;
 		this.phone = phone;
 	}
-	
-	public User(String email, String fullName, String password, String specialty, String cpf,
-			LocalDate birthDate, String phone) {
+
+	public User(UUID id, String email, String fullName, String password, String cpf, LocalDate birthDate,
+			String phone) {
+		super();
+		this.id = id;
 		this.email = email;
 		this.fullName = fullName;
 		this.password = password;
-		this.specialty = specialty;
 		this.cpf = cpf;
 		this.birthDate = birthDate;
 		this.phone = phone;
@@ -101,14 +100,6 @@ public class User implements Serializable {
 		this.password = password;
 	}
 
-	public String getSpecialty() {
-		return specialty;
-	}
-
-	public void setSpecialty(String specialty) {
-		this.specialty = specialty;
-	}
-
 	public String getCpf() {
 		return cpf;
 	}
@@ -135,7 +126,7 @@ public class User implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(birthDate, cpf, email, fullName, id, password, phone, specialty);
+		return Objects.hash(birthDate, cpf, email, fullName, id, password, phone);
 	}
 
 	@Override
@@ -150,15 +141,13 @@ public class User implements Serializable {
 		return Objects.equals(birthDate, other.birthDate) && Objects.equals(cpf, other.cpf)
 				&& Objects.equals(email, other.email) && Objects.equals(fullName, other.fullName)
 				&& Objects.equals(id, other.id) && Objects.equals(password, other.password)
-				&& Objects.equals(phone, other.phone) && Objects.equals(specialty, other.specialty);
+				&& Objects.equals(phone, other.phone);
 	}
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", email=" + email + ", fullName=" + fullName + ", password=" + password
-				+ ", specialty=" + specialty + ", cpf=" + cpf + ", birthDate=" + birthDate + ", phone=" + phone + "]";
+		return "User [id=" + id + ", email=" + email + ", fullName=" + fullName + ", password=" + password + ", cpf="
+				+ cpf + ", birthDate=" + birthDate + ", phone=" + phone + "]";
 	}
-	
-	
 
 }

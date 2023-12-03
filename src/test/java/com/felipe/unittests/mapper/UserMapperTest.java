@@ -7,7 +7,7 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.felipe.mapper.UserMapper;
+import com.felipe.mapper.PatientMapper;
 import com.felipe.model.User;
 import com.felipe.model.dto.v1.UserDTO;
 import com.felipe.unittests.mapper.mocks.MockUser;
@@ -15,7 +15,7 @@ import com.felipe.util.DateUtil;
 
 public class UserMapperTest {
     MockUser inputObject;
-    UserMapper userMapper = new UserMapper();
+    PatientMapper userMapper = new PatientMapper();
     
     @BeforeEach
     public void setUp() {

@@ -8,19 +8,19 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.felipe.model.User;
+import com.felipe.model.Doctor;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, UUID> {
+public interface DoctorRepository extends JpaRepository<Doctor, UUID> {
 
-	Optional<User> findByEmail(String email);
+	Optional<Doctor> findByEmail(String email);
 	
-	Optional<User> findByCpf(String cpf);
+	Optional<Doctor> findByCpf(String cpf);
 	
-	@Query("SELECT user " +
-			"FROM User user " + 
-			"WHERE user.fullName =:fullName AND p.specialty =:specialty")
-	User findByFullNameAndSpecialty(
+	@Query("SELECT doctor " +
+			"FROM Doctor doctor " + 
+			"WHERE doctor.fullName =:fullName AND p.specialty =:specialty")
+	Doctor findByFullNameAndSpecialty(
 			@Param("fullName") String fullName,
 			@Param("specialty") String specialty);
 

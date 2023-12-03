@@ -11,106 +11,106 @@ import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.felipe.controller.UserController;
+import com.felipe.controller.PatientController;
 import com.felipe.exceptions.BadRequestException;
 import com.felipe.exceptions.ResourceNotFoundException;
-import com.felipe.mapper.UserMapper;
-import com.felipe.model.User;
+import com.felipe.mapper.PatientMapper;
+import com.felipe.model.Patient;
 import com.felipe.model.dto.v1.PasswordUpdateDTO;
-import com.felipe.model.dto.v1.UserDTO;
-import com.felipe.repositories.UserRepository;
+import com.felipe.model.dto.v1.PatientDTO;
+import com.felipe.repositories.PatientRepository;
 import com.felipe.util.MessageUtils;
 
 /**
  * Service class for managing user-related operations.
  */
 @Service
-public class UserService {
-	private Logger logger = Logger.getLogger(UserService.class.getName());
+public class PatientService {
+	private Logger logger = Logger.getLogger(PatientService.class.getName());
 
 	@Autowired
-	private UserRepository repository;
+	private PatientRepository repository;
 
 	@Autowired
-	private UserMapper mapper;
+	private PatientMapper mapper;
 
     /**
      * Retrieves a list of all users.
      *
-     * @return A list of UserDTO objects.
+     * @return A list of PatientDTO objects.
      */
-	public List<UserDTO> findAll() {
-		logger.info("Finding All User");
+	public List<PatientDTO> findAll() {
+		logger.info("Finding All Patient");
 
-		List<UserDTO> listUsers = mapper.toDto(repository.findAll());
-		listUsers.stream().forEach(user -> {
+		List<PatientDTO> listPatients = mapper.toDto(repository.findAll());
+		listPatients.stream().forEach(user -> {
 			try {
-				addUserSelfRel(user);
+				addPatientSelfRel(user);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		});
 
-		return listUsers;
+		return listPatients;
 	}
 
     /**
      * Retrieves a user by their ID.
      *
      * @param id: The ID of the user.
-     * @return The UserDTO object representing the user.
+     * @return The PatientDTO object representing the user.
      * @throws ResourceNotFoundException: If no user is found with the given ID.
      */
-	public UserDTO findById(String id) throws Exception {
+	public PatientDTO findById(String id) throws Exception {
 		logger.info("Finding one user");
 
-		UserDTO user = repository.findById(UUID.fromString(id)).map(mapper::toDto)
+		PatientDTO user = repository.findById(UUID.fromString(id)).map(mapper::toDto)
 				.orElseThrow(() -> new ResourceNotFoundException(MessageUtils.NO_RECORDS_FOUND));
-		return addUserSelfRel(user);
+		return addPatientSelfRel(user);
 
 	}
 
     /**
      * Creates a new user.
      *
-     * @param dto: The UserDTO object containing user information.
-     * @return The created UserDTO object.
+     * @param dto: The PatientDTO object containing user information.
+     * @return The created PatientDTO object.
      * @throws BadRequestException: If the email provided already exists.
      */
-	public UserDTO create(UserDTO dto) throws Exception {
+	public PatientDTO create(PatientDTO dto) throws Exception {
 		logger.info("Create one user");
 
-		repository.findByEmail(dto.getEmail()).ifPresent(existingUser -> {
+		repository.findByEmail(dto.getEmail()).ifPresent(existingPatient -> {
 			throw new BadRequestException("Email " + MessageUtils.RECORDS_ALREADY_EXIST + ": " + dto.getEmail());
 		});
 
-		User entity = mapper.toEntity(dto);
-		UserDTO user = mapper.toDto(repository.save(entity));
+		Patient entity = mapper.toEntity(dto);
+		PatientDTO user = mapper.toDto(repository.save(entity));
 
-		return addUserSelfRel(user);
+		return addPatientSelfRel(user);
 
 	}
     /**
      * Updates an existing user.
      *
-     * @param dto: The UserDTO object containing updated user information.
-     * @return The updated UserDTO object.
+     * @param dto: The PatientDTO object containing updated user information.
+     * @return The updated PatientDTO object.
      * @throws ResourceNotFoundException: If no user is found with the given ID.
      */
-	public UserDTO update(UserDTO dto) throws Exception {
+	public PatientDTO update(PatientDTO dto) throws Exception {
 		logger.info("Update one user");
 
-		User entity = repository.findById(dto.getKey())
+		Patient entity = repository.findById(dto.getKey())
 				.orElseThrow(() -> new ResourceNotFoundException(MessageUtils.NO_RECORDS_FOUND));
 		entity.setFullName(Objects.requireNonNullElse(dto.getFullName(), entity.getFullName()));
 		entity.setEmail(Objects.requireNonNullElse(dto.getEmail(), entity.getEmail()));
-		entity.setSpecialty(Objects.requireNonNullElse(dto.getSpecialty(), entity.getSpecialty()));
 		entity.setCpf(Objects.requireNonNullElse(dto.getCpf(), entity.getCpf()));
 		entity.setBirthDate(Objects.requireNonNullElse(dto.getBirthDate(), entity.getBirthDate()));
 		entity.setPhone(Objects.requireNonNullElse(dto.getPhone(), entity.getPhone()));
+		entity.setHealthInsurance(Objects.requireNonNullElse(dto.getHealthInsurance(), entity.getHealthInsurance()));
 
-		UserDTO user = mapper.toDto(repository.save(entity));
-		return addUserSelfRel(user);
+		PatientDTO user = mapper.toDto(repository.save(entity));
+		return addPatientSelfRel(user);
 
 	}
 
@@ -125,7 +125,7 @@ public class UserService {
 	public void changePassword(String id, PasswordUpdateDTO passwordUpdateDTO) {
 		logger.info("Changing password");
 
-		User entity = repository.findById(UUID.fromString(id))
+		Patient entity = repository.findById(UUID.fromString(id))
 				.orElseThrow(() -> new ResourceNotFoundException(MessageUtils.NO_RECORDS_FOUND));
 		if (passwordUpdateDTO.getOldPassword().equals(entity.getPassword())) {
 			if (passwordUpdateDTO.getNewPassword().equals(passwordUpdateDTO.getConfirmNewPassword())) {
@@ -147,18 +147,18 @@ public class UserService {
      */
 	public void delete(String id) {
 		logger.info("Deleting one user");
-		User entity = repository.findById(UUID.fromString(id))
+		Patient entity = repository.findById(UUID.fromString(id))
 				.orElseThrow(() -> new ResourceNotFoundException(MessageUtils.NO_RECORDS_FOUND));
 		repository.delete(entity);
 	}
 	
     /**
      *     		
-     * @param user: The User object containing user information
-     * @return The UserDTO with self-rel link 
+     * @param user: The Patient object containing user information
+     * @return The PatientDTO with self-rel link 
      * @throws Exception
      */
-	private UserDTO addUserSelfRel(UserDTO user) throws Exception {
-	    return user.add(linkTo(methodOn(UserController.class).findById(user.getKey().toString())).withSelfRel());
+	private PatientDTO addPatientSelfRel(PatientDTO user) throws Exception {
+	    return (PatientDTO) user.add(linkTo(methodOn(PatientController.class).findById(user.getKey().toString())).withSelfRel());
 	}
 }

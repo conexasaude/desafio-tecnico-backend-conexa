@@ -15,31 +15,31 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.felipe.mapper.UserMapper;
+import com.felipe.mapper.PatientMapper;
 import com.felipe.model.User;
 import com.felipe.model.dto.v1.UserDTO;
-import com.felipe.repositories.UserRepository;
-import com.felipe.service.UserService;
+import com.felipe.repositories.PatientRepository;
+import com.felipe.service.PatientService;
 import com.felipe.unittests.mapper.mocks.MockUser;
 
 @SpringBootTest
 //@DataJdbcTest
 class UserRepositoryTest {
 
-	private Logger logger = Logger.getLogger(UserService.class.getName());
+	private Logger logger = Logger.getLogger(PatientService.class.getName());
 
 	@Autowired
-	private UserRepository repository;
+	private PatientRepository repository;
 
 	@Autowired
-	private UserMapper mapper;
+	private PatientMapper mapper;
 	
 	private User user;
 	private MockUser inputObject = new MockUser();
 
 	@BeforeEach
 	public void setUp() {
-		user = inputObject.mockRandomEntity();
+		user = inputObject.mockRandomEntity(false);
 	}
 
 	@DisplayName("Given User Object when Save then Return Saved User")

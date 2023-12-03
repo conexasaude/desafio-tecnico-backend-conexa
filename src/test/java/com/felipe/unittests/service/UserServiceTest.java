@@ -2,13 +2,14 @@ package com.felipe.unittests.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.BDDMockito.*;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.willDoNothing;
 import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import java.util.Collections;
@@ -28,11 +29,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.felipe.exceptions.BadRequestException;
-import com.felipe.mapper.UserMapper;
+import com.felipe.mapper.PatientMapper;
 import com.felipe.model.User;
 import com.felipe.model.dto.v1.UserDTO;
-import com.felipe.repositories.UserRepository;
-import com.felipe.service.UserService;
+import com.felipe.repositories.PatientRepository;
+import com.felipe.service.PatientService;
 import com.felipe.unittests.mapper.mocks.MockUser;
 import com.felipe.util.MessageUtils;
 
@@ -40,17 +41,17 @@ import com.felipe.util.MessageUtils;
 @ExtendWith(MockitoExtension.class)
 class UserServiceTest {
 
-	private Logger logger = Logger.getLogger(UserService.class.getName());
+	private Logger logger = Logger.getLogger(PatientService.class.getName());
 
 	@Mock
-	private UserRepository repository;
+	private PatientRepository repository;
 
 //	@Autowired
-	private UserMapper mapper = new UserMapper();
+	private PatientMapper mapper = new PatientMapper();
 
 	@Autowired
 	@InjectMocks
-	private UserService service;
+	private PatientService service;
 
 	private UserDTO userDto;
 

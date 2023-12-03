@@ -9,10 +9,8 @@ import org.springframework.hateoas.RepresentationModel;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-@JsonPropertyOrder({ "id", "email", "full_name", "specialty", "cpf", "birth_date", "phone" })
-public class UserDTO extends RepresentationModel<UserDTO> implements Serializable {
+public abstract class UserDTO extends RepresentationModel<UserDTO> implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@JsonProperty("id")
@@ -26,8 +24,6 @@ public class UserDTO extends RepresentationModel<UserDTO> implements Serializabl
 	@JsonIgnore
 	private String password;
 	
-	private String specialty;
-	
 	private String cpf;
 	
 	@JsonProperty("birth_date")
@@ -38,13 +34,12 @@ public class UserDTO extends RepresentationModel<UserDTO> implements Serializabl
     public UserDTO() {
     }
     
-	public UserDTO(UUID key, String email, String fullName, String password, String specialty, String cpf,
+	public UserDTO(UUID key, String email, String fullName, String password, String cpf,
 			LocalDate birthDate, String phone) {
 		this.key = key;
 		this.email = email;
 		this.fullName = fullName;
 		this.password = password;
-		this.specialty = specialty;
 		this.cpf = cpf;
 		this.birthDate = birthDate;
 		this.phone = phone;
@@ -82,14 +77,6 @@ public class UserDTO extends RepresentationModel<UserDTO> implements Serializabl
 		this.password = password;
 	}
 
-	public String getSpecialty() {
-		return specialty;
-	}
-
-	public void setSpecialty(String specialty) {
-		this.specialty = specialty;
-	}
-
 	public String getCpf() {
 		return cpf;
 	}
@@ -118,7 +105,7 @@ public class UserDTO extends RepresentationModel<UserDTO> implements Serializabl
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + Objects.hash(birthDate, cpf, email, fullName, key, password, phone, specialty);
+		result = prime * result + Objects.hash(birthDate, cpf, email, fullName, key, password, phone);
 		return result;
 	}
 
@@ -134,13 +121,12 @@ public class UserDTO extends RepresentationModel<UserDTO> implements Serializabl
 		return Objects.equals(birthDate, other.birthDate) && Objects.equals(cpf, other.cpf)
 				&& Objects.equals(email, other.email) && Objects.equals(fullName, other.fullName)
 				&& Objects.equals(key, other.key) && Objects.equals(password, other.password)
-				&& Objects.equals(phone, other.phone) && Objects.equals(specialty, other.specialty);
+				&& Objects.equals(phone, other.phone);
 	}
 
 	@Override
 	public String toString() {
 		return "UserDTO [key=" + key + ", email=" + email + ", fullName=" + fullName + ", password=" + password
-				+ ", specialty=" + specialty + ", cpf=" + cpf + ", birthDate=" + birthDate + ", phone=" + phone + "]";
+				+ ", cpf=" + cpf + ", birthDate=" + birthDate + ", phone=" + phone + "]";
 	}
-
 }

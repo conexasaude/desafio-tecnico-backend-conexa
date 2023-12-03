@@ -21,3 +21,7 @@ spring:
     user: root
     password: admin123
     locations: classpath:db/migration
+springdoc:
+  pathsToMatch: /api/v1/**
+  swagger-ui:
+    use-root-path: true
