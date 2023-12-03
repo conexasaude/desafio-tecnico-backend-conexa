@@ -110,4 +110,31 @@ class UserRepositoryTest {
 		assertNotNull(userFound);
 		assertEquals(user.getId(), userFound.getId());
 	}
+	
+	@DisplayName("Given User Object when Update User then Return Update User Object")
+	@Test
+	void testGivenUserObject_whenUpdateUserReturnUpdateUserObject() {
+
+		String fullname = faker.name().fullName();
+		String email = EmailGeneretor.generateEmail(fullname);
+		String cpf = generateDocument.cpf(true);
+		String phone = faker.phoneNumber().phoneNumber();
+		User user = new User(email, fullname, "senha123", "Pediatra", cpf,
+				DateUtil.convertStringToLocalDate("21/05/1981"), phone);
+		logger.info(user.toString());
+
+		User createdUser = repository.save(user);
+		logger.info(createdUser.toString());
+
+		User userFound = repository.findById(createdUser.getId()).get();
+		userFound.setFullName(fullname + "Updated Name");
+		userFound.setEmail(email + ".teste");
+		logger.info(userFound.toString());
+
+		User updatedUser = repository.save(userFound);
+		
+		assertNotNull(updatedUser);
+		assertEquals(fullname + "Updated Name", updatedUser.getFullName());
+		assertEquals(email + ".teste", updatedUser.getEmail());
+	}
 }
