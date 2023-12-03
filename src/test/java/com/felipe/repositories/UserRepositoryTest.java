@@ -66,7 +66,6 @@ class UserRepositoryTest {
 		assertFalse(userList.isEmpty());
 	}
 
-//
 	@DisplayName("Given User Object when findByID then Return User Object")
 	@Test
 	void testGivenUserObject_whenFindByID_thenReturnUserObject() {
@@ -83,10 +82,32 @@ class UserRepositoryTest {
 
 		logger.info(createdUser.toString());
 
+		// buscar pelo uuid gerado pelo banco, pois id "settado" é sobrescrito pela geração de uuid db
 		User userFound = repository.findById(createdUser.getId()).get();
 
 		assertNotNull(userFound);
 		assertEquals(user.getId(), userFound.getId());
 	}
 
+	@DisplayName("Given User Object when findByEmail then Return User Object")
+	@Test
+	void testGivenUserObject_whenFindByEmail_thenReturnUserObject() {
+
+		String fullname = faker.name().fullName();
+		String email = EmailGeneretor.generateEmail(fullname);
+		String cpf = generateDocument.cpf(true);
+		String phone = faker.phoneNumber().phoneNumber();
+		User user = new User(email, fullname, "senha123", "Pediatra", cpf,
+				DateUtil.convertStringToLocalDate("21/05/1981"), phone);
+		logger.info(user.toString());
+
+		User createdUser = repository.save(user);
+
+		logger.info(createdUser.toString());
+
+		User userFound = repository.findByEmail(user.getEmail()).get();
+
+		assertNotNull(userFound);
+		assertEquals(user.getId(), userFound.getId());
+	}
 }
