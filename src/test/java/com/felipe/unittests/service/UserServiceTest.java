@@ -11,6 +11,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
 
@@ -98,6 +99,19 @@ class UserServiceTest {
 
 		assertEquals("Email " + MessageUtils.RECORDS_ALREADY_EXIST + ": " + userDto.getEmail(), exception.getMessage());
 		verify(repository, never()).save(any(User.class));
+	}
+	
+	@DisplayName("JUnit test for Given Users List when Find All Users Then Return Users List")
+	@Test
+	void testGivenUsersList_whenFindAllUsers_thenReturnUsersList() throws Exception {
+		logger.info("JUnit test for Given Users List when Find All Users Then Return Users List");
+
+		// Mock the behavior of the repository
+		given(repository.findAll()).willReturn(inputObject.mockRandomEntityList(3));
+
+		List<UserDTO> usersDtoList = service.findAll();
+		
+		assertNotNull(usersDtoList);
 	}
 
 	@Test

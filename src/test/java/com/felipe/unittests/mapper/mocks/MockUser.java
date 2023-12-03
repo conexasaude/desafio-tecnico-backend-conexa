@@ -39,7 +39,15 @@ public class MockUser {
         }
         return users;
     }
-	    
+	 
+    public List<User> mockRandomEntityList(int quantityUsers) {
+        List<User> users = new ArrayList<User>();
+        for (int i = 0; i < quantityUsers; i++) {
+        	users.add(mockRandomEntity());
+        }
+        return users;
+    }
+    
     public User mockEntity(Integer number) {
         User user = new User();
 //        user.setId(UUID.fromString("0c38ae25-0d29-43ad-91d4-73e91309267b"));

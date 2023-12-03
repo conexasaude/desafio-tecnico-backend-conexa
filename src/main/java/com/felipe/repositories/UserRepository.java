@@ -15,6 +15,8 @@ public interface UserRepository extends JpaRepository<User, UUID> {
 
 	Optional<User> findByEmail(String email);
 	
+	Optional<User> findByCpf(String cpf);
+	
 	@Query("SELECT user " +
 			"FROM User user " + 
 			"WHERE user.fullName =:fullName AND p.specialty =:specialty")

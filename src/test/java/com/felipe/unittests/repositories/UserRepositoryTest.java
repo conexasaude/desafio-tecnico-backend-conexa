@@ -100,6 +100,22 @@ class UserRepositoryTest {
 		assertNotNull(userFound);
 		assertEquals(user.getId(), userFound.getId());
 	}
+	
+	@DisplayName("Given User Object when findByCpf then Return User Object")
+	@Test
+	void testGivenUserObject_whenFindByCpf_thenReturnUserObject() {
+		logger.info("Given User Object when findByCpf then Return User Object");
+
+		logger.info(user.toString());
+
+		User createdUser = repository.save(user);
+		logger.info(createdUser.toString());
+
+		User userFound = repository.findByCpf(user.getCpf()).get();
+
+		assertNotNull(userFound);
+		assertEquals(user.getId(), userFound.getId());
+	}
 
 	@DisplayName("Given User Object when Update User then Return Update User Object")
 	@Test
