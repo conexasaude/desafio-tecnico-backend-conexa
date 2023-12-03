@@ -137,4 +137,10 @@ public class UserDTO extends RepresentationModel<UserDTO> implements Serializabl
 				&& Objects.equals(phone, other.phone) && Objects.equals(specialty, other.specialty);
 	}
 
+	@Override
+	public String toString() {
+		return "UserDTO [key=" + key + ", email=" + email + ", fullName=" + fullName + ", password=" + password
+				+ ", specialty=" + specialty + ", cpf=" + cpf + ", birthDate=" + birthDate + ", phone=" + phone + "]";
+	}
+
 }

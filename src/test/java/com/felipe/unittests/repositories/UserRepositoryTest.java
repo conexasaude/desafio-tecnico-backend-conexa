@@ -1,4 +1,4 @@
-package com.felipe.repositories;
+package com.felipe.unittests.repositories;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -15,7 +15,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.felipe.mapper.UserMapper;
 import com.felipe.model.User;
+import com.felipe.model.dto.v1.UserDTO;
+import com.felipe.repositories.UserRepository;
 import com.felipe.service.UserService;
 import com.felipe.unittests.mapper.mocks.MockUser;
 
@@ -28,8 +31,11 @@ class UserRepositoryTest {
 	@Autowired
 	private UserRepository repository;
 
-	MockUser inputObject = new MockUser();;
-	User user;
+	@Autowired
+	private UserMapper mapper;
+	
+	private User user;
+	private MockUser inputObject = new MockUser();
 
 	@BeforeEach
 	public void setUp() {
@@ -42,8 +48,10 @@ class UserRepositoryTest {
 		logger.info("Given User Object when Save then Return Saved User");
 
 		User createdUser = repository.save(user);
-
 		logger.info(createdUser.toString());
+
+		UserDTO dto = mapper.toDto(createdUser);
+		logger.info("DTO => " + dto.toString());
 
 		assertNotNull(createdUser);
 		assertNotNull(createdUser.getId());
