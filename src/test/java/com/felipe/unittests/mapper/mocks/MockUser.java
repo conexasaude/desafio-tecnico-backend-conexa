@@ -2,6 +2,7 @@ package com.felipe.unittests.mapper.mocks;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import com.felipe.model.User;
 import com.felipe.model.dto.v1.UserDTO;
@@ -40,10 +41,10 @@ public class MockUser {
         return users;
     }
 	 
-    public List<User> mockRandomEntityList(int quantityUsers) {
+    public List<User> mockRandomEntityList(int quantityUsers, boolean withId) {
         List<User> users = new ArrayList<User>();
         for (int i = 0; i < quantityUsers; i++) {
-        	users.add(mockRandomEntity());
+        	users.add(mockRandomEntity(withId));
         }
         return users;
     }
@@ -74,12 +75,14 @@ public class MockUser {
         return user;
     }
     
-    public User mockRandomEntity() {
+    public User mockRandomEntity(boolean withId) {
+    	UUID id = withId ? UUID.randomUUID() : null;
 		String fullname = faker.name().fullName();
 		String email = EmailGeneretor.generateEmail(fullname);
 		String cpf = generateDocument.cpf(true);
 		String phone = faker.phoneNumber().phoneNumber();
-		return new User(email, fullname, "senha123", "Pediatra", cpf,
+		return new User(id, email, fullname, "senha123", "Pediatra", cpf,
 				DateUtil.convertStringToLocalDate("21/05/1981"), phone);
     }
+    
 }

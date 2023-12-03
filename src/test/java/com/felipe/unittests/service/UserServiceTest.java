@@ -11,6 +11,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -18,8 +19,10 @@ import java.util.logging.Logger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -33,7 +36,7 @@ import com.felipe.unittests.mapper.mocks.MockUser;
 import com.felipe.util.MessageUtils;
 
 @SpringBootTest
-//@ExtendWith(MockitoExtension.class)
+@ExtendWith(MockitoExtension.class)
 class UserServiceTest {
 
 	private Logger logger = Logger.getLogger(UserService.class.getName());
@@ -56,7 +59,7 @@ class UserServiceTest {
 
 	@BeforeEach
 	public void setUp() {
-		user = inputObject.mockRandomEntity();
+		user = inputObject.mockRandomEntity(true);
 		userDto = mapper.toDto(user);
 	}
 
@@ -64,7 +67,7 @@ class UserServiceTest {
 	@Test
 	void testGivenUserObject_whenSaveUser_thenReturnUserObject() throws Exception {
 		logger.info("JUnit test for Given Users Object when Save User then Return User Object");
-
+		
 		given(repository.findByEmail(anyString())).willReturn(Optional.empty());
 		given(repository.save(user)).willReturn(user);
 
@@ -103,15 +106,32 @@ class UserServiceTest {
 	
 	@DisplayName("JUnit test for Given Users List when Find All Users Then Return Users List")
 	@Test
-	void testGivenUsersList_whenFindAllUsers_thenReturnUsersList() throws Exception {
+	void testGivenUsersList_whenFindAllUsers_thenReturnUsersList()  {
 		logger.info("JUnit test for Given Users List when Find All Users Then Return Users List");
 
 		// Mock the behavior of the repository
-		given(repository.findAll()).willReturn(inputObject.mockRandomEntityList(3));
+		given(repository.findAll()).willReturn(inputObject.mockRandomEntityList(3, true));
 
 		List<UserDTO> usersDtoList = service.findAll();
-		
+		logger.info("SIZE => " + usersDtoList.size());
+
 		assertNotNull(usersDtoList);
+		assertEquals(3, usersDtoList.size());
+	}
+	
+	@DisplayName("JUnit test for Given Empty Users List when Find All Users Then Return Empty Users List")
+	@Test
+	void testGivenEmptyUsersList_whenFindAllUsers_thenReturnEmptyUsersList() throws Exception {
+		logger.info("JUnit test for Given Empty Users List when Find All Users Then Return Empty Users List");
+
+		// Mock the behavior of the repository
+		given(repository.findAll()).willReturn(Collections.emptyList());
+
+		List<UserDTO> usersDtoList = service.findAll();
+		logger.info("SIZE => " + usersDtoList.size());
+
+		assertTrue(usersDtoList.isEmpty());
+		assertEquals(0, usersDtoList.size());
 	}
 
 	@Test
