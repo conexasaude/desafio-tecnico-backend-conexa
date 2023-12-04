@@ -6,12 +6,10 @@ import java.util.UUID;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "patient_tb")
-@PrimaryKeyJoinColumn(name = "patient_id")
 public class Patient extends User {
 
 	private static final long serialVersionUID = 1L;
