@@ -1,6 +1,6 @@
 
 
-INSERT INTO `rest-conexa-challenger`.patient_tb
+INSERT INTO `patient_tb`
 (id, birth_date, cpf, email, full_name, password, phone, health_insurance)
 VALUES(UNHEX(REPLACE(UUID(), '-', '')), '1990-05-15', '123.556.789-01', 'joao.silva2@gmail.com', 'João Silva', 'senha123', '(21) 9876-5432', 'Bradesco'),
     (UNHEX(REPLACE(UUID(), '-', '')), '1985-08-20', '987.654.321-02', 'maria.santos@gmail.com', 'Maria Santos', 'senha456', '(21) 8765-4321', 'SulAmérica'),
