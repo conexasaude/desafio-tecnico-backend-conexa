@@ -16,7 +16,6 @@ import com.felipe.exceptions.BadRequestException;
 import com.felipe.exceptions.ResourceNotFoundException;
 import com.felipe.mapper.PatientMapper;
 import com.felipe.model.Patient;
-import com.felipe.model.dto.v1.PasswordUpdateDTO;
 import com.felipe.model.dto.v1.PatientDTO;
 import com.felipe.repositories.PatientRepository;
 import com.felipe.util.MessageUtils;
@@ -80,8 +79,8 @@ public class PatientService {
 	public PatientDTO create(PatientDTO dto) throws Exception {
 		logger.info("Create one user");
 
-		repository.findByEmail(dto.getEmail()).ifPresent(existingPatient -> {
-			throw new BadRequestException("Email " + MessageUtils.RECORDS_ALREADY_EXIST + ": " + dto.getEmail());
+		repository.findByCpf(dto.getCpf()).ifPresent(existingPatient -> {
+			throw new BadRequestException("Email " + MessageUtils.RECORDS_ALREADY_EXIST + ": " + dto.getCpf());
 		});
 
 		Patient entity = mapper.toEntity(dto);
@@ -103,10 +102,7 @@ public class PatientService {
 		Patient entity = repository.findById(dto.getKey())
 				.orElseThrow(() -> new ResourceNotFoundException(MessageUtils.NO_RECORDS_FOUND));
 		entity.setFullName(Objects.requireNonNullElse(dto.getFullName(), entity.getFullName()));
-		entity.setEmail(Objects.requireNonNullElse(dto.getEmail(), entity.getEmail()));
 		entity.setCpf(Objects.requireNonNullElse(dto.getCpf(), entity.getCpf()));
-		entity.setBirthDate(Objects.requireNonNullElse(dto.getBirthDate(), entity.getBirthDate()));
-		entity.setPhone(Objects.requireNonNullElse(dto.getPhone(), entity.getPhone()));
 		entity.setHealthInsurance(Objects.requireNonNullElse(dto.getHealthInsurance(), entity.getHealthInsurance()));
 
 		PatientDTO user = mapper.toDto(repository.save(entity));
@@ -114,31 +110,6 @@ public class PatientService {
 
 	}
 
-    /**
-     * Changes the password for a user.
-     *
-     * @param id: The ID of the user.
-     * @param passwordUpdateDTO: The DTO containing old and new password information.
-     * @throws BadRequestException: If old password is incorrect or new password doesn't match the confirmation.
-     * @throws ResourceNotFoundException: If no user is found with the given ID.
-     */
-	public void changePassword(String id, PasswordUpdateDTO passwordUpdateDTO) {
-		logger.info("Changing password");
-
-		Patient entity = repository.findById(UUID.fromString(id))
-				.orElseThrow(() -> new ResourceNotFoundException(MessageUtils.NO_RECORDS_FOUND));
-		if (passwordUpdateDTO.getOldPassword().equals(entity.getPassword())) {
-			if (passwordUpdateDTO.getNewPassword().equals(passwordUpdateDTO.getConfirmNewPassword())) {
-				entity.setPassword(passwordUpdateDTO.getNewPassword());
-				repository.save(entity);
-			} else {
-				throw new BadRequestException("New password and confirm new password is not matches");
-			}
-		} else {
-			throw new BadRequestException("Old password is incorret");
-		}
-	}
-	
     /**
      * Deletes a user by their ID.
      *

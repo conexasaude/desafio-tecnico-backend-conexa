@@ -15,26 +15,22 @@ public class PatientMapper {
 	public Patient toEntity(PatientDTO dto) {
 		Patient entity = new Patient();
 		entity.setId(dto.getKey());
-		entity.setEmail(dto.getEmail());
 		entity.setFullName(dto.getFullName());
-		entity.setPassword(dto.getPassword());
 		entity.setCpf(dto.getCpf());
-		entity.setBirthDate(dto.getBirthDate());
-		entity.setPhone(dto.getPhone());
 		entity.setHealthInsurance(dto.getHealthInsurance());
+//        entity.setCreatedAt(dto.getCreatedAt());
+//        entity.setUpdatedAt(dto.getUpdatedAt());
 		return entity;
 	}
 	
 	public PatientDTO toDto(Patient entity) {
 		PatientDTO dto = new PatientDTO();
 		dto.setKey(entity.getId());
-		dto.setEmail(entity.getEmail());
 		dto.setFullName(entity.getFullName());
-		dto.setPassword(entity.getPassword());
 		dto.setCpf(entity.getCpf());
-		dto.setBirthDate(entity.getBirthDate());
-		dto.setPhone(entity.getPhone());
 		dto.setHealthInsurance(entity.getHealthInsurance());
+//        dto.setCreatedAt(entity.getCreatedAt());
+//        dto.setUpdatedAt(entity.getUpdatedAt());
 		return dto;
 	}
 	

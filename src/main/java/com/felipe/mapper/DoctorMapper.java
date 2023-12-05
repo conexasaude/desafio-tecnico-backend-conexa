@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import com.felipe.model.Doctor;
 import com.felipe.model.dto.v1.DoctorDTO;
+import com.felipe.util.DateUtil;
 
 
 @Component
@@ -19,10 +20,11 @@ public class DoctorMapper {
 		entity.setFullName(dto.getFullName());
 		entity.setPassword(dto.getPassword());
 		entity.setSpecialty(dto.getSpecialty());
-		entity.setMedicalLicense(dto.getMedicalLicense());
 		entity.setCpf(dto.getCpf());
-		entity.setBirthDate(dto.getBirthDate());
+		entity.setBirthDate(DateUtil.convertStringToLocalDate(dto.getBirthDate()));
 		entity.setPhone(dto.getPhone());
+//        entity.setCreatedAt(dto.getCreatedAt());
+//        entity.setUpdatedAt(dto.getUpdatedAt());
 		return entity;
 	}
 	
@@ -33,10 +35,11 @@ public class DoctorMapper {
 		dto.setFullName(entity.getFullName());
 		dto.setPassword(entity.getPassword());
 		dto.setSpecialty(entity.getSpecialty());
-		dto.setMedicalLicense(entity.getMedicalLicense());
 		dto.setCpf(entity.getCpf());
-		dto.setBirthDate(entity.getBirthDate());
+		dto.setBirthDate(DateUtil.convertLocalDateToString(entity.getBirthDate()));
 		dto.setPhone(entity.getPhone());
+//        dto.setCreatedAt(entity.getCreatedAt());
+//        dto.setUpdatedAt(entity.getUpdatedAt());
 		return dto;
 	}
 	

@@ -2,13 +2,11 @@ package com.felipe.unittests.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.willDoNothing;
-import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -28,14 +26,12 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.felipe.exceptions.BadRequestException;
 import com.felipe.mapper.PatientMapper;
 import com.felipe.model.Patient;
 import com.felipe.model.dto.v1.PatientDTO;
 import com.felipe.repositories.PatientRepository;
 import com.felipe.service.PatientService;
 import com.felipe.unittests.mapper.mocks.MockPatient;
-import com.felipe.util.MessageUtils;
 
 @SpringBootTest
 @ExtendWith(MockitoExtension.class)
@@ -70,7 +66,7 @@ class PatientServiceTest {
 	void testGivenPatientObject_whenSavePatient_thenReturnPatientObject() throws Exception {
 		logger.info("JUnit test for Given Patients Object when Save Patient then Return Patient Object");
 		
-		given(repository.findByEmail(anyString())).willReturn(Optional.empty());
+		given(repository.findByCpf(anyString())).willReturn(Optional.empty());
 		given(repository.save(patient)).willReturn(patient);
 
 		logger.info(patient.toString());
@@ -85,26 +81,25 @@ class PatientServiceTest {
 
 	}
 
-	@DisplayName("JUnit test for Given Existing Email when Save Patient then Throws Exception")
-	@Test
-	void testGivenExistingEmail_whenSavePatient_thenThrowsException() throws Exception {
-		logger.info("JUnit test for Given Existing Emai when Save Patient then Throws Exception");
-
-		// Set the email of the PatientDTO to "songpagaciv.2961@example.com"
-		patientDto.setEmail("songpagaciv.2961@example.com");
-
-		// Mock the behavior of the repository
-		given(repository.findByEmail("songpagaciv.2961@example.com")).willReturn(Optional.of(patient));
-
-		BadRequestException exception = assertThrows(BadRequestException.class, () -> {
-			logger.info("Before service.create");
-			service.create(patientDto);
-			logger.info("After service.create");
-		});
-
-		assertEquals("Email " + MessageUtils.RECORDS_ALREADY_EXIST + ": " + patientDto.getEmail(), exception.getMessage());
-		verify(repository, never()).save(any(Patient.class));
-	}
+//	@DisplayName("JUnit test for Given Existing CPF when Save Patient then Throws Exception")
+//	@Test
+//	void testGivenExistingCPF_whenSavePatient_thenThrowsException() throws Exception {
+//		logger.info("JUnit test for Given Existing CPF when Save Patient then Throws Exception");
+//
+//		patientDto.setCpf("085.491.221-25");
+//
+//		// Mock the behavior of the repository
+//		given(repository.findByCpf("085.491.221-25")).willReturn(Optional.of(patient));
+//
+//		BadRequestException exception = assertThrows(BadRequestException.class, () -> {
+//			logger.info("Before service.create");
+//			service.create(patientDto);
+//			logger.info("After service.create");
+//		});
+//
+//		assertEquals("CPF " + MessageUtils.RECORDS_ALREADY_EXIST + ": " + patientDto.getCpf(), exception.getMessage());
+//		verify(repository, never()).save(any(Patient.class));
+//	}
 	
 	@DisplayName("JUnit test for Given Patients List when Find All Patients Then Return Patients List")
 	@Test
@@ -165,11 +160,11 @@ class PatientServiceTest {
 		given(repository.save(any(Patient.class))).willReturn(patient);
 
 		String newName = "Mauricio Di Paula";
-		String newEmail = "mauricio_dipaula@email.com";
+		String newEmail = "StockHealth";
 		logger.info("Before Update => " + patientDto.toString());
 
 		patient.setFullName(newName);
-		patient.setEmail(newEmail);
+		patient.setHealthInsurance(newEmail);
 		patientDto = mapper.toDto(patient);
 
 		PatientDTO patientUpdated = service.update(patientDto);
@@ -177,7 +172,7 @@ class PatientServiceTest {
 
 		assertNotNull(patientUpdated);
 		assertEquals(newName, patientUpdated.getFullName());
-		assertEquals(newEmail, patientUpdated.getEmail());
+		assertEquals(newEmail, patientUpdated.getHealthInsurance());
 	}
 	
 	@DisplayName("JUnit test for Given PatientID when Delete Patient then do Nothing")

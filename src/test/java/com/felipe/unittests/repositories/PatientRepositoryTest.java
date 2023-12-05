@@ -85,21 +85,7 @@ class PatientRepositoryTest {
 		assertEquals(patient.getId(), patientFound.getId());
 	}
 
-	@DisplayName("Given Patient Object when findByEmail then Return Patient Object")
-	@Test
-	void testGivenPatientObject_whenFindByEmail_thenReturnPatientObject() {
-		logger.info("Given Patient Object when findByEmail then Return Patient Object");
 
-		logger.info(patient.toString());
-
-		Patient createdPatient = repository.save(patient);
-		logger.info(createdPatient.toString());
-
-		Patient patientFound = repository.findByEmail(patient.getEmail()).get();
-
-		assertNotNull(patientFound);
-		assertEquals(patient.getId(), patientFound.getId());
-	}
 	
 	@DisplayName("Given Patient Object when findByCpf then Return Patient Object")
 	@Test
@@ -129,14 +115,14 @@ class PatientRepositoryTest {
 
 		Patient patientFound = repository.findById(createdPatient.getId()).get();
 		patientFound.setFullName(patient.getFullName() + " Updated Name");
-		patientFound.setEmail(patient.getEmail() + ".teste");
+		patientFound.setHealthInsurance(patient.getHealthInsurance() + ".teste");
 		logger.info(patientFound.toString());
 
 		Patient updatedPatient = repository.save(patientFound);
 
 		assertNotNull(updatedPatient);
 		assertEquals(patient.getFullName() + " Updated Name", updatedPatient.getFullName());
-		assertEquals(patient.getEmail() + ".teste", updatedPatient.getEmail());
+		assertEquals(patient.getHealthInsurance() + ".teste", updatedPatient.getHealthInsurance());
 	}
 
 	@DisplayName("Given Patient Object when Delete then Remove Patient")

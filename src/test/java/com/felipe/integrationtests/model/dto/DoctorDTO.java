@@ -1,66 +1,32 @@
-package com.felipe.model;
+package com.felipe.integrationtests.model.dto;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.UUID;
 
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EntityListeners;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-
-@Entity
-@Table(name = "doctor_tb")
-@EntityListeners(AuditingEntityListener.class)
-public class Doctor implements Serializable  {
-
+@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
+public class DoctorDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.UUID)
 	private UUID id;
-	
-	@Column(name = "email", unique = true)
 	private String email;
-	
-	@Column(name = "full_name", nullable = false, length = 160)
 	private String fullName;
-
-	@Column(name = "password")
 	private String password;
-	
-	@Column(name = "cpf", nullable = false, length = 14, unique = true)
 	private String cpf;
-	
-	@Column(name = "birth_date")
-	private LocalDate birthDate;
-	
-	@Column(name = "phone", length = 45)
+	private String birthDate;
 	private String phone;
-	
-	@Column(name = "specialty")
 	private String specialty;
-
-	@CreatedDate
 	private LocalDateTime createdAt;
+	private LocalDateTime updatedAt;
 
-    @LastModifiedDate
-    private LocalDateTime updatedAt;
-
-	public Doctor() {
-		super();
+	public DoctorDTO() {
 	}
 
-	public Doctor(String email, String fullName, String password, String cpf, LocalDate birthDate, String phone,
+	public DoctorDTO(String email, String fullName, String password, String cpf, String birthDate, String phone,
 			String specialty) {
 		this.email = email;
 		this.fullName = fullName;
@@ -71,7 +37,7 @@ public class Doctor implements Serializable  {
 		this.specialty = specialty;
 	}
 
-	public Doctor(UUID id, String email, String fullName, String password, String cpf, LocalDate birthDate,
+	public DoctorDTO(UUID id, String email, String fullName, String password, String cpf, String birthDate,
 			String phone, String specialty) {
 		this.id = id;
 		this.email = email;
@@ -82,7 +48,7 @@ public class Doctor implements Serializable  {
 		this.phone = phone;
 		this.specialty = specialty;
 	}
-
+	
 	public UUID getId() {
 		return id;
 	}
@@ -91,20 +57,20 @@ public class Doctor implements Serializable  {
 		this.id = id;
 	}
 
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
 	public String getFullName() {
 		return fullName;
 	}
 
 	public void setFullName(String fullName) {
 		this.fullName = fullName;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getPassword() {
@@ -123,11 +89,11 @@ public class Doctor implements Serializable  {
 		this.cpf = cpf;
 	}
 
-	public LocalDate getBirthDate() {
+	public String getBirthDate() {
 		return birthDate;
 	}
 
-	public void setBirthDate(LocalDate birthDate) {
+	public void setBirthDate(String birthDate) {
 		this.birthDate = birthDate;
 	}
 
@@ -176,7 +142,7 @@ public class Doctor implements Serializable  {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Doctor other = (Doctor) obj;
+		DoctorDTO other = (DoctorDTO) obj;
 		return Objects.equals(birthDate, other.birthDate) && Objects.equals(cpf, other.cpf)
 				&& Objects.equals(createdAt, other.createdAt) && Objects.equals(email, other.email)
 				&& Objects.equals(fullName, other.fullName) && Objects.equals(id, other.id)
@@ -186,8 +152,10 @@ public class Doctor implements Serializable  {
 
 	@Override
 	public String toString() {
-		return "Doctor [id=" + id + ", email=" + email + ", fullName=" + fullName + ", password=" + password + ", cpf="
-				+ cpf + ", birthDate=" + birthDate + ", phone=" + phone + ", specialty=" + specialty + "]";
+		return "DoctorDTO [id=" + id + ", email=" + email + ", fullName=" + fullName + ", password=" + password
+				+ ", cpf=" + cpf + ", birthDate=" + birthDate + ", phone=" + phone + ", specialty=" + specialty + "]";
 	}
+
+	
 
 }

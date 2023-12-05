@@ -1,19 +1,129 @@
 package com.felipe.model.dto.v1;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Objects;
+import java.util.UUID;
 
+import org.springframework.hateoas.RepresentationModel;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonPropertyOrder({ "id", "email", "full_name", "specialty", "cpf", "birth_date", "phone" })
-public class DoctorDTO extends UserDTO implements Serializable {
+public class DoctorDTO extends RepresentationModel<DoctorDTO> implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	private String specialty;
+	@JsonProperty("id")
+	private UUID key;
 	
-	@JsonProperty("medical_license")
-    private String medicalLicense;
+	private String email;
+	
+	@JsonProperty("full_name")
+	private String fullName;
+	
+	@JsonIgnore
+	private String password;
+	
+	private String cpf;
+	
+	@JsonProperty("birth_date")
+	private String birthDate;
+	
+	private String phone;
+	
+	private String specialty;
+
+//	@JsonProperty("created_at")
+	@JsonIgnore
+	private LocalDateTime createdAt;
+
+//	@JsonProperty("updated_at")
+	@JsonIgnore
+    private LocalDateTime updatedAt;
+    
+	public DoctorDTO() {
+	}
+
+	public DoctorDTO(String email, String fullName, String password, String cpf, String birthDate, String phone,
+			String specialty) {
+		this.email = email;
+		this.fullName = fullName;
+		this.password = password;
+		this.cpf = cpf;
+		this.birthDate = birthDate;
+		this.phone = phone;
+		this.specialty = specialty;
+	}
+
+	public DoctorDTO(UUID key, String email, String fullName, String password, String cpf, String birthDate,
+			String phone, String specialty) {
+		this.key = key;
+		this.email = email;
+		this.fullName = fullName;
+		this.password = password;
+		this.cpf = cpf;
+		this.birthDate = birthDate;
+		this.phone = phone;
+		this.specialty = specialty;
+	}
+
+	public UUID getKey() {
+		return key;
+	}
+
+	public void setKey(UUID key) {
+		this.key = key;
+	}
+	
+	public String getFullName() {
+		return fullName;
+	}
+
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+
+	public String getBirthDate() {
+		return birthDate;
+	}
+
+	public void setBirthDate(String birthDate) {
+		this.birthDate = birthDate;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
 
 	public String getSpecialty() {
 		return specialty;
@@ -23,19 +133,28 @@ public class DoctorDTO extends UserDTO implements Serializable {
 		this.specialty = specialty;
 	}
 
-	public String getMedicalLicense() {
-		return medicalLicense;
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
 	}
 
-	public void setMedicalLicense(String medicalLicense) {
-		this.medicalLicense = medicalLicense;
+	public void setCreatedAt(LocalDateTime createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public LocalDateTime getUpdatedAt() {
+		return updatedAt;
+	}
+
+	public void setUpdatedAt(LocalDateTime updatedAt) {
+		this.updatedAt = updatedAt;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + Objects.hash(medicalLicense, specialty);
+		result = prime * result
+				+ Objects.hash(birthDate, cpf, createdAt, email, fullName, key, password, phone, specialty, updatedAt);
 		return result;
 	}
 
@@ -48,17 +167,20 @@ public class DoctorDTO extends UserDTO implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		DoctorDTO other = (DoctorDTO) obj;
-		return Objects.equals(medicalLicense, other.medicalLicense) && Objects.equals(specialty, other.specialty);
+		return Objects.equals(birthDate, other.birthDate) && Objects.equals(cpf, other.cpf)
+				&& Objects.equals(createdAt, other.createdAt) && Objects.equals(email, other.email)
+				&& Objects.equals(fullName, other.fullName) && Objects.equals(key, other.key)
+				&& Objects.equals(password, other.password) && Objects.equals(phone, other.phone)
+				&& Objects.equals(specialty, other.specialty) && Objects.equals(updatedAt, other.updatedAt);
 	}
 
 	@Override
 	public String toString() {
-		String originalString = super.toString();
-		String newProperties = "specialty=" + specialty + ", medicalLicense=" + medicalLicense;
-		return  originalString.replace("UserDTO", "DoctorDTO") + ", " + newProperties + "]";
+		return "DoctorDTO [key=" + key + ", email=" + email + ", fullName=" + fullName + ", password=" + password
+				+ ", cpf=" + cpf + ", birthDate=" + birthDate + ", phone=" + phone + ", specialty=" + specialty
+				+ "]";
 	}
 	
 
 	
-
 }

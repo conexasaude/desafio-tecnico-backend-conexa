@@ -1,5 +1,7 @@
 server:
   port: 8888
+cors:
+  originPatterns: http://localhost:8080,http://localhost:3000,http://localhost:5000
 spring:
   application:
     name: rest-conexa-challenger-test
@@ -22,6 +24,8 @@ spring:
     user: root
     password: admin123
     locations: classpath:db/migration
+  jackson:
+    property-naming-strategy: SNAKE_CASE
 springdoc:
   pathsToMatch: /api/v1/**
   swagger-ui:
