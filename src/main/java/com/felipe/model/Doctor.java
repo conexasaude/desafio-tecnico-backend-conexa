@@ -29,7 +29,7 @@ public class Doctor implements Serializable  {
 	@GeneratedValue(strategy = GenerationType.UUID)
 	private UUID id;
 	
-	@Column(name = "email", unique = true)
+	@Column(name = "email", nullable = false, unique = true)
 	private String email;
 	
 	@Column(name = "full_name", nullable = false, length = 160)

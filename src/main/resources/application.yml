@@ -1,5 +1,10 @@
 cors:
   originPatterns: http://localhost:8080,http://localhost:3000,http://localhost:5000
+security:
+  jwt:
+    token:
+      secret-key: 53cr37
+      expire-length: 3600000
 spring:
   application:
     name: rest-conexa-challenger
@@ -23,6 +28,8 @@ spring:
     password: admin123
     locations: classpath:db/migration
 springdoc:
-  pathsToMatch: /api/v1/**
+  pathsToMatch: 
+    - /auth/**
+    - /api/v1/**
   swagger-ui:
     use-root-path: true
