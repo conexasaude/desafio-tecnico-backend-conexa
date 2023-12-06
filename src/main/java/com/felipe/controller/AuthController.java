@@ -1,16 +1,16 @@
 package com.felipe.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.felipe.exceptions.ForbbidenException;
 import com.felipe.model.dto.v1.security.AccountCredentialsDTO;
-import com.felipe.model.dto.v1.security.TokenDTO;
 import com.felipe.service.AuthService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -28,20 +28,14 @@ public class AuthController {
 	@Operation(summary = "Authenticates a user and return a token")
 	@PostMapping(value = "/signin")
 	public ResponseEntity signin(@RequestBody AccountCredentialsDTO data) {
-		if (checkParamsIsNotNull(data)) {
-			throw new ForbbidenException("Invalid client request!");
-		}
-		
-		var token = authService.signin(data);
-		if (token == null) {
-			throw new ForbbidenException("Invalid client request!");
-		}
-		return token;
-		
+		return authService.signin(data);
+	}
+	
+	@SuppressWarnings("rawtypes")
+	@Operation(summary = "Refresh token for authenticated user and returns a token")
+	@PutMapping(value = "/refresh/{username}")
+	public ResponseEntity refresh(@PathVariable("username") String username, @RequestHeader("Authorization") String refreshToken) {
+		return authService.refreshToken(username, refreshToken);
 	}
 
-	private boolean checkParamsIsNotNull(AccountCredentialsDTO data) {
-		return data == null || data.getUsername() == null || data.getUsername().isBlank() || data.getPassword() == null
-				|| data.getPassword().isBlank();
-	}
 }

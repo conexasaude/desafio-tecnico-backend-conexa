@@ -8,6 +8,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.felipe.exceptions.ForbbidenException;
 import com.felipe.model.dto.v1.security.AccountCredentialsDTO;
 import com.felipe.model.dto.v1.security.TokenDTO;
 import com.felipe.repositories.UserRepository;
@@ -28,24 +29,63 @@ public class AuthService {
 	@SuppressWarnings("rawtypes")
 	public ResponseEntity signin(AccountCredentialsDTO data) {
 		try {
-			var userName = data.getUsername();
+			checkParamsIsNotNull(data);
+
+			var username = data.getUsername();
 			var password = data.getPassword();
 
-			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userName, password));
+			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
 
-			var user = repository.findByUserName(userName);
+			var user = repository.findByUserName(username);
 
 			var tokenResponse = new TokenDTO();
 
 			if (user != null) {
-				tokenResponse = jwtTokenProvider.createAccessToken(userName, user.getRoles());
+				tokenResponse = jwtTokenProvider.createAccessToken(username, user.getRoles());
 			} else {
-				throw new UsernameNotFoundException("Username " + userName + " not found!");
+				throw new UsernameNotFoundException("Username " + username + " not found!");
 			}
+			validateTokenResponse(tokenResponse);
 
 			return ResponseEntity.ok(tokenResponse);
 		} catch (Exception e) {
 			throw new BadCredentialsException("Invalid username/password supplied!");
+		}
+	}
+
+	@SuppressWarnings("rawtypes")
+	public ResponseEntity refreshToken(String username, String refreshToken) {
+		checkParamsIsNotNull(username, refreshToken);
+
+		var user = repository.findByUserName(username);
+
+		var tokenResponse = new TokenDTO();
+		if (user != null) {
+			tokenResponse = jwtTokenProvider.refreshToken(refreshToken);
+		} else {
+			throw new UsernameNotFoundException("Username " + username + " not found!");
+		}
+		validateTokenResponse(tokenResponse);
+		
+		return ResponseEntity.ok(tokenResponse);
+	}
+
+	private void checkParamsIsNotNull(String username, String refreshToken) {
+		if (refreshToken == null || refreshToken.isBlank() || username == null || username.isBlank()) {
+			throw new ForbbidenException("Invalid client request!");
+		}
+	}
+
+	private void checkParamsIsNotNull(AccountCredentialsDTO data) {
+		if (data == null || data.getUsername() == null || data.getUsername().isBlank() || data.getPassword() == null
+				|| data.getPassword().isBlank()) {
+			throw new ForbbidenException("Invalid client request!");
+		}
+	}
+	
+	private void validateTokenResponse(TokenDTO tokenResponse) {
+		if (tokenResponse == null) {
+			throw new ForbbidenException("Invalid client request!");
 		}
 	}
 

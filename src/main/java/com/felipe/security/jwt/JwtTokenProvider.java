@@ -53,15 +53,25 @@ public class JwtTokenProvider {
 		var refreshToken = getRefreshToken(username, roles, now);
 		return new TokenDTO(username, true, now, validity, accessToken, refreshToken);
 	}
-	
+
+	public TokenDTO refreshToken(String refreshToken) {
+		if (refreshToken.contains("Bearer ")) {
+			refreshToken = refreshToken.substring("Bearer ".length());
+		}
+		JWTVerifier verifier = JWT.require(algorithm).build();
+		DecodedJWT decodedJWT = verifier.verify(refreshToken);
+		String username = decodedJWT.getSubject();
+		List<String> roles = decodedJWT.getClaim("roles").asList(String.class);
+		return createAccessToken(username, roles);
+	}
+
 	public Authentication getAuthentication(String token) {
 		DecodedJWT decodedJWT = decodedToken(token);
-		UserDetails userDetails = this.userDetailsService
-				.loadUserByUsername(decodedJWT.getSubject());
-	    logger.info("UserDetails: " + userDetails.toString());
+		UserDetails userDetails = this.userDetailsService.loadUserByUsername(decodedJWT.getSubject());
+		logger.info("UserDetails: " + userDetails.toString());
 		return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
 	}
-	
+
 	public String resolveToken(HttpServletRequest req) {
 		String bearerToken = req.getHeader("Authorization");
 		if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
@@ -69,7 +79,7 @@ public class JwtTokenProvider {
 		}
 		return null;
 	}
-	
+
 	public boolean validateToken(String token) {
 		DecodedJWT decodedJWT = decodedToken(token);
 		try {
@@ -97,8 +107,8 @@ public class JwtTokenProvider {
 
 	private String getRefreshToken(String username, List<String> roles, Date now) {
 		Date validityRefreshToken = new Date(now.getTime() + (validityInMilliseconds * 3));
-		return JWT.create().withClaim("roles", roles).withIssuedAt(now).withExpiresAt(validityRefreshToken).withSubject(username)
-				.sign(algorithm).strip();
+		return JWT.create().withClaim("roles", roles).withIssuedAt(now).withExpiresAt(validityRefreshToken)
+				.withSubject(username).sign(algorithm).strip();
 	}
 
 }
