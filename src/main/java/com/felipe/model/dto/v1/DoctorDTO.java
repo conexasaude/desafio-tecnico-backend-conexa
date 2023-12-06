@@ -23,9 +23,6 @@ public class DoctorDTO extends RepresentationModel<DoctorDTO> implements Seriali
 	@JsonProperty("full_name")
 	private String fullName;
 	
-	@JsonIgnore
-	private String password;
-	
 	private String cpf;
 	
 	@JsonProperty("birth_date")
@@ -46,23 +43,21 @@ public class DoctorDTO extends RepresentationModel<DoctorDTO> implements Seriali
 	public DoctorDTO() {
 	}
 
-	public DoctorDTO(String email, String fullName, String password, String cpf, String birthDate, String phone,
+	public DoctorDTO(String email, String fullName, String cpf, String birthDate, String phone,
 			String specialty) {
 		this.email = email;
 		this.fullName = fullName;
-		this.password = password;
 		this.cpf = cpf;
 		this.birthDate = birthDate;
 		this.phone = phone;
 		this.specialty = specialty;
 	}
 
-	public DoctorDTO(UUID key, String email, String fullName, String password, String cpf, String birthDate,
+	public DoctorDTO(UUID key, String email, String fullName, String cpf, String birthDate,
 			String phone, String specialty) {
 		this.key = key;
 		this.email = email;
 		this.fullName = fullName;
-		this.password = password;
 		this.cpf = cpf;
 		this.birthDate = birthDate;
 		this.phone = phone;
@@ -91,14 +86,6 @@ public class DoctorDTO extends RepresentationModel<DoctorDTO> implements Seriali
 
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
 	}
 
 	public String getCpf() {
@@ -154,7 +141,7 @@ public class DoctorDTO extends RepresentationModel<DoctorDTO> implements Seriali
 		final int prime = 31;
 		int result = super.hashCode();
 		result = prime * result
-				+ Objects.hash(birthDate, cpf, createdAt, email, fullName, key, password, phone, specialty, updatedAt);
+				+ Objects.hash(birthDate, cpf, createdAt, email, fullName, key, phone, specialty, updatedAt);
 		return result;
 	}
 
@@ -170,13 +157,13 @@ public class DoctorDTO extends RepresentationModel<DoctorDTO> implements Seriali
 		return Objects.equals(birthDate, other.birthDate) && Objects.equals(cpf, other.cpf)
 				&& Objects.equals(createdAt, other.createdAt) && Objects.equals(email, other.email)
 				&& Objects.equals(fullName, other.fullName) && Objects.equals(key, other.key)
-				&& Objects.equals(password, other.password) && Objects.equals(phone, other.phone)
+				&& Objects.equals(phone, other.phone)
 				&& Objects.equals(specialty, other.specialty) && Objects.equals(updatedAt, other.updatedAt);
 	}
 
 	@Override
 	public String toString() {
-		return "DoctorDTO [key=" + key + ", email=" + email + ", fullName=" + fullName + ", password=" + password
+		return "DoctorDTO [key=" + key + ", email=" + email + ", fullName=" + fullName + ", password="
 				+ ", cpf=" + cpf + ", birthDate=" + birthDate + ", phone=" + phone + ", specialty=" + specialty
 				+ "]";
 	}

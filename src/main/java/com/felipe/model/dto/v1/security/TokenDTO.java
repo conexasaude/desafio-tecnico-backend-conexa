@@ -8,7 +8,7 @@ public class TokenDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private String username;
+	private String email;
 	private Boolean authenticated;
 	private Date created;
 	private Date expiration;
@@ -18,9 +18,9 @@ public class TokenDTO implements Serializable {
 	public TokenDTO() {
 	}
 
-	public TokenDTO(String username, Boolean authenticated, Date created, Date expiration, String acessToken,
+	public TokenDTO(String email, Boolean authenticated, Date created, Date expiration, String acessToken,
 			String refreshToken) {
-		this.username = username;
+		this.email = email;
 		this.authenticated = authenticated;
 		this.created = created;
 		this.expiration = expiration;
@@ -28,14 +28,13 @@ public class TokenDTO implements Serializable {
 		this.refreshToken = refreshToken;
 	}
 	
-	
 
-	public String getUsername() {
-		return username;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public Boolean getAuthenticated() {
@@ -80,7 +79,7 @@ public class TokenDTO implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(acessToken, authenticated, created, expiration, refreshToken, username);
+		return Objects.hash(acessToken, authenticated, created, expiration, refreshToken, email);
 	}
 
 	@Override
@@ -94,7 +93,7 @@ public class TokenDTO implements Serializable {
 		TokenDTO other = (TokenDTO) obj;
 		return Objects.equals(acessToken, other.acessToken) && Objects.equals(authenticated, other.authenticated)
 				&& Objects.equals(created, other.created) && Objects.equals(expiration, other.expiration)
-				&& Objects.equals(refreshToken, other.refreshToken) && Objects.equals(username, other.username);
+				&& Objects.equals(refreshToken, other.refreshToken) && Objects.equals(email, other.email);
 	}
 
 }

@@ -78,9 +78,8 @@ public class DoctorService {
      * @return The created DoctorDTO object.
      * @throws BadRequestException: If the email provided already exists.
      */
-	public DoctorDTO create(DoctorDTO dto) throws Exception {
+	public Doctor create(DoctorDTO dto) throws Exception {
 		logger.info("Create one doctor");
-
 		repository.findByEmail(dto.getEmail()).ifPresent(existingDoctor -> {
 			throw new BadRequestException("Email " + MessageUtils.RECORDS_ALREADY_EXIST + ": " + dto.getEmail());
 		});
@@ -88,13 +87,10 @@ public class DoctorService {
 		repository.findByCpf(dto.getCpf()).ifPresent(existingPatient -> {
 			throw new BadRequestException("Email " + MessageUtils.RECORDS_ALREADY_EXIST + ": " + dto.getCpf());
 		});
-		
 		Doctor entity = mapper.toEntity(dto);
-		DoctorDTO doctor = mapper.toDto(repository.save(entity));
-
-		return addDoctorSelfRel(doctor);
-
+		return repository.save(entity);
 	}
+	
     /**
      * Updates an existing doctor.
      *
@@ -119,30 +115,30 @@ public class DoctorService {
 
 	}
 
-    /**
-     * Changes the password for a doctor.
-     *
-     * @param id: The ID of the doctor.
-     * @param passwordUpdateDTO: The DTO containing old and new password information.
-     * @throws BadRequestException: If old password is incorrect or new password doesn't match the confirmation.
-     * @throws ResourceNotFoundException: If no doctor is found with the given ID.
-     */
-	public void changePassword(String id, PasswordUpdateDTO passwordUpdateDTO) {
-		logger.info("Changing password");
-
-		Doctor entity = repository.findById(UUID.fromString(id))
-				.orElseThrow(() -> new ResourceNotFoundException(MessageUtils.NO_RECORDS_FOUND));
-		if (passwordUpdateDTO.getOldPassword().equals(entity.getPassword())) {
-			if (passwordUpdateDTO.getNewPassword().equals(passwordUpdateDTO.getConfirmNewPassword())) {
-				entity.setPassword(passwordUpdateDTO.getNewPassword());
-				repository.save(entity);
-			} else {
-				throw new BadRequestException("New password and confirm new password is not matches");
-			}
-		} else {
-			throw new BadRequestException("Old password is incorret");
-		}
-	}
+//    /**
+//     * Changes the password for a doctor.
+//     *
+//     * @param id: The ID of the doctor.
+//     * @param passwordUpdateDTO: The DTO containing old and new password information.
+//     * @throws BadRequestException: If old password is incorrect or new password doesn't match the confirmation.
+//     * @throws ResourceNotFoundException: If no doctor is found with the given ID.
+//     */
+//	public void changePassword(String id, PasswordUpdateDTO passwordUpdateDTO) {
+//		logger.info("Changing password");
+//
+//		Doctor entity = repository.findById(UUID.fromString(id))
+//				.orElseThrow(() -> new ResourceNotFoundException(MessageUtils.NO_RECORDS_FOUND));
+//		if (passwordUpdateDTO.getOldPassword().equals(entity.getPassword())) {
+//			if (passwordUpdateDTO.getNewPassword().equals(passwordUpdateDTO.getConfirmNewPassword())) {
+//				entity.setPassword(passwordUpdateDTO.getNewPassword());
+//				repository.save(entity);
+//			} else {
+//				throw new BadRequestException("New password and confirm new password is not matches");
+//			}
+//		} else {
+//			throw new BadRequestException("Old password is incorret");
+//		}
+//	}
 	
     /**
      * Deletes a doctor by their ID.

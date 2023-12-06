@@ -16,6 +16,7 @@ import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -34,9 +35,6 @@ public class Doctor implements Serializable  {
 	
 	@Column(name = "full_name", nullable = false, length = 160)
 	private String fullName;
-
-	@Column(name = "password")
-	private String password;
 	
 	@Column(name = "cpf", nullable = false, length = 14, unique = true)
 	private String cpf;
@@ -50,6 +48,9 @@ public class Doctor implements Serializable  {
 	@Column(name = "specialty")
 	private String specialty;
 
+    @OneToOne
+    private User user;
+	
 	@CreatedDate
 	private LocalDateTime createdAt;
 
@@ -60,23 +61,21 @@ public class Doctor implements Serializable  {
 		super();
 	}
 
-	public Doctor(String email, String fullName, String password, String cpf, LocalDate birthDate, String phone,
+	public Doctor(String email, String fullName, String cpf, LocalDate birthDate, String phone,
 			String specialty) {
 		this.email = email;
 		this.fullName = fullName;
-		this.password = password;
 		this.cpf = cpf;
 		this.birthDate = birthDate;
 		this.phone = phone;
 		this.specialty = specialty;
 	}
 
-	public Doctor(UUID id, String email, String fullName, String password, String cpf, LocalDate birthDate,
+	public Doctor(UUID id, String email, String fullName, String cpf, LocalDate birthDate,
 			String phone, String specialty) {
 		this.id = id;
 		this.email = email;
 		this.fullName = fullName;
-		this.password = password;
 		this.cpf = cpf;
 		this.birthDate = birthDate;
 		this.phone = phone;
@@ -105,14 +104,6 @@ public class Doctor implements Serializable  {
 
 	public void setFullName(String fullName) {
 		this.fullName = fullName;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
 	}
 
 	public String getCpf() {
@@ -162,10 +153,19 @@ public class Doctor implements Serializable  {
 	public void setUpdatedAt(LocalDateTime updatedAt) {
 		this.updatedAt = updatedAt;
 	}
+	
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(birthDate, cpf, createdAt, email, fullName, id, password, phone, specialty, updatedAt);
+		return Objects.hash(birthDate, cpf, createdAt, email, fullName, id, phone, specialty, updatedAt,
+				user);
 	}
 
 	@Override
@@ -180,14 +180,18 @@ public class Doctor implements Serializable  {
 		return Objects.equals(birthDate, other.birthDate) && Objects.equals(cpf, other.cpf)
 				&& Objects.equals(createdAt, other.createdAt) && Objects.equals(email, other.email)
 				&& Objects.equals(fullName, other.fullName) && Objects.equals(id, other.id)
-				&& Objects.equals(password, other.password) && Objects.equals(phone, other.phone)
-				&& Objects.equals(specialty, other.specialty) && Objects.equals(updatedAt, other.updatedAt);
+				&& Objects.equals(phone, other.phone)
+				&& Objects.equals(specialty, other.specialty) && Objects.equals(updatedAt, other.updatedAt)
+				&& Objects.equals(user, other.user);
 	}
 
 	@Override
 	public String toString() {
-		return "Doctor [id=" + id + ", email=" + email + ", fullName=" + fullName + ", password=" + password + ", cpf="
-				+ cpf + ", birthDate=" + birthDate + ", phone=" + phone + ", specialty=" + specialty + "]";
+		return "Doctor [id=" + id + ", email=" + email + ", fullName=" + fullName + ", cpf="
+				+ cpf + ", birthDate=" + birthDate + ", phone=" + phone + ", specialty=" + specialty + ", user=" + user
+				+ ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + "]";
 	}
+
+
 
 }

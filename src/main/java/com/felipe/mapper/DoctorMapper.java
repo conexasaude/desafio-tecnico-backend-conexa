@@ -18,7 +18,6 @@ public class DoctorMapper {
 		entity.setId(dto.getKey());
 		entity.setEmail(dto.getEmail());
 		entity.setFullName(dto.getFullName());
-		entity.setPassword(dto.getPassword());
 		entity.setSpecialty(dto.getSpecialty());
 		entity.setCpf(dto.getCpf());
 		entity.setBirthDate(DateUtil.convertStringToLocalDate(dto.getBirthDate()));
@@ -33,7 +32,6 @@ public class DoctorMapper {
 		dto.setKey(entity.getId());
 		dto.setEmail(entity.getEmail());
 		dto.setFullName(entity.getFullName());
-		dto.setPassword(entity.getPassword());
 		dto.setSpecialty(entity.getSpecialty());
 		dto.setCpf(entity.getCpf());
 		dto.setBirthDate(DateUtil.convertLocalDateToString(entity.getBirthDate()));

@@ -63,19 +63,19 @@ public class DoctorController {
 
 	}
 
-	@PostMapping
-	@Operation(summary = "Create Doctor", tags = {
-			"Doctor" }, description = "Update an existing doctor by providing updated doctor details in JSON or XML format",
-
-			responses = { @ApiResponse(description = "Success", responseCode = "201", content = {
-					@Content(mediaType = "application/json", schema = @Schema(implementation = DoctorDTO.class)) }),
-					@ApiResponse(description = "No Content", responseCode = "204", content = @Content),
-					@ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
-					@ApiResponse(description = "Unathorized", responseCode = "401", content = @Content),
-					@ApiResponse(description = "Internal Error", responseCode = "500", content = @Content) })
-	public DoctorDTO create(@RequestBody DoctorDTO doctorDTO) throws Exception {
-		return service.create(doctorDTO);
-	}
+//	@PostMapping
+//	@Operation(summary = "Create Doctor", tags = {
+//			"Doctor" }, description = "Update an existing doctor by providing updated doctor details in JSON or XML format",
+//
+//			responses = { @ApiResponse(description = "Success", responseCode = "201", content = {
+//					@Content(mediaType = "application/json", schema = @Schema(implementation = DoctorDTO.class)) }),
+//					@ApiResponse(description = "No Content", responseCode = "204", content = @Content),
+//					@ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
+//					@ApiResponse(description = "Unathorized", responseCode = "401", content = @Content),
+//					@ApiResponse(description = "Internal Error", responseCode = "500", content = @Content) })
+//	public DoctorDTO create(@RequestBody DoctorDTO doctorDTO) throws Exception {
+//		return service.create(doctorDTO);
+//	}
 
 	@PutMapping
 	@Operation(summary = "Update Doctor", tags = {
@@ -91,20 +91,20 @@ public class DoctorController {
 		return service.update(doctorDTO);
 	}
 
-	@PatchMapping("/{id}/password")
-	@Operation(summary = "Update Doctor Password", tags = {
-			"Doctor" }, description = "Update the password of an existing doctor by providing the doctor ID and the new password",
-
-			responses = { @ApiResponse(description = "No Content", responseCode = "204", content = @Content),
-					@ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
-					@ApiResponse(description = "Unathorized", responseCode = "401", content = @Content),
-					@ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
-					@ApiResponse(description = "Internal Error", responseCode = "500", content = @Content) })
-	public ResponseEntity<Void> updatePassword(@PathVariable(value = "id") String id,
-			@RequestBody PasswordUpdateDTO passwordUpdateDTO) {
-		service.changePassword(id, passwordUpdateDTO);
-		return ResponseEntity.noContent().build();
-	}
+//	@PatchMapping("/{id}/password")
+//	@Operation(summary = "Update Doctor Password", tags = {
+//			"Doctor" }, description = "Update the password of an existing doctor by providing the doctor ID and the new password",
+//
+//			responses = { @ApiResponse(description = "No Content", responseCode = "204", content = @Content),
+//					@ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
+//					@ApiResponse(description = "Unathorized", responseCode = "401", content = @Content),
+//					@ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
+//					@ApiResponse(description = "Internal Error", responseCode = "500", content = @Content) })
+//	public ResponseEntity<Void> updatePassword(@PathVariable(value = "id") String id,
+//			@RequestBody PasswordUpdateDTO passwordUpdateDTO) {
+//		service.changePassword(id, passwordUpdateDTO);
+//		return ResponseEntity.noContent().build();
+//	}
 
 	@DeleteMapping("/{id}")
 	@Operation(summary = "Delete Doctor", tags = {

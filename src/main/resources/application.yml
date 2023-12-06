@@ -21,12 +21,12 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
-  flyway:
-    url: jdbc:mysql://localhost:3306/
-    schemas: rest-conexa-challenger
-    user: root
-    password: admin123
-    locations: classpath:db/migration
+#  flyway:
+#    url: jdbc:mysql://localhost:3306/
+#    schemas: rest-conexa-challenger
+#    user: root
+#    password: admin123
+#    locations: classpath:db/migration
 springdoc:
   pathsToMatch: 
     - /auth/**

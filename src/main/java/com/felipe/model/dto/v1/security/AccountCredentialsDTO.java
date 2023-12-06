@@ -7,23 +7,23 @@ public class AccountCredentialsDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private String username;
+	private String email;
 	private String password;
 
 	public AccountCredentialsDTO() {
 	}
 
-	public AccountCredentialsDTO(String username, String password) {
-		this.username = username;
+	public AccountCredentialsDTO(String email, String password) {
+		this.email = email;
 		this.password = password;
 	}
 
-	public String getUsername() {
-		return username;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getPassword() {
@@ -36,7 +36,7 @@ public class AccountCredentialsDTO implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(password, username);
+		return Objects.hash(password, email);
 	}
 
 	@Override
@@ -48,7 +48,7 @@ public class AccountCredentialsDTO implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		AccountCredentialsDTO other = (AccountCredentialsDTO) obj;
-		return Objects.equals(password, other.password) && Objects.equals(username, other.username);
+		return Objects.equals(password, other.password) && Objects.equals(email, other.email);
 	}
 
 	

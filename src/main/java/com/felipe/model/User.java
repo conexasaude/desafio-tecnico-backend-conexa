@@ -19,6 +19,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -34,9 +35,6 @@ public class User implements UserDetails, Serializable {
 	@Column(name = "user_name", unique = true)
 	private String userName;
 
-	@Column(name = "full_name")
-	private String fullName;
-
 	@Column(name = "password")
 	private String password;
 
@@ -51,6 +49,9 @@ public class User implements UserDetails, Serializable {
 
 	@Column(name = "enabled")
 	private Boolean enabled;
+	
+    @OneToOne(mappedBy = "user")
+    private Doctor doctor;
 
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "user_permission_tb", joinColumns = { @JoinColumn(name = "id_user") }, inverseJoinColumns = {
@@ -58,6 +59,17 @@ public class User implements UserDetails, Serializable {
 	private List<Permission> permissions;
 
 	public User() {
+	}
+	
+	public User(String userName, String password, Boolean accountNonExpired, Boolean accountNonLocked,
+			Boolean credentialsNonExpired, Boolean enabled, Doctor doctor) {
+		this.userName = userName;
+		this.password = password;
+		this.accountNonExpired = accountNonExpired;
+		this.accountNonLocked = accountNonLocked;
+		this.credentialsNonExpired = credentialsNonExpired;
+		this.enabled = enabled;
+		this.doctor = doctor;
 	}
 
 	public List<String> getRoles() {
@@ -119,14 +131,6 @@ public class User implements UserDetails, Serializable {
 		this.userName = userName;
 	}
 
-	public String getFullName() {
-		return this.fullName;
-	}
-
-	public void setFullName(String fullName) {
-		this.fullName = fullName;
-	}
-
 	public Boolean getAccountNonExpired() {
 		return this.accountNonExpired;
 	}
@@ -171,9 +175,17 @@ public class User implements UserDetails, Serializable {
 		this.password = password;
 	}
 
+	public Doctor getDoctor() {
+		return doctor;
+	}
+
+	public void setDoctor(Doctor doctor) {
+		this.doctor = doctor;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(accountNonExpired, accountNonLocked, credentialsNonExpired, enabled, fullName, id, password,
+		return Objects.hash(accountNonExpired, accountNonLocked, credentialsNonExpired, doctor, enabled, id, password,
 				permissions, userName);
 	}
 
@@ -189,8 +201,18 @@ public class User implements UserDetails, Serializable {
 		return Objects.equals(accountNonExpired, other.accountNonExpired)
 				&& Objects.equals(accountNonLocked, other.accountNonLocked)
 				&& Objects.equals(credentialsNonExpired, other.credentialsNonExpired)
-				&& Objects.equals(enabled, other.enabled) && Objects.equals(fullName, other.fullName)
+				&& Objects.equals(doctor, other.doctor) && Objects.equals(enabled, other.enabled)
 				&& Objects.equals(id, other.id) && Objects.equals(password, other.password)
 				&& Objects.equals(permissions, other.permissions) && Objects.equals(userName, other.userName);
 	}
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", userName=" + userName + ", password=" + password + ", accountNonExpired="
+				+ accountNonExpired + ", accountNonLocked=" + accountNonLocked + ", credentialsNonExpired="
+				+ credentialsNonExpired + ", enabled=" + enabled + ", doctor=" + doctor + ", permissions=" + permissions
+				+ "]";
+	}
+	
+	
 }

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.felipe.model.dto.v1.security.AccountCredentialsDTO;
+import com.felipe.model.dto.v1.security.CreateUserDoctorDTO;
 import com.felipe.service.AuthService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -38,4 +39,10 @@ public class AuthController {
 		return authService.refreshToken(username, refreshToken);
 	}
 
+	@SuppressWarnings("rawtypes")
+	@Operation(summary = "Create a new user")
+	@PostMapping(value = "/signup")
+	public ResponseEntity signup(@RequestBody CreateUserDoctorDTO data) throws Exception {
+		return authService.signup(data);
+	}
 }
