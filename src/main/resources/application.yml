@@ -27,6 +27,10 @@ spring:
 #    user: root
 #    password: admin123
 #    locations: classpath:db/migration
+  data:
+    redis:
+      host: localhost
+      port: 6379
 springdoc:
   pathsToMatch: 
     - /auth/**

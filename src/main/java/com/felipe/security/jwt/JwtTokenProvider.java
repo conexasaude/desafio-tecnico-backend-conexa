@@ -3,10 +3,13 @@ package com.felipe.security.jwt;
 import java.util.Base64;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -38,12 +41,18 @@ public class JwtTokenProvider {
 	@Autowired
 	private UserDetailsService userDetailsService;
 
+	@Autowired
+	private RedisTemplate<String, String> redisTemplate;
+
+	private Set<String> revokedTokens;
+
 	Algorithm algorithm = null;
 
 	@PostConstruct
 	protected void init() {
 		secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
 		algorithm = Algorithm.HMAC256(secretKey.getBytes());
+		revokedTokens = redisTemplate.opsForSet().members("revokedTokens");
 	}
 
 	public TokenDTO createAccessToken(String username, List<String> roles) {
@@ -54,21 +63,26 @@ public class JwtTokenProvider {
 		return new TokenDTO(username, true, now, validity, accessToken, refreshToken);
 	}
 
-	public TokenDTO refreshToken(String refreshToken) {
+	public TokenDTO refreshToken(String refreshToken, String olderToken) {
 		if (refreshToken.contains("Bearer ")) {
 			refreshToken = refreshToken.substring("Bearer ".length());
 		}
-		JWTVerifier verifier = JWT.require(algorithm).build();
-		DecodedJWT decodedJWT = verifier.verify(refreshToken);
+		DecodedJWT decodedJWT = decodedToken(refreshToken);
+
 		String username = decodedJWT.getSubject();
+
 		List<String> roles = decodedJWT.getClaim("roles").asList(String.class);
-		return createAccessToken(username, roles);
+		TokenDTO newToken = createAccessToken(username, roles);
+
+		this.revokeToken(olderToken);
+		this.revokeRefreshToken(username);
+		this.allowRefreshToken(newToken.getRefreshToken(), decodedJWT.getSubject());
+		return newToken;
 	}
 
 	public Authentication getAuthentication(String token) {
 		DecodedJWT decodedJWT = decodedToken(token);
 		UserDetails userDetails = this.userDetailsService.loadUserByUsername(decodedJWT.getSubject());
-		logger.info("UserDetails: " + userDetails.toString());
 		return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
 	}
 
@@ -80,17 +94,45 @@ public class JwtTokenProvider {
 		return null;
 	}
 
-	public boolean validateToken(String token) {
+	public boolean validateToken(String token) throws Exception {
 		DecodedJWT decodedJWT = decodedToken(token);
-		try {
-			if (decodedJWT.getExpiresAt().before(new Date())) {
-				return false;
-			}
-			return true;
-		} catch (Exception e) {
-			throw new InvalidJwtAuthenticationException("Expired or invalid JWT token!");
+		if (redisTemplate.opsForSet().isMember("revokedTokens", token)) {
+			throw new InvalidJwtAuthenticationException("Token has been revoked!");
 		}
+		if (decodedJWT.getExpiresAt().before(new Date())) {
+			throw new InvalidJwtAuthenticationException("Token has expired!");
+		}
+		return true;
 	}
+
+	public void revokeAllTokens(String token) {
+
+		DecodedJWT decodedJWT = decodedToken(token);
+		this.revokeRefreshToken(decodedJWT.getSubject());
+		this.revokeToken(token);
+	}
+
+	public void allowRefreshToken(String refreshToken, String subject) {
+		String key = "allowedRefreshTokens:" + subject;
+		redisTemplate.opsForValue().set(key, refreshToken, validityInMilliseconds * 3, TimeUnit.MILLISECONDS);
+	}
+
+	private void revokeToken(String token) {
+		if (revokedTokens.contains(token)) {
+			throw new InvalidJwtAuthenticationException("token already invalided!");
+		}
+		logger.info("token: " + token);
+		redisTemplate.opsForSet().add("revokedTokens", token);
+		redisTemplate.expire("revokedTokens", validityInMilliseconds, TimeUnit.MILLISECONDS);
+
+		revokedTokens.add(token);
+	}
+
+	private void revokeRefreshToken(String subject) {
+		String key = "allowedRefreshTokens:" + subject;
+		redisTemplate.delete(key);
+	}
+	
 
 	private DecodedJWT decodedToken(String token) {
 		Algorithm alg = Algorithm.HMAC256(secretKey.getBytes());

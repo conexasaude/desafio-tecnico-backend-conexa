@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class TokenDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -12,7 +14,11 @@ public class TokenDTO implements Serializable {
 	private Boolean authenticated;
 	private Date created;
 	private Date expiration;
+
+	@JsonProperty("acess_token")
 	private String acessToken;
+
+	@JsonProperty("refresh_token")
 	private String refreshToken;
 	
 	public TokenDTO() {

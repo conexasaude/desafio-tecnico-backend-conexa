@@ -22,6 +22,7 @@ import com.felipe.model.User;
 import com.felipe.model.dto.v1.DoctorDTO;
 import com.felipe.model.dto.v1.security.AccountCredentialsDTO;
 import com.felipe.model.dto.v1.security.CreateUserDoctorDTO;
+import com.felipe.model.dto.v1.security.LogoutDTO;
 import com.felipe.model.dto.v1.security.TokenDTO;
 import com.felipe.repositories.UserRepository;
 import com.felipe.security.jwt.JwtTokenProvider;
@@ -59,6 +60,7 @@ public class AuthService {
 
 			if (user != null) {
 				tokenResponse = jwtTokenProvider.createAccessToken(username, user.getRoles());
+				jwtTokenProvider.allowRefreshToken(tokenResponse.getRefreshToken(), username);
 			} else {
 				throw new UsernameNotFoundException("Email " + username + " not found!");
 			}
@@ -71,14 +73,14 @@ public class AuthService {
 	}
 
 	@SuppressWarnings("rawtypes")
-	public ResponseEntity refreshToken(String username, String refreshToken) {
+	public ResponseEntity refreshToken(String username, String refreshToken, LogoutDTO dto) {
 		checkParamsIsNotNull(username, refreshToken);
 
 		var user = userRepository.findByUserName(username);
 
 		var tokenResponse = new TokenDTO();
 		if (user != null) {
-			tokenResponse = jwtTokenProvider.refreshToken(refreshToken);
+			tokenResponse = jwtTokenProvider.refreshToken(refreshToken, dto.getAcessToken());
 		} else {
 			throw new UsernameNotFoundException("Email " + username + " not found!");
 		}
@@ -108,14 +110,20 @@ public class AuthService {
 
 		String passwordEncoded = delegatingPasswordEncoder.encode(dto.getPassword());
 		
-		// Cria um objeto User
 		User user = new User(dto.getEmail(), passwordEncoded, true, true, true, true, createdDoctor);
-//		createdDoctor.setUser(user);
 		userRepository.save(user);
 		
 		return ResponseEntity.noContent().build();
 	}
 
+	public ResponseEntity<String> logout(String token) {
+        if (token != null && token.startsWith("Bearer ")) {
+            token = token.substring("Bearer ".length());
+        }
+        jwtTokenProvider.revokeAllTokens(token);
+        return ResponseEntity.ok("Logged out successfully");
+	}
+	
 	private void checkParamsIsNotNull(String username, String refreshToken) {
 		if (refreshToken == null || refreshToken.isBlank() || username == null || username.isBlank()) {
 			throw new ForbbidenException("Invalid client request!");

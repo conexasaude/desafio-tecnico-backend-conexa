@@ -1,25 +1,20 @@
 package com.felipe.model;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "patient_tb")
-@EntityListeners(AuditingEntityListener.class)
 public class Patient implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -37,26 +32,25 @@ public class Patient implements Serializable {
 	@Column(name = "health_insurance", length = 25)
 	private String healthInsurance;
 
-	@CreatedDate
-	private LocalDateTime createdAt;
-
-	@LastModifiedDate
-	private LocalDateTime updatedAt;
-
+    @OneToMany(mappedBy = "patient")
+    private List<Attendance> attendances;
+	
 	public Patient() {
 	}
 
-	public Patient(String fullName, String cpf, String healthInsurance) {
+	public Patient(String fullName, String cpf, String healthInsurance, List<Attendance> attendances) {
 		this.fullName = fullName;
 		this.cpf = cpf;
 		this.healthInsurance = healthInsurance;
+		this.attendances = attendances;
 	}
 
-	public Patient(UUID id, String fullName, String cpf, String healthInsurance) {
+	public Patient(UUID id, String fullName, String cpf, String healthInsurance, List<Attendance> attendances) {
 		this.id = id;
 		this.fullName = fullName;
 		this.cpf = cpf;
 		this.healthInsurance = healthInsurance;
+		this.attendances = attendances;
 	}
 
 	public UUID getId() {
@@ -91,25 +85,17 @@ public class Patient implements Serializable {
 		this.healthInsurance = healthInsurance;
 	}
 
-	public LocalDateTime getCreatedAt() {
-		return createdAt;
+	public List<Attendance> getAttendances() {
+		return attendances;
 	}
 
-	public void setCreatedAt(LocalDateTime createdAt) {
-		this.createdAt = createdAt;
-	}
-
-	public LocalDateTime getUpdatedAt() {
-		return updatedAt;
-	}
-
-	public void setUpdatedAt(LocalDateTime updatedAt) {
-		this.updatedAt = updatedAt;
+	public void setAttendances(List<Attendance> attendances) {
+		this.attendances = attendances;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(cpf, createdAt, fullName, healthInsurance, id, updatedAt);
+		return Objects.hash(attendances, cpf, fullName, healthInsurance, id);
 	}
 
 	@Override
@@ -121,15 +107,17 @@ public class Patient implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Patient other = (Patient) obj;
-		return Objects.equals(cpf, other.cpf) && Objects.equals(createdAt, other.createdAt)
+		return Objects.equals(attendances, other.attendances) && Objects.equals(cpf, other.cpf)
 				&& Objects.equals(fullName, other.fullName) && Objects.equals(healthInsurance, other.healthInsurance)
-				&& Objects.equals(id, other.id) && Objects.equals(updatedAt, other.updatedAt);
+				&& Objects.equals(id, other.id);
 	}
 
 	@Override
 	public String toString() {
 		return "Patient [id=" + id + ", fullName=" + fullName + ", cpf=" + cpf + ", healthInsurance=" + healthInsurance
-				+ "]";
+				+ ", attendances=" + attendances + "]";
 	}
+
+	
 
 }
