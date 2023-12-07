@@ -21,6 +21,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 
 @Tag(name = "Authentication Endpoint")
 @RestController
@@ -30,37 +31,44 @@ public class AuthController {
 	@Autowired
 	AuthService authService;
 
-	@Operation(summary = "Authenticates a user and return a token")
+	@Operation(summary = "Authenticates a user and returns a token", responses = {
+			@ApiResponse(description = "Success", responseCode = "200", content = {
+					@Content(mediaType = "application/json", schema = @Schema(implementation = AccessTokenDTO.class)) }),
+			@ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
+			@ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content) })
 	@PostMapping(value = "/login")
-	public ResponseEntity<AccessTokenDTO> signin(@RequestBody AccountCredentialsDTO data) {
+	public ResponseEntity<AccessTokenDTO> signin(@Valid @RequestBody AccountCredentialsDTO data) {
 		return authService.signin(data);
 	}
-	
-	@Operation(summary = "Refresh token for authenticated user and returns a token")
+
+	@Operation(summary = "Refresh token for an authenticated user and returns a new token", responses = {
+			@ApiResponse(description = "Success", responseCode = "200", content = {
+					@Content(mediaType = "application/json", schema = @Schema(implementation = AccessTokenDTO.class)) }),
+			@ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content) })
 	@PutMapping(value = "/refresh/{email}")
-	public ResponseEntity<AccessTokenDTO> refresh(@PathVariable("email") String email, @RequestHeader("Authorization") String refreshToken, @RequestBody AccessTokenDTO dto) {
+	public ResponseEntity<AccessTokenDTO> refresh(@PathVariable("email") String email,
+			@RequestHeader("Authorization") String refreshToken, @Valid @RequestBody AccessTokenDTO dto) {
 		return authService.refreshToken(email, refreshToken, dto);
 	}
 
 	@SuppressWarnings("rawtypes")
-	@PostMapping(value = "/signup")
 	@Operation(summary = "Create User", tags = {
-	"Doctor" }, description = "Create an user by providing doctor details in JSON or XML format",
-
-	responses = { @ApiResponse(description = "Success", responseCode = "201", content = {
-			@Content(mediaType = "application/json", schema = @Schema(implementation = CreateUserDoctorDTO.class)) }),
-			@ApiResponse(description = "No Content", responseCode = "204", content = @Content),
-			@ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
-			@ApiResponse(description = "Unathorized", responseCode = "401", content = @Content),
-			@ApiResponse(description = "Internal Error", responseCode = "500", content = @Content) })
-	public ResponseEntity signup(@RequestBody CreateUserDoctorDTO data) throws Exception {
+			"User" }, description = "Create a user by providing doctor details in JSON or XML format", responses = {
+					@ApiResponse(description = "No Content", responseCode = "204", content = @Content),
+					@ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
+					@ApiResponse(description = "Internal Error", responseCode = "500", content = @Content) })
+	@PostMapping(value = "/signup")
+	public ResponseEntity signup(@Valid @RequestBody CreateUserDoctorDTO data) throws Exception {
 		return authService.signup(data);
 	}
-	
-    @PostMapping("/logout")
-    @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<String> logout(@RequestHeader("Authorization") String token) {
-        return authService.logout(token);
-    }
-    
+
+	@Operation(summary = "Logout", description = "Logout an authenticated user", responses = {
+			@ApiResponse(description = "Success", responseCode = "200", content = @Content),
+			@ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content) })
+	@PostMapping("/logout")
+	@PreAuthorize("isAuthenticated()")
+	public ResponseEntity<String> logout(@Valid @RequestHeader("Authorization") String token) {
+		return authService.logout(token);
+	}
+
 }

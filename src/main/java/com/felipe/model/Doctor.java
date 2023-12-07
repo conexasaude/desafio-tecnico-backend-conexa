@@ -10,6 +10,8 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import com.felipe.util.StringUtil;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
@@ -65,7 +67,7 @@ public class Doctor implements Serializable  {
 			String specialty) {
 		this.email = email;
 		this.fullName = fullName;
-		this.cpf = cpf;
+		this.cpf = StringUtil.removeNonNumeric(cpf);
 		this.birthDate = birthDate;
 		this.phone = phone;
 		this.specialty = specialty;
@@ -76,7 +78,7 @@ public class Doctor implements Serializable  {
 		this.id = id;
 		this.email = email;
 		this.fullName = fullName;
-		this.cpf = cpf;
+		this.cpf = StringUtil.removeNonNumeric(cpf);
 		this.birthDate = birthDate;
 		this.phone = phone;
 		this.specialty = specialty;

@@ -30,7 +30,7 @@ import jakarta.servlet.http.HttpServletRequest;
 
 @Service
 public class JwtTokenProvider {
-	private Logger logger = Logger.getLogger(UserService.class.getName());
+	private Logger logger = Logger.getLogger(JwtTokenProvider.class.getName());
 
 	@Value("${security.jwt.token.secret-key:secret}")
 	private String secretKey = "secret";

@@ -4,13 +4,18 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.felipe.util.MessageUtils;
+
+import jakarta.validation.constraints.NotBlank;
 
 public class AccountCredentialsDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	@NotBlank(message = MessageUtils.CANNOT_BLANK)
 	private String email;
 	
+	@NotBlank(message = MessageUtils.CANNOT_BLANK)
 	@JsonProperty("senha")
 	private String password;
 

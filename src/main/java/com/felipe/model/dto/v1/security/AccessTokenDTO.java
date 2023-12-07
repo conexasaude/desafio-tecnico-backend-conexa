@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.felipe.util.MessageUtils;
+
+import jakarta.validation.constraints.NotBlank;
 
 public class AccessTokenDTO implements Serializable {
 
@@ -11,6 +14,7 @@ public class AccessTokenDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@JsonProperty("token")
+	@NotBlank(message = MessageUtils.CANNOT_BLANK)
 	private String acessToken;
 	
 	public AccessTokenDTO() {

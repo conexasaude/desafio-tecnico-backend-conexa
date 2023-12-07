@@ -26,7 +26,7 @@ public class UserController {
    
 	@PatchMapping("/{email}/password")
 	@Operation(summary = "Update User Password", tags = {
-			"Doctor" }, description = "Update the password of an existing user by providing the user ID and the new password",
+			"User" }, description = "Update the password of an existing user by providing the user ID and the new password",
 
 			responses = { @ApiResponse(description = "No Content", responseCode = "204", content = @Content),
 					@ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),

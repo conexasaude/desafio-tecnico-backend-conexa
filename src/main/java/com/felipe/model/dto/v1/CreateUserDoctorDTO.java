@@ -4,31 +4,54 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.felipe.util.MessageUtils;
+
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.AssertTrue;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 public class CreateUserDoctorDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	@NotBlank(message = MessageUtils.CANNOT_BLANK)
+	@Email(message = "invalid E-mail")
 	private String email;
 
+	@NotBlank(message = MessageUtils.CANNOT_BLANK)
 	@JsonProperty("nomeCompleto")
 	private String fullName;
 
+	@NotBlank(message = MessageUtils.CANNOT_BLANK)
 	@JsonProperty("senha")
 	private String password;
 
+	@NotBlank(message = MessageUtils.CANNOT_BLANK)
 	@JsonProperty("confirmacaoSenha")
 	private String confirmPassword;
-	
+
 	@JsonProperty("especialidade")
+	@NotBlank(message = MessageUtils.CANNOT_BLANK)
 	private String specialty;
 
+	
+	@NotBlank(message = MessageUtils.CANNOT_BLANK)
+	@Size(min = 11, max = 14, message = "CPF must be between 11 and 14 characters")
 	private String cpf;
 
+	@NotBlank(message = MessageUtils.CANNOT_BLANK)
 	@JsonProperty("dataNascimento")
 	private String birthDate;
-	
+
+	/**
+	 * Formats:
+	 * (XX) XXXX-XXXX ; (XX) XXXXX-XXXX ; 11XXXXXXXX ; 11XXXXXXXXX
+	 */
 	@JsonProperty("telefone")
+	@Pattern(regexp = "^\\(\\d{2}\\)\\s?\\d{4,5}-\\d{4}$|^\\d{11}$", message = "Invalid phone number format")
 	private String phone;
 
 	public CreateUserDoctorDTO() {
@@ -78,6 +101,7 @@ public class CreateUserDoctorDTO implements Serializable {
 		this.confirmPassword = confirmPassword;
 	}
 
+    @Valid
 	public String getCpf() {
 		return cpf;
 	}
@@ -110,6 +134,11 @@ public class CreateUserDoctorDTO implements Serializable {
 		this.specialty = specialty;
 	}
 
+	@AssertTrue(message = MessageUtils.PASSWORD_MISMATCH)
+	public boolean isPasswordConfirmed() {
+		return password.equals(confirmPassword);
+	}
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(birthDate, confirmPassword, cpf, email, fullName, password, phone, specialty);
@@ -129,7 +158,5 @@ public class CreateUserDoctorDTO implements Serializable {
 				&& Objects.equals(fullName, other.fullName) && Objects.equals(password, other.password)
 				&& Objects.equals(phone, other.phone) && Objects.equals(specialty, other.specialty);
 	}
-	
-	
-	
+
 }

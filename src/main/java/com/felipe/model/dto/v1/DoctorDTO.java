@@ -10,6 +10,11 @@ import org.springframework.hateoas.RepresentationModel;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.felipe.util.MessageUtils;
+
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 
 @JsonPropertyOrder({ "id", "email", "full_name", "specialty", "cpf", "birth_date", "phone" })
 public class DoctorDTO extends RepresentationModel<DoctorDTO> implements Serializable {
@@ -18,18 +23,27 @@ public class DoctorDTO extends RepresentationModel<DoctorDTO> implements Seriali
 	@JsonProperty("id")
 	private UUID key;
 	
+	@NotBlank(message = MessageUtils.CANNOT_BLANK)
+	@Email(message = "invalid E-mail")
 	private String email;
 	
+	@NotBlank(message = MessageUtils.CANNOT_BLANK)
 	@JsonProperty("full_name")
 	private String fullName;
 	
+	@NotBlank(message = MessageUtils.CANNOT_BLANK)
+	@Pattern(regexp = "^[0-9]{3}\\.[0-9]{3}\\.[0-9]{3}-[0-9]{2}$", message = "Invalid CPF format")
 	private String cpf;
-	
-	@JsonProperty("birth_date")
+
+	@NotBlank(message = MessageUtils.CANNOT_BLANK)
+	@JsonProperty("dataNascimento")
 	private String birthDate;
 	
+	@JsonProperty("telefone")
+	@Pattern(regexp = "^\\(\\d{2}\\)\\s?\\d{4,5}-\\d{4}$|^\\d{11}$", message = "Invalid phone number format")
 	private String phone;
 	
+	@NotBlank(message = MessageUtils.CANNOT_BLANK)
 	private String specialty;
 
 //	@JsonProperty("created_at")

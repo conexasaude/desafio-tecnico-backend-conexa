@@ -7,7 +7,10 @@ import org.springframework.stereotype.Component;
 
 import com.felipe.model.Doctor;
 import com.felipe.model.dto.v1.DoctorDTO;
+import com.felipe.util.CpfUtil;
 import com.felipe.util.DateUtil;
+import com.felipe.util.PhoneNumberUtil;
+import com.felipe.util.StringUtil;
 
 
 @Component
@@ -19,9 +22,9 @@ public class DoctorMapper {
 		entity.setEmail(dto.getEmail());
 		entity.setFullName(dto.getFullName());
 		entity.setSpecialty(dto.getSpecialty());
-		entity.setCpf(dto.getCpf());
+		entity.setCpf(StringUtil.removeNonNumeric(dto.getCpf()));
 		entity.setBirthDate(DateUtil.convertStringToLocalDate(dto.getBirthDate()));
-		entity.setPhone(dto.getPhone());
+		entity.setPhone(PhoneNumberUtil.unformatPhoneNumber(dto.getPhone()));
 //        entity.setCreatedAt(dto.getCreatedAt());
 //        entity.setUpdatedAt(dto.getUpdatedAt());
 		return entity;
@@ -33,9 +36,9 @@ public class DoctorMapper {
 		dto.setEmail(entity.getEmail());
 		dto.setFullName(entity.getFullName());
 		dto.setSpecialty(entity.getSpecialty());
-		dto.setCpf(entity.getCpf());
+		dto.setCpf(CpfUtil.formatCPF(entity.getCpf()));
 		dto.setBirthDate(DateUtil.convertLocalDateToString(entity.getBirthDate()));
-		dto.setPhone(entity.getPhone());
+		dto.setPhone(PhoneNumberUtil.formatPhoneNumber(entity.getPhone()));
 //        dto.setCreatedAt(entity.getCreatedAt());
 //        dto.setUpdatedAt(entity.getUpdatedAt());
 		return dto;

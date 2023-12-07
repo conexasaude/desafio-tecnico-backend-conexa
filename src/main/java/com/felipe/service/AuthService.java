@@ -31,7 +31,7 @@ import jakarta.transaction.Transactional;
 
 @Service
 public class AuthService {
-	private Logger logger = Logger.getLogger(UserService.class.getName());
+	private Logger logger = Logger.getLogger(AuthService.class.getName());
 
 	@Autowired
 	private AuthenticationManager authenticationManager;
@@ -44,27 +44,25 @@ public class AuthService {
 
 	@Autowired
 	private DoctorService doctorService;
-	
+
 	@Autowired
 	private PasswordService passwordService;
 
 	public ResponseEntity<AccessTokenDTO> signin(AccountCredentialsDTO data) {
 		try {
-			checkParamsIsNotNull(data);
-
 			var username = data.getEmail();
 			var password = data.getPassword();
 
 			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
 
-			var user = userRepository.findByUserName(username)
-				.orElseThrow(() -> new ResourceNotFoundException(MessageUtils.NO_RECORDS_FOUND + ": Email " + username + " not found!"));
+			var user = userRepository.findByUserName(username).orElseThrow(() -> new ResourceNotFoundException(
+					MessageUtils.NO_RECORDS_FOUND + ": Email " + username + " not found!"));
 
 			var tokenResponse = jwtTokenProvider.createAccessToken(username, user.getRoles());
-				jwtTokenProvider.allowRefreshToken(tokenResponse.getRefreshToken(), username);
-			
+			jwtTokenProvider.allowRefreshToken(tokenResponse.getRefreshToken(), username);
+
 			validateTokenResponse(tokenResponse);
-		    HttpHeaders headers = getHeaderRefreshToken(tokenResponse);
+			HttpHeaders headers = getHeaderRefreshToken(tokenResponse);
 
 			return ResponseEntity.ok().headers(headers).body(new AccessTokenDTO(tokenResponse.getAcessToken()));
 		} catch (Exception e) {
@@ -84,57 +82,46 @@ public class AuthService {
 			throw new UsernameNotFoundException("Email " + username + " not found!");
 		}
 		validateTokenResponse(tokenResponse);
-		
-	    HttpHeaders headers = getHeaderRefreshToken(tokenResponse);
-	    
+
+		HttpHeaders headers = getHeaderRefreshToken(tokenResponse);
 
 		return ResponseEntity.ok().headers(headers).body(new AccessTokenDTO(tokenResponse.getAcessToken()));
 	}
 
-
-
 	@Transactional
 	public ResponseEntity<?> signup(CreateUserDoctorDTO dto) throws Exception {
-		if (!dto.getConfirmPassword().equals(dto.getPassword())) {
-			throw new BadRequestException(MessageUtils.INVALID_EMAIL_PASSWORD);
-		}
-
-		DoctorDTO doctor = new DoctorDTO(dto.getEmail(), dto.getFullName(), dto.getCpf(), dto.getBirthDate(), 
-				 dto.getPhone(), dto.getSpecialty());
+		DoctorDTO doctor = new DoctorDTO(dto.getEmail(), dto.getFullName(), dto.getCpf(), dto.getBirthDate(),
+				dto.getPhone(), dto.getSpecialty());
 
 		Doctor createdDoctor = doctorService.create(doctor);
-		
-        String passwordEncoded = passwordService.encodePassword(dto.getPassword());
-	
+
+		String passwordEncoded = passwordService.encodePassword(dto.getPassword());
+
 		User user = new User(dto.getEmail(), passwordEncoded, true, true, true, true, createdDoctor);
 		User savedUser = userRepository.save(user);
 		logger.info("User created");
 
-	    return ResponseEntity.created(new URI("/api/users/" + savedUser.getId())) // Adapte a URI conforme necessário
-	            .body(null);
+		return ResponseEntity.created(new URI("/api/users/" + savedUser.getId())) // Adapte a URI conforme necessário
+				.body(null);
 	}
 
 	public ResponseEntity<String> logout(String token) {
-        if (token != null && token.startsWith("Bearer ")) {
-            token = token.substring("Bearer ".length());
-        }
-        jwtTokenProvider.revokeAllTokens(token);
-        return ResponseEntity.ok("Logged out successfully");
+		if (token != null && token.startsWith("Bearer ")) {
+			token = token.substring("Bearer ".length());
+		}
+		jwtTokenProvider.revokeAllTokens(token);
+		return ResponseEntity.ok("Logged out successfully");
 	}
-	
+
 	public void changePassword(String email, PasswordUpdateDTO passwordUpdateDTO) {
 		logger.info("Changing password");
 		try {
 			User entity = userRepository.findByUserName(email)
 					.orElseThrow(() -> new ResourceNotFoundException(MessageUtils.NO_RECORDS_FOUND));
-			
+
 			if (passwordService.matches(passwordUpdateDTO.getOldPassword(), entity.getPassword())) {
-				if (passwordUpdateDTO.getNewPassword().equals(passwordUpdateDTO.getConfirmNewPassword())) {
-					entity.setPassword(passwordService.encodePassword(passwordUpdateDTO.getNewPassword()));
-					userRepository.save(entity);
-				} else {
-					throw new BadRequestException(MessageUtils.NEW_PASSWORD_MISMATCH);
-				}
+				entity.setPassword(passwordService.encodePassword(passwordUpdateDTO.getNewPassword()));
+				userRepository.save(entity);
 			}
 		} catch (Exception e) {
 			if (e.getMessage().contains("Detected a Non-hex character at 1 or 2 position")) {
@@ -146,19 +133,12 @@ public class AuthService {
 
 	private HttpHeaders getHeaderRefreshToken(TokenDTO tokenResponse) {
 		HttpHeaders headers = new HttpHeaders();
-	    headers.add("Refresh-Token", tokenResponse.getRefreshToken());
+		headers.add("Refresh-Token", tokenResponse.getRefreshToken());
 		return headers;
 	}
-	
+
 	private void checkParamsIsNotNull(String username, String refreshToken) {
 		if (refreshToken == null || refreshToken.isBlank() || username == null || username.isBlank()) {
-			throw new ForbbidenException(MessageUtils.INVALID_CLIENT_REQUEST);
-		}
-	}
-
-	private void checkParamsIsNotNull(AccountCredentialsDTO data) {
-		if (data == null || data.getEmail() == null || data.getEmail().isBlank() || data.getPassword() == null
-				|| data.getPassword().isBlank()) {
 			throw new ForbbidenException(MessageUtils.INVALID_CLIENT_REQUEST);
 		}
 	}
