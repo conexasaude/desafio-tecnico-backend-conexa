@@ -5,17 +5,18 @@ import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class LogoutDTO implements Serializable {
+public class AccessTokenDTO implements Serializable {
+
 
 	private static final long serialVersionUID = 1L;
 
-	@JsonProperty("access_token")
+	@JsonProperty("token")
 	private String acessToken;
-
-	public LogoutDTO() {
+	
+	public AccessTokenDTO() {
 	}
-
-	public LogoutDTO(String acessToken) {
+	
+	public AccessTokenDTO(String acessToken) {
 		this.acessToken = acessToken;
 	}
 
@@ -40,13 +41,14 @@ public class LogoutDTO implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		LogoutDTO other = (LogoutDTO) obj;
+		AccessTokenDTO other = (AccessTokenDTO) obj;
 		return Objects.equals(acessToken, other.acessToken);
 	}
 
 	@Override
 	public String toString() {
-		return "LogoutDTO [acessToken=" + acessToken + "]";
+		return "TokenDTO [acessToken=" + acessToken + "]";
 	}
+
 
 }

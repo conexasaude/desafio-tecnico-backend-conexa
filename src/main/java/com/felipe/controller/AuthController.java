@@ -11,10 +11,9 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.felipe.model.dto.v1.CreateUserDoctorDTO;
+import com.felipe.model.dto.v1.security.AccessTokenDTO;
 import com.felipe.model.dto.v1.security.AccountCredentialsDTO;
-import com.felipe.model.dto.v1.security.CreateUserDoctorDTO;
-import com.felipe.model.dto.v1.security.LogoutDTO;
-import com.felipe.model.dto.v1.security.TokenDTO;
 import com.felipe.service.AuthService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -32,15 +31,15 @@ public class AuthController {
 	AuthService authService;
 
 	@Operation(summary = "Authenticates a user and return a token")
-	@PostMapping(value = "/signin")
-	public ResponseEntity<TokenDTO> signin(@RequestBody AccountCredentialsDTO data) {
+	@PostMapping(value = "/login")
+	public ResponseEntity<AccessTokenDTO> signin(@RequestBody AccountCredentialsDTO data) {
 		return authService.signin(data);
 	}
 	
 	@Operation(summary = "Refresh token for authenticated user and returns a token")
-	@PutMapping(value = "/refresh/{username}")
-	public ResponseEntity<TokenDTO> refresh(@PathVariable("username") String username, @RequestHeader("Authorization") String refreshToken, @RequestBody LogoutDTO dto) {
-		return authService.refreshToken(username, refreshToken, dto);
+	@PutMapping(value = "/refresh/{email}")
+	public ResponseEntity<AccessTokenDTO> refresh(@PathVariable("email") String email, @RequestHeader("Authorization") String refreshToken, @RequestBody AccessTokenDTO dto) {
+		return authService.refreshToken(email, refreshToken, dto);
 	}
 
 	@SuppressWarnings("rawtypes")

@@ -1,4 +1,4 @@
-package com.felipe.model.dto.v1.security;
+package com.felipe.model.dto.v1;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -11,22 +11,25 @@ public class CreateUserDoctorDTO implements Serializable {
 
 	private String email;
 
-	@JsonProperty("full_name")
+	@JsonProperty("nomeCompleto")
 	private String fullName;
 
+	@JsonProperty("senha")
 	private String password;
 
-	@JsonProperty("confirm_password")
+	@JsonProperty("confirmacaoSenha")
 	private String confirmPassword;
+	
+	@JsonProperty("especialidade")
+	private String specialty;
 
 	private String cpf;
 
-	@JsonProperty("birth_date")
+	@JsonProperty("dataNascimento")
 	private String birthDate;
-
+	
+	@JsonProperty("telefone")
 	private String phone;
-
-	private String specialty;
 
 	public CreateUserDoctorDTO() {
 	}

@@ -1,8 +1,10 @@
 package com.felipe.service;
 
+import java.net.URI;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -15,11 +17,11 @@ import com.felipe.exceptions.ForbbidenException;
 import com.felipe.exceptions.ResourceNotFoundException;
 import com.felipe.model.Doctor;
 import com.felipe.model.User;
+import com.felipe.model.dto.v1.CreateUserDoctorDTO;
 import com.felipe.model.dto.v1.DoctorDTO;
 import com.felipe.model.dto.v1.PasswordUpdateDTO;
+import com.felipe.model.dto.v1.security.AccessTokenDTO;
 import com.felipe.model.dto.v1.security.AccountCredentialsDTO;
-import com.felipe.model.dto.v1.security.CreateUserDoctorDTO;
-import com.felipe.model.dto.v1.security.LogoutDTO;
 import com.felipe.model.dto.v1.security.TokenDTO;
 import com.felipe.repositories.UserRepository;
 import com.felipe.security.jwt.JwtTokenProvider;
@@ -46,7 +48,7 @@ public class AuthService {
 	@Autowired
 	private PasswordService passwordService;
 
-	public ResponseEntity<TokenDTO> signin(AccountCredentialsDTO data) {
+	public ResponseEntity<AccessTokenDTO> signin(AccountCredentialsDTO data) {
 		try {
 			checkParamsIsNotNull(data);
 
@@ -62,14 +64,15 @@ public class AuthService {
 				jwtTokenProvider.allowRefreshToken(tokenResponse.getRefreshToken(), username);
 			
 			validateTokenResponse(tokenResponse);
+		    HttpHeaders headers = getHeaderRefreshToken(tokenResponse);
 
-			return ResponseEntity.ok(tokenResponse);
+			return ResponseEntity.ok().headers(headers).body(new AccessTokenDTO(tokenResponse.getAcessToken()));
 		} catch (Exception e) {
 			throw new BadCredentialsException(MessageUtils.INVALID_EMAIL_PASSWORD);
 		}
 	}
 
-	public ResponseEntity<TokenDTO> refreshToken(String username, String refreshToken, LogoutDTO dto) {
+	public ResponseEntity<AccessTokenDTO> refreshToken(String username, String refreshToken, AccessTokenDTO dto) {
 		checkParamsIsNotNull(username, refreshToken);
 
 		var user = userRepository.findByUserName(username);
@@ -81,13 +84,17 @@ public class AuthService {
 			throw new UsernameNotFoundException("Email " + username + " not found!");
 		}
 		validateTokenResponse(tokenResponse);
+		
+	    HttpHeaders headers = getHeaderRefreshToken(tokenResponse);
+	    
 
-		return ResponseEntity.ok(tokenResponse);
+		return ResponseEntity.ok().headers(headers).body(new AccessTokenDTO(tokenResponse.getAcessToken()));
 	}
 
-	@SuppressWarnings("rawtypes")
+
+
 	@Transactional
-	public ResponseEntity signup(CreateUserDoctorDTO dto) throws Exception {
+	public ResponseEntity<?> signup(CreateUserDoctorDTO dto) throws Exception {
 		if (!dto.getConfirmPassword().equals(dto.getPassword())) {
 			throw new BadRequestException(MessageUtils.INVALID_EMAIL_PASSWORD);
 		}
@@ -100,10 +107,11 @@ public class AuthService {
         String passwordEncoded = passwordService.encodePassword(dto.getPassword());
 	
 		User user = new User(dto.getEmail(), passwordEncoded, true, true, true, true, createdDoctor);
-		userRepository.save(user);
+		User savedUser = userRepository.save(user);
 		logger.info("User created");
 
-		return ResponseEntity.noContent().build();
+	    return ResponseEntity.created(new URI("/api/users/" + savedUser.getId())) // Adapte a URI conforme necessário
+	            .body(null);
 	}
 
 	public ResponseEntity<String> logout(String token) {
@@ -113,29 +121,6 @@ public class AuthService {
         jwtTokenProvider.revokeAllTokens(token);
         return ResponseEntity.ok("Logged out successfully");
 	}
-
-//	public void changePassword(String email, PasswordUpdateDTO passwordUpdateDTO) {
-//		logger.info("Changing password");
-//		try {
-//			User entity = userRepository.findByUserName(email)
-//					.orElseThrow(() -> new ResourceNotFoundException(MessageUtils.NO_RECORDS_FOUND));
-//			PasswordEncoder passwordEncoder = getPasswordEncoder();
-//			
-//			if (passwordEncoder.matches(passwordUpdateDTO.getOldPassword(), entity.getPassword())) {
-//				if (passwordUpdateDTO.getNewPassword().equals(passwordUpdateDTO.getConfirmNewPassword())) {
-//					entity.setPassword(passwordUpdateDTO.getNewPassword());
-//					userRepository.save(entity);
-//				} else {
-//					throw new BadRequestException(MessageUtils.NEW_PASSWORD_MISMATCH);
-//				}
-//			}
-//		} catch (Exception e) {
-//			if (e.getMessage().contains("Detected a Non-hex character at 1 or 2 position")) {
-//				throw new BadRequestException(MessageUtils.IVALID_PASSWORD);
-//			}
-//			throw new BadRequestException(e.getMessage());
-//		}
-//	}
 	
 	public void changePassword(String email, PasswordUpdateDTO passwordUpdateDTO) {
 		logger.info("Changing password");
@@ -159,6 +144,12 @@ public class AuthService {
 		}
 	}
 
+	private HttpHeaders getHeaderRefreshToken(TokenDTO tokenResponse) {
+		HttpHeaders headers = new HttpHeaders();
+	    headers.add("Refresh-Token", tokenResponse.getRefreshToken());
+		return headers;
+	}
+	
 	private void checkParamsIsNotNull(String username, String refreshToken) {
 		if (refreshToken == null || refreshToken.isBlank() || username == null || username.isBlank()) {
 			throw new ForbbidenException(MessageUtils.INVALID_CLIENT_REQUEST);

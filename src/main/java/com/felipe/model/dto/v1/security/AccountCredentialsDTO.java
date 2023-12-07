@@ -3,11 +3,15 @@ package com.felipe.model.dto.v1.security;
 import java.io.Serializable;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class AccountCredentialsDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	private String email;
+	
+	@JsonProperty("senha")
 	private String password;
 
 	public AccountCredentialsDTO() {
