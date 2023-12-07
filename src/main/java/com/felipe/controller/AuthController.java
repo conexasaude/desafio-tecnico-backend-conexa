@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.felipe.model.dto.v1.security.AccountCredentialsDTO;
 import com.felipe.model.dto.v1.security.CreateUserDoctorDTO;
 import com.felipe.model.dto.v1.security.LogoutDTO;
+import com.felipe.model.dto.v1.security.TokenDTO;
 import com.felipe.service.AuthService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -30,17 +31,15 @@ public class AuthController {
 	@Autowired
 	AuthService authService;
 
-	@SuppressWarnings("rawtypes")
 	@Operation(summary = "Authenticates a user and return a token")
 	@PostMapping(value = "/signin")
-	public ResponseEntity signin(@RequestBody AccountCredentialsDTO data) {
+	public ResponseEntity<TokenDTO> signin(@RequestBody AccountCredentialsDTO data) {
 		return authService.signin(data);
 	}
 	
-	@SuppressWarnings("rawtypes")
 	@Operation(summary = "Refresh token for authenticated user and returns a token")
 	@PutMapping(value = "/refresh/{username}")
-	public ResponseEntity refresh(@PathVariable("username") String username, @RequestHeader("Authorization") String refreshToken, @RequestBody LogoutDTO dto) {
+	public ResponseEntity<TokenDTO> refresh(@PathVariable("username") String username, @RequestHeader("Authorization") String refreshToken, @RequestBody LogoutDTO dto) {
 		return authService.refreshToken(username, refreshToken, dto);
 	}
 
@@ -64,4 +63,5 @@ public class AuthController {
     public ResponseEntity<String> logout(@RequestHeader("Authorization") String token) {
         return authService.logout(token);
     }
+    
 }

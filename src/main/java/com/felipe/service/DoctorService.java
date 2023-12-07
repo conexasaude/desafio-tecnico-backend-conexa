@@ -16,15 +16,12 @@ import com.felipe.exceptions.BadRequestException;
 import com.felipe.exceptions.ResourceNotFoundException;
 import com.felipe.mapper.DoctorMapper;
 import com.felipe.model.Doctor;
-import com.felipe.model.dto.v1.PasswordUpdateDTO;
 import com.felipe.model.dto.v1.DoctorDTO;
 import com.felipe.repositories.DoctorRepository;
 import com.felipe.util.DateUtil;
 import com.felipe.util.MessageUtils;
 
-/**
- * Service class for managing doctor-related operations.
- */
+
 @Service
 public class DoctorService {
 	private Logger logger = Logger.getLogger(DoctorService.class.getName());
@@ -85,7 +82,7 @@ public class DoctorService {
 		});
 		
 		repository.findByCpf(dto.getCpf()).ifPresent(existingPatient -> {
-			throw new BadRequestException("Email " + MessageUtils.RECORDS_ALREADY_EXIST + ": " + dto.getCpf());
+			throw new BadRequestException("CPF " + MessageUtils.RECORDS_ALREADY_EXIST + ": " + dto.getCpf());
 		});
 		Doctor entity = mapper.toEntity(dto);
 		return repository.save(entity);
@@ -114,31 +111,6 @@ public class DoctorService {
 		return addDoctorSelfRel(doctor);
 
 	}
-
-//    /**
-//     * Changes the password for a doctor.
-//     *
-//     * @param id: The ID of the doctor.
-//     * @param passwordUpdateDTO: The DTO containing old and new password information.
-//     * @throws BadRequestException: If old password is incorrect or new password doesn't match the confirmation.
-//     * @throws ResourceNotFoundException: If no doctor is found with the given ID.
-//     */
-//	public void changePassword(String id, PasswordUpdateDTO passwordUpdateDTO) {
-//		logger.info("Changing password");
-//
-//		Doctor entity = repository.findById(UUID.fromString(id))
-//				.orElseThrow(() -> new ResourceNotFoundException(MessageUtils.NO_RECORDS_FOUND));
-//		if (passwordUpdateDTO.getOldPassword().equals(entity.getPassword())) {
-//			if (passwordUpdateDTO.getNewPassword().equals(passwordUpdateDTO.getConfirmNewPassword())) {
-//				entity.setPassword(passwordUpdateDTO.getNewPassword());
-//				repository.save(entity);
-//			} else {
-//				throw new BadRequestException("New password and confirm new password is not matches");
-//			}
-//		} else {
-//			throw new BadRequestException("Old password is incorret");
-//		}
-//	}
 	
     /**
      * Deletes a doctor by their ID.
