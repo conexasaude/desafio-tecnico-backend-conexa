@@ -28,9 +28,8 @@ public class DoctorMapperTest {
 
 		assertEquals("doctor.email0@gmail.com", output.getEmail());
 		assertEquals("Full Name Test0", output.getFullName());
-		assertEquals("password010", output.getPassword());
 		assertEquals("100.200.300-40", output.getCpf());
-		assertEquals(DateUtil.convertStringToLocalDate("21/05/1980"), output.getBirthDate());
+		assertEquals("21/05/1980", output.getBirthDate());
 		assertEquals("(21) 3232-6560", output.getPhone());
 		assertEquals("Pediatra0", output.getSpecialty());
 	}
@@ -43,18 +42,16 @@ public class DoctorMapperTest {
 
 		assertEquals("doctor.email0@gmail.com", outputZero.getEmail());
 		assertEquals("Full Name Test0", outputZero.getFullName());
-		assertEquals("password010", outputZero.getPassword());
 		assertEquals("100.200.300-40", outputZero.getCpf());
-		assertEquals(DateUtil.convertStringToLocalDate("21/05/1980"), outputZero.getBirthDate());
+		assertEquals("21/05/1980", outputZero.getBirthDate());
 		assertEquals("(21) 3232-6560", outputZero.getPhone());
 		assertEquals("Pediatra0", outputZero.getSpecialty());
 		DoctorDTO outputFour = outputList.get(4);
 
 		assertEquals("doctor.email4@gmail.com", outputFour.getEmail());
 		assertEquals("Full Name Test4", outputFour.getFullName());
-		assertEquals("password014", outputFour.getPassword());
 		assertEquals("100.200.300-44", outputFour.getCpf());
-		assertEquals(DateUtil.convertStringToLocalDate("21/05/1984"), outputFour.getBirthDate());
+		assertEquals("21/05/1984", outputFour.getBirthDate());
 		assertEquals("(21) 3232-6564", outputFour.getPhone());
 		assertEquals("Pediatra4", outputFour.getSpecialty());
 
@@ -62,9 +59,8 @@ public class DoctorMapperTest {
 
 		assertEquals("doctor.email7@gmail.com", outputSeven.getEmail());
 		assertEquals("Full Name Test7", outputSeven.getFullName());
-		assertEquals("password017", outputSeven.getPassword());
 		assertEquals("100.200.300-47", outputSeven.getCpf());
-		assertEquals(DateUtil.convertStringToLocalDate("21/05/1987"), outputSeven.getBirthDate());
+		assertEquals("21/05/1987", outputSeven.getBirthDate());
 		assertEquals("(21) 3232-6567", outputSeven.getPhone());
 		assertEquals("Pediatra7", outputSeven.getSpecialty());
 	}
@@ -75,7 +71,6 @@ public class DoctorMapperTest {
 
 		assertEquals("doctor.email0@gmail.com", output.getEmail());
 		assertEquals("Full Name Test0", output.getFullName());
-		assertEquals("password010", output.getPassword());
 		assertEquals("100.200.300-40", output.getCpf());
 		assertEquals(DateUtil.convertStringToLocalDate("21/05/1980"), output.getBirthDate());
 		assertEquals("(21) 3232-6560", output.getPhone());
@@ -90,7 +85,6 @@ public class DoctorMapperTest {
 
 		assertEquals("doctor.email0@gmail.com", outputZero.getEmail());
 		assertEquals("Full Name Test0", outputZero.getFullName());
-		assertEquals("password010", outputZero.getPassword());
 		assertEquals("100.200.300-40", outputZero.getCpf());
 		assertEquals(DateUtil.convertStringToLocalDate("21/05/1980"), outputZero.getBirthDate());
 		assertEquals("(21) 3232-6560", outputZero.getPhone());
@@ -100,7 +94,6 @@ public class DoctorMapperTest {
 
 		assertEquals("doctor.email4@gmail.com", outputFour.getEmail());
 		assertEquals("Full Name Test4", outputFour.getFullName());
-		assertEquals("password014", outputFour.getPassword());
 		assertEquals("100.200.300-44", outputFour.getCpf());
 		assertEquals(DateUtil.convertStringToLocalDate("21/05/1984"), outputFour.getBirthDate());
 		assertEquals("(21) 3232-6564", outputFour.getPhone());
@@ -110,7 +103,6 @@ public class DoctorMapperTest {
 
 		assertEquals("doctor.email7@gmail.com", outputSeven.getEmail());
 		assertEquals("Full Name Test7", outputSeven.getFullName());
-		assertEquals("password017", outputSeven.getPassword());
 		assertEquals("100.200.300-47", outputSeven.getCpf());
 		assertEquals(DateUtil.convertStringToLocalDate("21/05/1987"), outputSeven.getBirthDate());
 		assertEquals("(21) 3232-6567", outputSeven.getPhone());

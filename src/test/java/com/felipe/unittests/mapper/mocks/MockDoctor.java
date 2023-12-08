@@ -62,7 +62,6 @@ public class MockDoctor {
 //        doctor.setId(UUID.fromString("0c38ae25-0d29-43ad-91d4-73e91309267b"));
 		entity.setEmail("doctor.email" + number + "@gmail.com");
 		entity.setFullName("Full Name Test" + number);
-		entity.setPassword("password01" + number);
 		entity.setCpf("100.200.300-4" + number);
 		entity.setBirthDate(DateUtil.convertStringToLocalDate("21/05/198" + number));
 		entity.setPhone("(21) 3232-656" + number);
@@ -75,7 +74,6 @@ public class MockDoctor {
 //        doctor.setKey(UUID.fromString("1bf6842a-06f6-480d-b766-6e2725e86007"));
 		entity.setEmail("doctor.email" + number + "@gmail.com");
 		entity.setFullName("Full Name Test" + number);
-		entity.setPassword("password01" + number);
 		entity.setCpf("100.200.300-4" + number);
 		entity.setBirthDate("21/05/198" + number);
 		entity.setPhone("(21) 3232-656" + number);
@@ -89,7 +87,7 @@ public class MockDoctor {
 		String email = EmailGeneretor.generateEmail(fullname);
 		String cpf = generateDocument.cpf(true);
 		String phone = faker.phoneNumber().phoneNumber();
-		return new Doctor(id, email, fullname, "senha123", cpf, DateUtil.convertStringToLocalDate("21/05/1981"), phone,
+		return new Doctor(id, email, fullname, cpf, DateUtil.convertStringToLocalDate("21/05/1981"), phone,
 				"Pediatra");
 	}
 	
@@ -99,7 +97,7 @@ public class MockDoctor {
 		String email = EmailGeneretor.generateEmail(fullname);
 		String cpf = generateDocument.cpf(true);
 		String phone = faker.phoneNumber().phoneNumber();
-		return new DoctorDTO(id, email, fullname, "senha123", cpf, "21/05/1981", phone,
+		return new DoctorDTO(id, email, fullname, cpf, "21/05/1981", phone,
 				"Pediatra");
 	}
 
