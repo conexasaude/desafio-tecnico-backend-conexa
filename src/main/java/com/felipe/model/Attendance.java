@@ -16,7 +16,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "attendance_tb")
-public abstract class Attendance implements Serializable {
+public class Attendance implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 

@@ -2,9 +2,20 @@ package com.felipe.model.dto.v1;
 
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.felipe.util.MessageUtils;
+
+import jakarta.validation.constraints.AssertTrue;
+
 public class PasswordUpdateDTO {
+	
+	@JsonProperty("senha")
 	private String oldPassword;
+	
+	@JsonProperty("novaSenha")
 	private String newPassword;
+	
+	@JsonProperty("confirmarNovaSenha")
 	private String confirmNewPassword;
 	
 	public PasswordUpdateDTO() {
@@ -39,6 +50,11 @@ public class PasswordUpdateDTO {
 
 	public void setConfirmNewPassword(String confirmNewPassword) {
 		this.confirmNewPassword = confirmNewPassword;
+	}
+	
+	@AssertTrue(message = MessageUtils.PASSWORD_MISMATCH)
+	public boolean isPasswordConfirmed() {
+		return newPassword.equals(confirmNewPassword);
 	}
 
 	@Override

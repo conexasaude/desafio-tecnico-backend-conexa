@@ -3,7 +3,6 @@ package com.felipe.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,7 +42,7 @@ public class PatientController {
 					@ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
 					@ApiResponse(description = "Internal Error", responseCode = "500", content = @Content) })
 	public ResponseEntity<List<PatientDTO>> findAllId() throws Exception {
-		return new ResponseEntity<>(service.findAll(), HttpStatus.OK);
+		return service.findAll();
 	}
 
 	@GetMapping("/{id}")
@@ -58,7 +57,7 @@ public class PatientController {
 					@ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
 					@ApiResponse(description = "Internal Error", responseCode = "500", content = @Content) })
 	public ResponseEntity<PatientDTO> findById(@PathVariable(value = "id") String id) throws Exception {
-		return new ResponseEntity<>(service.findById(id), HttpStatus.OK);
+		return service.findById(id);
 
 	}
 
@@ -72,7 +71,7 @@ public class PatientController {
 					@ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
 					@ApiResponse(description = "Unathorized", responseCode = "401", content = @Content),
 					@ApiResponse(description = "Internal Error", responseCode = "500", content = @Content) })
-	public PatientDTO create(@Valid @RequestBody PatientDTO patientDTO) throws Exception {
+	public ResponseEntity<PatientDTO> create(@Valid @RequestBody PatientDTO patientDTO) throws Exception {
 		return service.create(patientDTO);
 	}
 
@@ -86,7 +85,7 @@ public class PatientController {
 					@ApiResponse(description = "Unathorized", responseCode = "401", content = @Content),
 					@ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
 					@ApiResponse(description = "Internal Error", responseCode = "500", content = @Content) })
-	public PatientDTO update(@RequestBody PatientDTO patientDTO) throws Exception {
+	public ResponseEntity<PatientDTO> update(@RequestBody PatientDTO patientDTO) throws Exception {
 		return service.update(patientDTO);
 	}
 

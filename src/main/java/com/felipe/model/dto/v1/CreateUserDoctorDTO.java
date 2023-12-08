@@ -3,6 +3,8 @@ package com.felipe.model.dto.v1;
 import java.io.Serializable;
 import java.util.Objects;
 
+import org.hibernate.validator.constraints.br.CPF;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.felipe.util.MessageUtils;
 
@@ -10,7 +12,6 @@ import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
 
 public class CreateUserDoctorDTO implements Serializable {
 
@@ -35,10 +36,9 @@ public class CreateUserDoctorDTO implements Serializable {
 	@JsonProperty("especialidade")
 	@NotBlank(message = MessageUtils.CANNOT_BLANK)
 	private String specialty;
-
 	
 	@NotBlank(message = MessageUtils.CANNOT_BLANK)
-	@Size(min = 11, max = 14, message = "CPF must be between 11 and 14 characters")
+	@CPF(message = "CPF invalid")
 	private String cpf;
 
 	@NotBlank(message = MessageUtils.CANNOT_BLANK)

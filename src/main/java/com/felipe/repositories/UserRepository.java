@@ -13,5 +13,4 @@ import com.felipe.model.User;
 public interface UserRepository extends JpaRepository<User, UUID> {
 
 	Optional<User> findByUserName(@Param("userName") String userName);
-	// User findByEmail(@Param("email") String email);
 }

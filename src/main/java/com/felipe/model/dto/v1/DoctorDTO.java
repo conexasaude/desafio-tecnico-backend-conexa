@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.UUID;
 
+import org.hibernate.validator.constraints.br.CPF;
 import org.springframework.hateoas.RepresentationModel;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -15,9 +16,8 @@ import com.felipe.util.MessageUtils;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
 
-@JsonPropertyOrder({ "id", "email", "full_name", "specialty", "cpf", "birth_date", "phone" })
+@JsonPropertyOrder({ "id", "email", "nome", "specialty", "cpf", "birth_date", "phone" })
 public class DoctorDTO extends RepresentationModel<DoctorDTO> implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
@@ -29,11 +29,11 @@ public class DoctorDTO extends RepresentationModel<DoctorDTO> implements Seriali
 	private String email;
 	
 	@NotBlank(message = MessageUtils.CANNOT_BLANK)
-	@JsonProperty("full_name")
+	@JsonProperty("nome")
 	private String fullName;
 	
 	@NotBlank(message = MessageUtils.CANNOT_BLANK)
-	@Size(min = 11, max = 14, message = "CPF must be between 11 and 14 characters")
+	@CPF(message = "CPF invalid")
 	private String cpf;
 
 	@NotBlank(message = MessageUtils.CANNOT_BLANK)
