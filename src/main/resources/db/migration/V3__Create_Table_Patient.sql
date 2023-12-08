@@ -1,5 +1,3 @@
--- `rest-conexa-challenger`.patient_tb definition
-
 CREATE TABLE IF NOT EXISTS `patient_tb` (
   `id` binary(16) NOT NULL,
   `cpf` varchar(14) NOT NULL,

@@ -32,22 +32,22 @@ public class User implements UserDetails, Serializable {
 	@GeneratedValue(strategy = GenerationType.UUID)
 	private UUID id;
 
-	@Column(name = "user_name", unique = true)
+	@Column(name = "user_name", unique = true, nullable = false)
 	private String userName;
 
-	@Column(name = "password")
+	@Column(name = "password", nullable = false)
 	private String password;
 
-	@Column(name = "account_non_expired")
+	@Column(name = "account_non_expired", nullable = false)
 	private Boolean accountNonExpired;
 
-	@Column(name = "account_non_locked")
+	@Column(name = "account_non_locked", nullable = false)
 	private Boolean accountNonLocked;
 
-	@Column(name = "credentials_non_expired")
+	@Column(name = "credentials_non_expired", nullable = false)
 	private Boolean credentialsNonExpired;
 
-	@Column(name = "enabled")
+	@Column(name = "enabled", nullable = false)
 	private Boolean enabled;
 	
     @OneToOne(mappedBy = "user")
