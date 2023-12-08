@@ -2,6 +2,8 @@ package com.felipe.model.validation;
 
 import java.time.LocalDateTime;
 
+import com.felipe.util.DateUtil;
+
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
@@ -18,10 +20,11 @@ public class FutureDateTimeValidator implements ConstraintValidator<FutureDateTi
         }
 
         try {
-            LocalDateTime dateTime = LocalDateTime.parse(value); // Assumindo que o formato está correto
+            LocalDateTime dateTime = DateUtil.convertStringToLocalDateTime(value); // Assumindo que o formato está correto
             return dateTime.isAfter(LocalDateTime.now());
         } catch (Exception e) {
-            return false; // Se houver um problema ao converter, considere inválido
+        	throw e;
+//            return false; // Se houver um problema ao converter, considere inválido
         }
     }
 }

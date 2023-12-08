@@ -15,7 +15,7 @@ import com.felipe.util.MessageUtils;
 
 import jakarta.validation.constraints.NotBlank;
 
-@JsonPropertyOrder({ "id", "nomeCompleto", "cpf", "planoDeSaude" })
+@JsonPropertyOrder({ "id", "nome", "cpf", "planoDeSaude" })
 public class PatientDTO extends RepresentationModel<PatientDTO> implements Serializable  {
 	private static final long serialVersionUID = 1L;
 	
