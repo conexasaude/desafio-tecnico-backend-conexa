@@ -9,7 +9,6 @@ import java.util.UUID;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.felipe.controller.PatientController;
@@ -40,7 +39,7 @@ public class PatientService {
      *
      * @return A list of PatientDTO objects.
      */
-	public ResponseEntity<List<PatientDTO>> findAll() {
+	public List<PatientDTO> findAll() {
 		logger.info("Finding All Patient");
 
 		List<PatientDTO> listPatients = mapper.toDto(repository.findAll());
@@ -52,7 +51,7 @@ public class PatientService {
 			}
 		});
 
-		return ResponseEntity.ok(listPatients);
+		return listPatients;
 	}
 
     /**
@@ -62,12 +61,12 @@ public class PatientService {
      * @return The PatientDTO object representing the user.
      * @throws ResourceNotFoundException: If no user is found with the given ID.
      */
-	public ResponseEntity<PatientDTO> findById(String id) throws Exception {
+	public PatientDTO findById(String id) throws Exception {
 		logger.info("Finding one user");
 
 		PatientDTO user = repository.findById(UUID.fromString(id)).map(mapper::toDto)
 				.orElseThrow(() -> new ResourceNotFoundException(MessageUtils.NO_RECORDS_FOUND));
-		return ResponseEntity.ok(addPatientSelfRel(user));
+		return addPatientSelfRel(user);
 	}
 
     /**
@@ -77,7 +76,7 @@ public class PatientService {
      * @return The created PatientDTO object.
      * @throws BadRequestException: If the email provided already exists.
      */
-	public ResponseEntity<PatientDTO> create(PatientDTO dto) throws Exception {
+	public PatientDTO create(PatientDTO dto) throws Exception {
 		logger.info("Create one user");
 
 		repository.findByCpf(StringUtil.removeNonNumeric(dto.getCpf())).ifPresent(existingPatient -> {
@@ -87,7 +86,7 @@ public class PatientService {
 		Patient entity = mapper.toEntity(dto);
 		PatientDTO user = mapper.toDto(repository.save(entity));
 
-		return ResponseEntity.ok(addPatientSelfRel(user));
+		return addPatientSelfRel(user);
 
 	}
     /**
@@ -97,7 +96,7 @@ public class PatientService {
      * @return The updated PatientDTO object.
      * @throws ResourceNotFoundException: If no user is found with the given ID.
      */
-	public ResponseEntity<PatientDTO> update(PatientDTO dto) throws Exception {
+	public PatientDTO update(PatientDTO dto) throws Exception {
 		logger.info("Update one user");
 
 		Patient entity = repository.findById(dto.getKey())
@@ -107,7 +106,7 @@ public class PatientService {
 		entity.setHealthInsurance(Objects.requireNonNullElse(dto.getHealthInsurance(), entity.getHealthInsurance()));
 
 		PatientDTO user = mapper.toDto(repository.save(entity));
-		return ResponseEntity.ok(addPatientSelfRel(user));
+		return addPatientSelfRel(user);
 	}
 
     /**

@@ -23,7 +23,7 @@ public class AttendanceController {
 
 	@Autowired
 	AttendanceService service;
-   
+
 	@PostMapping()
 	@Operation(summary = "Create an Attendance", tags = {
 			"Attendance" }, description = "Create an attendance, if not exists patient create too",
@@ -34,7 +34,8 @@ public class AttendanceController {
 					@ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
 					@ApiResponse(description = "Internal Error", responseCode = "500", content = @Content) })
 	public ResponseEntity<AttendanceDTO> updatePassword(@Valid @RequestBody AttendanceDTO dto) {
-		return service.createAttendanceWithPatient(dto);
+		AttendanceDTO savedAttendance = service.createAttendanceWithPatient(dto);
+		return ResponseEntity.ok(savedAttendance);
 	}
 
 }

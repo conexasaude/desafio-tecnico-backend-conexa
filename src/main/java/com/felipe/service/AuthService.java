@@ -23,6 +23,7 @@ import com.felipe.model.dto.v1.PasswordUpdateDTO;
 import com.felipe.model.dto.v1.security.AccessTokenDTO;
 import com.felipe.model.dto.v1.security.AccountCredentialsDTO;
 import com.felipe.model.dto.v1.security.TokenDTO;
+import com.felipe.repositories.DoctorRepository;
 import com.felipe.repositories.UserRepository;
 import com.felipe.security.jwt.JwtTokenProvider;
 import com.felipe.util.MessageUtils;
@@ -41,6 +42,9 @@ public class AuthService {
 
 	@Autowired
 	private UserRepository userRepository;
+
+	@Autowired
+	private DoctorRepository doctorRepository;
 
 	@Autowired
 	private DoctorService doctorService;
@@ -98,11 +102,14 @@ public class AuthService {
 		String passwordEncoded = passwordService.encodePassword(dto.getPassword());
 
 		User user = new User(dto.getEmail(), passwordEncoded, true, true, true, true, createdDoctor);
+
 		User savedUser = userRepository.save(user);
 		logger.info("User created");
 
-		return ResponseEntity.created(new URI("/api/users/" + savedUser.getId())) // Adapte a URI conforme necessário
-				.body(null);
+		createdDoctor.setUser(savedUser);
+		doctorRepository.save(createdDoctor);
+
+		return ResponseEntity.created(new URI("/api/users/" + savedUser.getId())).body(null);
 	}
 
 	public ResponseEntity<String> logout(String token) {

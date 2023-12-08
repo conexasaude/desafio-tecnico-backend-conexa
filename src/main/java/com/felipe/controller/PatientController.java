@@ -42,7 +42,8 @@ public class PatientController {
 					@ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
 					@ApiResponse(description = "Internal Error", responseCode = "500", content = @Content) })
 	public ResponseEntity<List<PatientDTO>> findAllId() throws Exception {
-		return service.findAll();
+		return ResponseEntity.ok(service.findAll());
+
 	}
 
 	@GetMapping("/{id}")
@@ -57,7 +58,7 @@ public class PatientController {
 					@ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
 					@ApiResponse(description = "Internal Error", responseCode = "500", content = @Content) })
 	public ResponseEntity<PatientDTO> findById(@PathVariable(value = "id") String id) throws Exception {
-		return service.findById(id);
+		return ResponseEntity.ok(service.findById(id));
 
 	}
 
@@ -72,7 +73,7 @@ public class PatientController {
 					@ApiResponse(description = "Unathorized", responseCode = "401", content = @Content),
 					@ApiResponse(description = "Internal Error", responseCode = "500", content = @Content) })
 	public ResponseEntity<PatientDTO> create(@Valid @RequestBody PatientDTO patientDTO) throws Exception {
-		return service.create(patientDTO);
+		return ResponseEntity.ok(service.create(patientDTO));
 	}
 
 	@PutMapping
@@ -86,7 +87,7 @@ public class PatientController {
 					@ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
 					@ApiResponse(description = "Internal Error", responseCode = "500", content = @Content) })
 	public ResponseEntity<PatientDTO> update(@RequestBody PatientDTO patientDTO) throws Exception {
-		return service.update(patientDTO);
+		return ResponseEntity.ok(service.update(patientDTO));
 	}
 
 	@DeleteMapping("/{id}")
