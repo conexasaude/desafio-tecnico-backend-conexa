@@ -72,7 +72,7 @@ class DoctorServiceTest {
 		logger.info("JUnit test for Given Doctors Object when Save Doctor then Return Doctor Object");
 		
 		given(repository.findByEmail(anyString())).willReturn(Optional.empty());
-		given(repository.save(doctor)).willReturn(doctor);
+		given(repository.save(any(Doctor.class))).willReturn(doctor);
 
 		logger.info(doctor.toString());
 		logger.info("DTO => " + doctorDto.toString());
@@ -107,25 +107,25 @@ class DoctorServiceTest {
 		verify(repository, never()).save(any(Doctor.class));
 	}
 	
-//	@DisplayName("JUnit test for Given Existing CPF when Save Patient then Throws Exception")
-//	@Test
-//	void testGivenExistingCPF_whenSavePatient_thenThrowsException() throws Exception {
-//		logger.info("JUnit test for Given Existing CPF when Save Patient then Throws Exception");
-//
-//		doctorDto.setCpf("085.491.221-25");
-//
-//		// Mock the behavior of the repository
-//		given(repository.findByCpf("085.491.221-25")).willReturn(Optional.of(doctor));
-//
-//		BadRequestException exception = assertThrows(BadRequestException.class, () -> {
-//			logger.info("Before service.create");
-//			service.create(doctorDto);
-//			logger.info("After service.create");
-//		});
-//
-//		assertEquals("CPF " + MessageUtils.RECORDS_ALREADY_EXIST + ": " + doctorDto.getCpf(), exception.getMessage());
-//		verify(repository, never()).save(any(Doctor.class));
-//	}
+	@DisplayName("JUnit test for Given Existing CPF when Save Patient then Throws Exception")
+	@Test
+	void testGivenExistingCPF_whenSavePatient_thenThrowsException() throws Exception {
+		logger.info("JUnit test for Given Existing CPF when Save Patient then Throws Exception");
+
+		doctorDto.setCpf("085.491.221-25");
+
+		// Mock the behavior of the repository
+		given(repository.findByCpf("085.491.221-25")).willReturn(Optional.of(doctor));
+
+		BadRequestException exception = assertThrows(BadRequestException.class, () -> {
+			logger.info("Before service.create");
+			service.create(doctorDto);
+			logger.info("After service.create");
+		});
+
+		assertEquals("CPF " + MessageUtils.RECORDS_ALREADY_EXIST + ": " + doctorDto.getCpf(), exception.getMessage());
+		verify(repository, never()).save(any(Doctor.class));
+	}
 	
 	@DisplayName("JUnit test for Given Doctors List when Find All Doctors Then Return Doctors List")
 	@Test

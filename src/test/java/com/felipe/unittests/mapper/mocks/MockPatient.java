@@ -67,9 +67,12 @@ public class MockPatient {
 
 	public Patient mockRandomEntity(boolean withId) {
 		UUID id = withId ? UUID.randomUUID() : null;
-		String fullname = faker.name().fullName();
-		String cpf = generateDocument.cpf(true);
-		return new Patient(id, fullname, cpf, "SulAmericano");
+		Patient entity = new Patient();
+		entity.setId(id);
+		entity.setFullName(faker.name().fullName());
+		entity.setCpf(generateDocument.cpf(true));
+		entity.setHealthInsurance("SulAmericano");
+		return entity;
 	}
 
 }

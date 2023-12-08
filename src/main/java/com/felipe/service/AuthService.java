@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import com.felipe.exceptions.BadRequestException;
 import com.felipe.exceptions.ForbbidenException;
 import com.felipe.exceptions.ResourceNotFoundException;
+import com.felipe.mapper.DoctorMapper;
 import com.felipe.model.Doctor;
 import com.felipe.model.User;
 import com.felipe.model.dto.v1.CreateUserDoctorDTO;
@@ -48,6 +49,10 @@ public class AuthService {
 
 	@Autowired
 	private DoctorService doctorService;
+	
+	@Autowired
+	private DoctorMapper doctorMapper;
+
 
 	@Autowired
 	private PasswordService passwordService;
@@ -97,7 +102,7 @@ public class AuthService {
 		DoctorDTO doctor = new DoctorDTO(dto.getEmail(), dto.getFullName(), dto.getCpf(), dto.getBirthDate(),
 				dto.getPhone(), dto.getSpecialty());
 
-		Doctor createdDoctor = doctorService.create(doctor);
+		Doctor createdDoctor = doctorMapper.toEntity(doctorService.create(doctor));
 
 		String passwordEncoded = passwordService.encodePassword(dto.getPassword());
 

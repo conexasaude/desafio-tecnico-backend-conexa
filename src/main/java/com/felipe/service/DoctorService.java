@@ -75,7 +75,7 @@ public class DoctorService {
      * @return The created DoctorDTO object.
      * @throws BadRequestException: If the email provided already exists.
      */
-	public Doctor create(DoctorDTO dto) throws Exception {
+	public DoctorDTO create(DoctorDTO dto) throws Exception {
 		logger.info("Create one doctor");
 		repository.findByEmail(dto.getEmail()).ifPresent(existingDoctor -> {
 			throw new BadRequestException("Email " + MessageUtils.RECORDS_ALREADY_EXIST + ": " + dto.getEmail());
@@ -85,7 +85,7 @@ public class DoctorService {
 			throw new BadRequestException("CPF " + MessageUtils.RECORDS_ALREADY_EXIST + ": " + dto.getCpf());
 		});
 		Doctor entity = mapper.toEntity(dto);
-		return repository.save(entity);
+		return mapper.toDto(repository.save(entity));
 	}
 	
     /**
