@@ -80,7 +80,7 @@ public class PatientService {
 		logger.info("Create one user");
 
 		repository.findByCpf(StringUtil.removeNonNumeric(dto.getCpf())).ifPresent(existingPatient -> {
-			throw new BadRequestException("Email " + MessageUtils.RECORDS_ALREADY_EXIST + ": " + dto.getCpf() + " or " + StringUtil.removeNonNumeric(dto.getCpf()));
+			throw new BadRequestException("CPF " + MessageUtils.RECORDS_ALREADY_EXIST + ": " + dto.getCpf() + " or " + StringUtil.removeNonNumeric(dto.getCpf()));
 		});
 
 		Patient entity = mapper.toEntity(dto);

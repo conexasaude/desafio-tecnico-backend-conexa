@@ -2,11 +2,13 @@ package com.felipe.unittests.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.willDoNothing;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -26,12 +28,15 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.felipe.exceptions.BadRequestException;
 import com.felipe.mapper.PatientMapper;
 import com.felipe.model.Patient;
 import com.felipe.model.dto.v1.PatientDTO;
 import com.felipe.repositories.PatientRepository;
 import com.felipe.service.PatientService;
 import com.felipe.unittests.mapper.mocks.MockPatient;
+import com.felipe.util.MessageUtils;
+import com.felipe.util.StringUtil;
 
 @SpringBootTest
 @ExtendWith(MockitoExtension.class)
@@ -81,25 +86,27 @@ class PatientServiceTest {
 
 	}
 
-//	@DisplayName("JUnit test for Given Existing CPF when Save Patient then Throws Exception")
-//	@Test
-//	void testGivenExistingCPF_whenSavePatient_thenThrowsException() throws Exception {
-//		logger.info("JUnit test for Given Existing CPF when Save Patient then Throws Exception");
-//
-//		patientDto.setCpf("085.491.221-25");
-//
-//		// Mock the behavior of the repository
-//		given(repository.findByCpf("085.491.221-25")).willReturn(Optional.of(patient));
-//
-//		BadRequestException exception = assertThrows(BadRequestException.class, () -> {
-//			logger.info("Before service.create");
-//			service.create(patientDto);
-//			logger.info("After service.create");
-//		});
-//
-//		assertEquals("CPF " + MessageUtils.RECORDS_ALREADY_EXIST + ": " + patientDto.getCpf(), exception.getMessage());
-//		verify(repository, never()).save(any(Patient.class));
-//	}
+	@DisplayName("JUnit test for Given Existing CPF when Save Patient then Throws Exception")
+	@Test
+	void testGivenExistingCPF_whenSavePatient_thenThrowsException() throws Exception {
+		logger.info("JUnit test for Given Existing CPF when Save Patient then Throws Exception");
+
+		patientDto.setCpf("08549122125");
+
+		// Mock the behavior of the repository
+		given(repository.findByCpf("08549122125")).willReturn(Optional.of(patient));
+
+		BadRequestException exception = assertThrows(BadRequestException.class, () -> {
+			logger.info("Before service.create");
+			service.create(patientDto);
+			logger.info("After service.create");
+		});
+		
+		
+
+		assertEquals("CPF " + MessageUtils.RECORDS_ALREADY_EXIST + ": " + patientDto.getCpf() + " or " + StringUtil.removeNonNumeric(patientDto.getCpf()), exception.getMessage());
+		verify(repository, never()).save(any(Patient.class));
+	}
 	
 	@DisplayName("JUnit test for Given Patients List when Find All Patients Then Return Patients List")
 	@Test
