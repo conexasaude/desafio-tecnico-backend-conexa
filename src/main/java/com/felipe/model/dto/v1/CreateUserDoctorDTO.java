@@ -6,7 +6,6 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.felipe.util.MessageUtils;
 
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -101,7 +100,6 @@ public class CreateUserDoctorDTO implements Serializable {
 		this.confirmPassword = confirmPassword;
 	}
 
-    @Valid
 	public String getCpf() {
 		return cpf;
 	}

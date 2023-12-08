@@ -2,12 +2,9 @@ package com.felipe.model;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.UUID;
 
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.felipe.util.StringUtil;
@@ -53,11 +50,11 @@ public class Doctor implements Serializable  {
     @OneToOne
     private User user;
 	
-	@CreatedDate
-	private LocalDateTime createdAt;
+//	@CreatedDate
+//	private LocalDateTime createdAt;
 
-    @LastModifiedDate
-    private LocalDateTime updatedAt;
+//    @LastModifiedDate
+//    private LocalDateTime updatedAt;
 
 	public Doctor() {
 		super();
@@ -140,21 +137,6 @@ public class Doctor implements Serializable  {
 		this.specialty = specialty;
 	}
 
-	public LocalDateTime getCreatedAt() {
-		return createdAt;
-	}
-
-	public void setCreatedAt(LocalDateTime createdAt) {
-		this.createdAt = createdAt;
-	}
-
-	public LocalDateTime getUpdatedAt() {
-		return updatedAt;
-	}
-
-	public void setUpdatedAt(LocalDateTime updatedAt) {
-		this.updatedAt = updatedAt;
-	}
 	
 	public User getUser() {
 		return user;
@@ -166,8 +148,7 @@ public class Doctor implements Serializable  {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(birthDate, cpf, createdAt, email, fullName, id, phone, specialty, updatedAt,
-				user);
+		return Objects.hash(birthDate, cpf, email, fullName, id, phone, specialty, user);
 	}
 
 	@Override
@@ -180,18 +161,16 @@ public class Doctor implements Serializable  {
 			return false;
 		Doctor other = (Doctor) obj;
 		return Objects.equals(birthDate, other.birthDate) && Objects.equals(cpf, other.cpf)
-				&& Objects.equals(createdAt, other.createdAt) && Objects.equals(email, other.email)
+				&& Objects.equals(email, other.email) && Objects.equals(phone, other.phone)
 				&& Objects.equals(fullName, other.fullName) && Objects.equals(id, other.id)
-				&& Objects.equals(phone, other.phone)
-				&& Objects.equals(specialty, other.specialty) && Objects.equals(updatedAt, other.updatedAt)
-				&& Objects.equals(user, other.user);
+				&& Objects.equals(specialty, other.specialty) && Objects.equals(user, other.user);
 	}
 
 	@Override
 	public String toString() {
 		return "Doctor [id=" + id + ", email=" + email + ", fullName=" + fullName + ", cpf="
 				+ cpf + ", birthDate=" + birthDate + ", phone=" + phone + ", specialty=" + specialty + ", user=" + user
-				+ ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + "]";
+				+ "]";
 	}
 
 

@@ -15,6 +15,7 @@ import com.felipe.util.MessageUtils;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 @JsonPropertyOrder({ "id", "email", "full_name", "specialty", "cpf", "birth_date", "phone" })
 public class DoctorDTO extends RepresentationModel<DoctorDTO> implements Serializable {
@@ -32,7 +33,7 @@ public class DoctorDTO extends RepresentationModel<DoctorDTO> implements Seriali
 	private String fullName;
 	
 	@NotBlank(message = MessageUtils.CANNOT_BLANK)
-	@Pattern(regexp = "^[0-9]{3}\\.[0-9]{3}\\.[0-9]{3}-[0-9]{2}$", message = "Invalid CPF format")
+	@Size(min = 11, max = 14, message = "CPF must be between 11 and 14 characters")
 	private String cpf;
 
 	@NotBlank(message = MessageUtils.CANNOT_BLANK)

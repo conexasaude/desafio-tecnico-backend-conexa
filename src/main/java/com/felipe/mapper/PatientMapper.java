@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import com.felipe.model.Patient;
 import com.felipe.model.dto.v1.PatientDTO;
+import com.felipe.util.CpfUtil;
 
 
 @Component
@@ -16,7 +17,7 @@ public class PatientMapper {
 		Patient entity = new Patient();
 		entity.setId(dto.getKey());
 		entity.setFullName(dto.getFullName());
-		entity.setCpf(dto.getCpf());
+		entity.setCpf(CpfUtil.formatCPF(dto.getCpf()));
 		entity.setHealthInsurance(dto.getHealthInsurance());
 //        entity.setCreatedAt(dto.getCreatedAt());
 //        entity.setUpdatedAt(dto.getUpdatedAt());

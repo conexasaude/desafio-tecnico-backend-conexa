@@ -5,35 +5,40 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.UUID;
 
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.hateoas.RepresentationModel;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.felipe.util.MessageUtils;
 
-import jakarta.persistence.Column;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
-@JsonPropertyOrder({ "id", "full_name", "cpf", "health_insurance" })
+@JsonPropertyOrder({ "id", "nomeCompleto", "cpf", "planoDeSaude" })
 public class PatientDTO extends RepresentationModel<PatientDTO> implements Serializable  {
 	private static final long serialVersionUID = 1L;
 	
 	@JsonProperty("id")
 	private UUID key;
 	
-	@JsonProperty("full_name")
+	@NotBlank(message = MessageUtils.CANNOT_BLANK)
+	@JsonProperty("nomeCompleto")
 	private String fullName;
 
-	@Column(name = "cpf", nullable = false, length = 14, unique = true)
+	@NotBlank(message = MessageUtils.CANNOT_BLANK)
+	@Size(min = 11, max = 14, message = "CPF must be between 11 and 14 characters")
 	private String cpf;
 
-	@JsonProperty("health_insurance")
+	@JsonProperty("planoDeSaude")
 	private String healthInsurance;
 
-	@CreatedDate
+//	@CreatedDate
+	@JsonIgnore
 	private LocalDateTime createdAt;
 
-	@LastModifiedDate
+//	@LastModifiedDate
+	@JsonIgnore
 	private LocalDateTime updatedAt;
 
 	public PatientDTO() {

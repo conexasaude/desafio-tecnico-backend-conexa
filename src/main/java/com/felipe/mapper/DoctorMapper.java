@@ -10,7 +10,6 @@ import com.felipe.model.dto.v1.DoctorDTO;
 import com.felipe.util.CpfUtil;
 import com.felipe.util.DateUtil;
 import com.felipe.util.PhoneNumberUtil;
-import com.felipe.util.StringUtil;
 
 
 @Component
@@ -22,9 +21,9 @@ public class DoctorMapper {
 		entity.setEmail(dto.getEmail());
 		entity.setFullName(dto.getFullName());
 		entity.setSpecialty(dto.getSpecialty());
-		entity.setCpf(StringUtil.removeNonNumeric(dto.getCpf()));
+		entity.setCpf(CpfUtil.formatCPF(dto.getCpf()));
 		entity.setBirthDate(DateUtil.convertStringToLocalDate(dto.getBirthDate()));
-		entity.setPhone(PhoneNumberUtil.unformatPhoneNumber(dto.getPhone()));
+		entity.setPhone(PhoneNumberUtil.formatPhoneNumber(dto.getPhone()));
 //        entity.setCreatedAt(dto.getCreatedAt());
 //        entity.setUpdatedAt(dto.getUpdatedAt());
 		return entity;
@@ -38,7 +37,7 @@ public class DoctorMapper {
 		dto.setSpecialty(entity.getSpecialty());
 		dto.setCpf(CpfUtil.formatCPF(entity.getCpf()));
 		dto.setBirthDate(DateUtil.convertLocalDateToString(entity.getBirthDate()));
-		dto.setPhone(PhoneNumberUtil.formatPhoneNumber(entity.getPhone()));
+		dto.setPhone(entity.getPhone());
 //        dto.setCreatedAt(entity.getCreatedAt());
 //        dto.setUpdatedAt(entity.getUpdatedAt());
 		return dto;

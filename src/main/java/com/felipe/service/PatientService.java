@@ -19,6 +19,7 @@ import com.felipe.model.Patient;
 import com.felipe.model.dto.v1.PatientDTO;
 import com.felipe.repositories.PatientRepository;
 import com.felipe.util.MessageUtils;
+import com.felipe.util.StringUtil;
 
 /**
  * Service class for managing user-related operations.
@@ -79,8 +80,8 @@ public class PatientService {
 	public PatientDTO create(PatientDTO dto) throws Exception {
 		logger.info("Create one user");
 
-		repository.findByCpf(dto.getCpf()).ifPresent(existingPatient -> {
-			throw new BadRequestException("Email " + MessageUtils.RECORDS_ALREADY_EXIST + ": " + dto.getCpf());
+		repository.findByCpf(StringUtil.removeNonNumeric(dto.getCpf())).ifPresent(existingPatient -> {
+			throw new BadRequestException("Email " + MessageUtils.RECORDS_ALREADY_EXIST + ": " + dto.getCpf() + " or " + StringUtil.removeNonNumeric(dto.getCpf()));
 		});
 
 		Patient entity = mapper.toEntity(dto);
