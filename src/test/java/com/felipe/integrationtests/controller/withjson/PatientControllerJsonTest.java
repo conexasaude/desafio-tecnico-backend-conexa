@@ -317,9 +317,9 @@ public class PatientControllerJsonTest extends AbstractIntegrationTest {
 
 
 	private void mockCreateDoctor() {
-		createDto.setFullName("João Paulo Souza");
-		createDto.setEmail("jp.souza@gmail.com");
-		createDto.setCpf("696.456.830-17");
+		createDto.setFullName("Marcondes Carvalho");
+		createDto.setEmail("marcondes.carvalho@gmail.com");
+		createDto.setCpf("947.586.030-49");
 		createDto.setPhone("(21) 83232-6565");
 		createDto.setSpecialty("Cardiologista");
 		createDto.setBirthDate("10/03/1980");
