@@ -5,7 +5,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.util.Map;
 import java.util.logging.Logger;
 
 import org.junit.jupiter.api.BeforeAll;
@@ -14,13 +13,6 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -29,21 +21,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.felipe.configs.TestConfigs;
 import com.felipe.integrationtests.model.dto.AccountCredentialsDTO;
 import com.felipe.integrationtests.model.dto.CreateUserDoctorDTO;
-import com.felipe.integrationtests.model.dto.DoctorDTO;
-import com.felipe.integrationtests.model.dto.TokenDTO;
 import com.felipe.integrationtests.testcontainers.AbstractIntegrationTest;
-import com.felipe.model.dto.v1.security.AccessTokenDTO;
 
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.filter.log.LogDetail;
 import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.specification.RequestSpecification;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import jakarta.validation.Valid;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @TestMethodOrder(OrderAnnotation.class)
@@ -124,19 +108,19 @@ public class AuthControllerJson extends AbstractIntegrationTest {
 		AccountCredentialsDTO userLogin = new AccountCredentialsDTO(dto.getEmail(), dto.getPassword());
 		logger.info("userLogin:  => " + userLogin.toString());
 
-		var response = given().basePath("/api/v1/login").port(TestConfigs.SERVER_PORT)
+		var content = given().basePath("/api/v1/login").port(TestConfigs.SERVER_PORT)
 				.contentType(TestConfigs.CONTENT_TYPE_JSON).body(userLogin).when().post();
-		int statusCode = response.statusCode();
-		String responseBody = response.getBody().asString();
-		refreshToken = response.getHeader("Refresh-Token");
+		int statusCode = content.statusCode();
+		String responseBody = content.getBody().asString();
+		refreshToken = content.getHeader("Refresh-Token");
 
 		logger.info("Status code: " + statusCode);
 		logger.info("Response body: " + responseBody);
 		logger.info("refreshToken: " + refreshToken);
 
-		response.then().statusCode(200);
+		content.then().statusCode(200);
 
-		accessToken = response.jsonPath().getString("token");
+		accessToken = content.jsonPath().getString("token");
 
 		assertNotNull(accessToken);
 		assertNotNull(refreshToken);
@@ -152,20 +136,20 @@ public class AuthControllerJson extends AbstractIntegrationTest {
 				.addFilter(new RequestLoggingFilter(LogDetail.ALL)).addFilter(new ResponseLoggingFilter(LogDetail.ALL))
 				.build();
 
-		var response = given().spec(specification).contentType(TestConfigs.CONTENT_TYPE_JSON)
+		var content = given().spec(specification).contentType(TestConfigs.CONTENT_TYPE_JSON)
 				.header(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_FRONT)
 				.body("{\"token\":\"" + accessToken + "\"}").when().put();
-		int statusCode = response.statusCode();
-		String responseBody = response.getBody().asString();
-		refreshToken = response.getHeader("Refresh-Token");
+		int statusCode = content.statusCode();
+		String responseBody = content.getBody().asString();
+		refreshToken = content.getHeader("Refresh-Token");
 
 		logger.info("Status code: " + statusCode);
 		logger.info("Response body: " + responseBody);
 		logger.info("refreshToken: " + refreshToken);
 
-		response.then().statusCode(200);
+		content.then().statusCode(200);
 
-		accessToken = response.jsonPath().getString("token");
+		accessToken = content.jsonPath().getString("token");
 		logger.info("REFRESH_ROUTE =>  token: " + accessToken);
 
 		assertNotNull(accessToken);
@@ -183,12 +167,12 @@ public class AuthControllerJson extends AbstractIntegrationTest {
 				.addFilter(new RequestLoggingFilter(LogDetail.ALL)).addFilter(new ResponseLoggingFilter(LogDetail.ALL))
 				.build();
 
-		var response = given().spec(specification).contentType(TestConfigs.CONTENT_TYPE_JSON)
+		var content = given().spec(specification).contentType(TestConfigs.CONTENT_TYPE_JSON)
 				.header(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_FRONT)
 				.body("").when().post();
 
-		int statusCode = response.statusCode();
-		String responseBody = response.getBody().asString();
+		int statusCode = content.statusCode();
+		String responseBody = content.getBody().asString();
 
 		logger.info("Response: " + responseBody);
 		logger.info("statusCode: " + statusCode);

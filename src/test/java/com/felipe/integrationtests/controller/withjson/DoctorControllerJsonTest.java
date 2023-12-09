@@ -5,6 +5,9 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.List;
+import java.util.logging.Logger;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
@@ -13,10 +16,13 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.felipe.configs.TestConfigs;
+import com.felipe.integrationtests.model.dto.AccountCredentialsDTO;
+import com.felipe.integrationtests.model.dto.CreateUserDoctorDTO;
 import com.felipe.integrationtests.model.dto.DoctorDTO;
 import com.felipe.integrationtests.testcontainers.AbstractIntegrationTest;
 
@@ -29,11 +35,17 @@ import io.restassured.specification.RequestSpecification;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @TestMethodOrder(OrderAnnotation.class)
 public class DoctorControllerJsonTest extends AbstractIntegrationTest {
+	private Logger logger = Logger.getLogger(DoctorControllerJsonTest.class.getName());
 
 	private static RequestSpecification specification;
 	private static ObjectMapper objectMapper;
 	
 	private static DoctorDTO dto;
+	
+	private static CreateUserDoctorDTO createDto;
+
+	private static String accessToken;
+	private static String refreshToken;
 	
 	@BeforeAll
 	public static void setup() {
@@ -41,15 +53,65 @@ public class DoctorControllerJsonTest extends AbstractIntegrationTest {
 		objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
 		
 		dto = new DoctorDTO();
+		createDto = new CreateUserDoctorDTO();
+	}
+	
+	
+	@Test
+	@Order(0)
+	public void testSignup() throws JsonMappingException, JsonProcessingException {
+		mockCreateDoctor();
+		specification = new RequestSpecBuilder().addHeader(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_FRONT)
+				.setBasePath("/api/v1/signup").setPort(TestConfigs.SERVER_PORT)
+				.addFilter(new RequestLoggingFilter(LogDetail.ALL)).addFilter(new ResponseLoggingFilter(LogDetail.ALL))
+				.build();
+		var content = given().spec(specification).contentType(TestConfigs.CONTENT_TYPE_JSON).body(createDto).when().post()
+				.then().statusCode(201).extract().body().asString();
+
+		logger.info("Persisted:  => " + content.toString());
+		DoctorDTO persisted = objectMapper.readValue(content, DoctorDTO.class);
+		dto = persisted;
+
+		assertNotNull(persisted);
+		logger.info("Persisted:  => " + persisted.toString());
+
+		assertNotNull(persisted.getId());
+
+		assertTrue(!persisted.getId().toString().isBlank());
 	}
 	
 	@Test
 	@Order(1)
-	public void testCreate() throws JsonMappingException, JsonProcessingException {
-		mockDoctor();
+	public void testLogin() throws JsonMappingException, JsonProcessingException {
+		AccountCredentialsDTO userLogin = new AccountCredentialsDTO(createDto.getEmail(), createDto.getPassword());
+		logger.info("userLogin:  => " + userLogin.toString());
+
+		var content = given().basePath("/api/v1/login").port(TestConfigs.SERVER_PORT)
+				.contentType(TestConfigs.CONTENT_TYPE_JSON).body(userLogin).when().post();
+		int statusCode = content.statusCode();
+		String responseBody = content.getBody().asString();
+		refreshToken = content.getHeader("Refresh-Token");
+
+		logger.info("Status code: " + statusCode);
+		logger.info("Response body: " + responseBody);
+		logger.info("refreshToken: " + refreshToken);
+
+		content.then().statusCode(200);
+
+		accessToken = content.jsonPath().getString("token");
+
+		assertNotNull(accessToken);
+		assertNotNull(refreshToken);
+	}
+	
+	
+	@Test
+	@Order(2)
+	public void testFindAllDoctor() throws JsonMappingException, JsonProcessingException {
+		logger.info("testFindAll => " + "   /api/v1/doctor");
 		
 		specification = new RequestSpecBuilder()
-				.addHeader(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_FRONT)
+				.addHeader(TestConfigs.HEADER_PARAM_AUTHORIZATION, "Bearer " + accessToken)
 				.setBasePath("/api/v1/doctor")
 				.setPort(TestConfigs.SERVER_PORT)
 					.addFilter(new RequestLoggingFilter(LogDetail.ALL))
@@ -57,81 +119,81 @@ public class DoctorControllerJsonTest extends AbstractIntegrationTest {
 				.build();
 		var content = given().spec(specification)
 				.contentType(TestConfigs.CONTENT_TYPE_JSON)
-					.body(dto)
+				.header(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_FRONT)
 					.when()
-					.post()
+					.get()
 				.then()
 					.statusCode(200)
 				.extract()
 					.body()
 						.asString();
 		
-		DoctorDTO persisted = objectMapper.readValue(content, DoctorDTO.class);
-		dto = persisted;
+		logger.info("testFindAll => " + content.toString());
+		
+
+	    List<DoctorDTO> persisted = objectMapper.readValue(content, new TypeReference<List<DoctorDTO>>() {});
+		logger.info("testFindAll => " + persisted.toString());
 		
 		assertNotNull(persisted);
-		
-		assertNotNull(persisted.getId());
-		assertNotNull(persisted.getFullName());
-		assertNotNull(persisted.getEmail());
-		assertNotNull(persisted.getCpf());
-		assertNotNull(persisted.getPhone());
-		assertNotNull(persisted.getSpecialty());
-		assertNotNull(persisted.getBirthDate());
-//		assertNotNull(created.getPassword()); // Não é serializado
-		
-		assertTrue(!persisted.getId().toString().isBlank());
-		
-		assertEquals("Richard Stallman", persisted.getFullName());
-		assertEquals("richard.stallman@mail.com", persisted.getEmail());
-		assertEquals("810.231.566-44", persisted.getCpf());
-		assertEquals("(81) 5412-2521", persisted.getPhone());
-		assertEquals("Cardiologista", persisted.getSpecialty());
-		assertEquals("16/04/1953", persisted.getBirthDate());
-//		assertEquals("OpenSourcePai123", created.getPassword()); // // Não é serializado
-	}
-	
-	@Test
-	@Order(2)
-	public void testCreateWithWrongOrigin() throws JsonMappingException, JsonProcessingException {
-		mockDoctor();
-		
-		specification = new RequestSpecBuilder()
-				.addHeader(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_FELIPE)
-				.setBasePath("/api/v1/doctor")
-				.setPort(TestConfigs.SERVER_PORT)
-					.addFilter(new RequestLoggingFilter(LogDetail.ALL))
-					.addFilter(new ResponseLoggingFilter(LogDetail.ALL))
-				.build();
-		var content = given().spec(specification)
-				.contentType(TestConfigs.CONTENT_TYPE_JSON)
-					.body(dto)
-					.when()
-					.post()
-				.then()
-					.statusCode(403)
-				.extract()
-					.body()
-						.asString();
-		
-		assertNotNull(content);
-		assertEquals("Invalid CORS request", content);
+		assertTrue(persisted.size() > 0);
+		assertNotNull(persisted.get(0).getId());
+		assertTrue(!persisted.get(0).getId().toString().isBlank());
+
 	}
 	
 	@Test
 	@Order(3)
-	public void testFindById() throws JsonMappingException, JsonProcessingException {
+	public void testUpdateDoctor() throws JsonMappingException, JsonProcessingException {
 		mockDoctor();
-		
-		specification = new RequestSpecBuilder()
-				.addHeader(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_FRONT)
-				.setBasePath("/api/v1/doctor")
-				.setPort(TestConfigs.SERVER_PORT)
-					.addFilter(new RequestLoggingFilter(LogDetail.ALL))
-					.addFilter(new ResponseLoggingFilter(LogDetail.ALL))
-				.build();
+		dto.setFullName("Marcia Oliveira Da Silva");
+		dto.setSpecialty("Dermatologista");
+
 		var content = given().spec(specification)
 				.contentType(TestConfigs.CONTENT_TYPE_JSON)
+				.header(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_FRONT)
+					.body(dto)
+					.when()
+					.put()
+				.then()
+					.statusCode(200)
+				.extract()
+					.body()
+						.asString();
+		
+		DoctorDTO persisted = objectMapper.readValue(content, DoctorDTO.class);
+		dto = persisted;
+		
+		assertNotNull(persisted);
+		
+		assertNotNull(persisted.getId());
+		assertNotNull(persisted.getFullName());
+		assertNotNull(persisted.getEmail());
+		assertNotNull(persisted.getCpf());
+		assertNotNull(persisted.getPhone());
+		assertNotNull(persisted.getSpecialty());
+		assertNotNull(persisted.getBirthDate());
+		
+		assertTrue(!persisted.getId().toString().isBlank());
+		
+		assertEquals("Marcia Oliveira Da Silva", persisted.getFullName());
+		assertEquals("Dermatologista", persisted.getSpecialty());
+
+		assertEquals("marcia_oliveira@gmail.com", persisted.getEmail());
+		assertEquals("483.127.330-94", persisted.getCpf());
+		assertEquals("(21) 83232-6565", persisted.getPhone());
+		assertEquals("10/03/1980", persisted.getBirthDate());
+	}
+
+	
+	@Test
+	@Order(4)
+	public void testFindByIdDoctor() throws JsonMappingException, JsonProcessingException {
+		mockDoctor();
+		
+	
+		var content = given().spec(specification)
+				.contentType(TestConfigs.CONTENT_TYPE_JSON)
+				.header(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_FRONT)
 					.pathParam("id", dto.getId())
 					.when()
 					.get("{id}")
@@ -153,33 +215,24 @@ public class DoctorControllerJsonTest extends AbstractIntegrationTest {
 		assertNotNull(persisted.getPhone());
 		assertNotNull(persisted.getSpecialty());
 		assertNotNull(persisted.getBirthDate());
-//		assertNotNull(created.getPassword()); // Não é serializado
 		
 		assertTrue(!persisted.getId().toString().isBlank());
 		
-		assertEquals("Richard Stallman", persisted.getFullName());
-		assertEquals("richard.stallman@mail.com", persisted.getEmail());
-		assertEquals("810.231.566-44", persisted.getCpf());
-		assertEquals("(81) 5412-2521", persisted.getPhone());
-		assertEquals("Cardiologista", persisted.getSpecialty());
-		assertEquals("16/04/1953", persisted.getBirthDate());
-//		assertEquals("OpenSourcePai123", created.getPassword()); // // Não é serializado
+		assertEquals("Marcia Oliveira Da Silva", persisted.getFullName());
+		assertEquals("Dermatologista", persisted.getSpecialty());
+		assertEquals("marcia_oliveira@gmail.com", persisted.getEmail());
+		assertEquals("483.127.330-94", persisted.getCpf());
+		assertEquals("(21) 83232-6565", persisted.getPhone());
+		assertEquals("10/03/1980", persisted.getBirthDate());
 	}
 	
 	@Test
-	@Order(4)
+	@Order(5)
 	public void testFindByIdWithWrongOrigin() throws JsonMappingException, JsonProcessingException {
-		mockDoctor();
 		
-		specification = new RequestSpecBuilder()
-				.addHeader(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_FELIPE)
-				.setBasePath("/api/v1/doctor")
-				.setPort(TestConfigs.SERVER_PORT)
-					.addFilter(new RequestLoggingFilter(LogDetail.ALL))
-					.addFilter(new ResponseLoggingFilter(LogDetail.ALL))
-				.build();
 		var content = given().spec(specification)
 				.contentType(TestConfigs.CONTENT_TYPE_JSON)
+				.header(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_FELIPE)
 					.pathParam("id", dto.getId())
 					.when()
 					.get("{id}")
@@ -191,19 +244,69 @@ public class DoctorControllerJsonTest extends AbstractIntegrationTest {
 		
 		assertNotNull(content);
 		assertEquals("Invalid CORS request", content);
-
 	}
+	
+	@Test
+	@Order(6)
+	public void testDeleteByIdDoctor() throws JsonMappingException, JsonProcessingException {
+	
+		var content = given().spec(specification)
+				.contentType(TestConfigs.CONTENT_TYPE_JSON)
+				.header(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_FRONT)
+					.pathParam("id", dto.getId())
+					.when()
+					.delete("{id}")
+				.then()
+					.statusCode(204)
+				.extract()
+					.body()
+						.asString();
+		logger.info("testDeleteByIdDoctor => " + content);
+	}
+	
+	@Test
+	@Order(7)
+	public void testFindByIdDoctorWithNotFound() throws JsonMappingException, JsonProcessingException {
+		
+		var content = given().spec(specification)
+				.contentType(TestConfigs.CONTENT_TYPE_JSON)
+				.header(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_FRONT)
+					.pathParam("id", dto.getId())
+					.when()
+					.get("{id}")		
+				.then()
+					.statusCode(404)
+				.extract()
+					.body()
+						.asString();
+		logger.info("testFindByIdDoctorWithNotFound => " + content);
+		String message = objectMapper.readTree(content).get("message").asText();
+		assertNotNull(content);
+		assertEquals("No records found", message);
+	}
+	
 	
 	
 
 	private void mockDoctor() {
-		dto.setFullName("Richard Stallman");
-		dto.setEmail("richard.stallman@mail.com");
-		dto.setCpf("810.231.566-44");
-		dto.setPhone("(81) 5412-2521");
+		dto.setFullName("Marcia Oliveira");
+		dto.setEmail("marcia_oliveira@gmail.com");
+		dto.setCpf("483.127.330-94");
+		dto.setPhone("(21) 83232-6565");
 		dto.setSpecialty("Cardiologista");
-		dto.setBirthDate("16/04/1953");
-		dto.setPassword("OpenSourcePai123");
+		dto.setBirthDate("10/03/1980");
+		dto.setPassword("senhaNova");
+	}
+	
+	private void mockCreateDoctor() {
+		createDto.setFullName("Marcia Oliveira");
+		createDto.setEmail("marcia_oliveira@gmail.com");
+		createDto.setCpf("483.127.330-94");
+		createDto.setPhone("(21) 83232-6565");
+		createDto.setSpecialty("Cardiologista");
+		createDto.setBirthDate("10/03/1980");
+		createDto.setPassword("senhaNova");
+		createDto.setConfirmPassword("senhaNova");
 	}
 
 }
