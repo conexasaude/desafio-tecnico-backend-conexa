@@ -73,7 +73,7 @@ public class PatientController {
 					@ApiResponse(description = "Unathorized", responseCode = "401", content = @Content),
 					@ApiResponse(description = "Internal Error", responseCode = "500", content = @Content) })
 	public ResponseEntity<PatientDTO> create(@Valid @RequestBody PatientDTO patientDTO) throws Exception {
-		return ResponseEntity.ok(service.create(patientDTO));
+		return ResponseEntity.created(null).body(service.create(patientDTO));
 	}
 
 	@PutMapping

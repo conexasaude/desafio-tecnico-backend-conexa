@@ -1,7 +1,6 @@
 package com.felipe.integrationtests.model.dto;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.UUID;
 

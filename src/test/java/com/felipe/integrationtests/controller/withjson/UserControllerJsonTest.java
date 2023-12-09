@@ -175,9 +175,9 @@ public class UserControllerJsonTest extends AbstractIntegrationTest {
 	}
 
 	private void mockCreateDoctor() {
-		createDto.setFullName("Ana Paula Aragão");
-		createDto.setEmail("ana.paula@gmail.com");
-		createDto.setCpf("706.495.040-54");
+		createDto.setFullName("João Paulo Souza");
+		createDto.setEmail("jp.souza@gmail.com");
+		createDto.setCpf("696.456.830-17");
 		createDto.setPhone("(21) 83232-6565");
 		createDto.setSpecialty("Cardiologista");
 		createDto.setBirthDate("10/03/1980");
