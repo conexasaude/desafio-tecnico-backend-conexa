@@ -98,7 +98,7 @@ public class AuthService {
 	}
 
 	@Transactional
-	public ResponseEntity<?> signup(CreateUserDoctorDTO dto) throws Exception {
+	public ResponseEntity<DoctorDTO> signup(CreateUserDoctorDTO dto) throws Exception {
 		DoctorDTO doctor = new DoctorDTO(dto.getEmail(), dto.getFullName(), dto.getCpf(), dto.getBirthDate(),
 				dto.getPhone(), dto.getSpecialty());
 
@@ -114,7 +114,7 @@ public class AuthService {
 		createdDoctor.setUser(savedUser);
 		doctorRepository.save(createdDoctor);
 
-		return ResponseEntity.created(new URI("/api/users/" + savedUser.getId())).body(null);
+		return ResponseEntity.created(new URI("/api/users/" + savedUser.getId())).body(doctorMapper.toDto(createdDoctor));
 	}
 
 	public ResponseEntity<String> logout(String token) {

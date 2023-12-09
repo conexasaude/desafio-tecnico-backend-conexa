@@ -9,13 +9,13 @@ import jakarta.validation.constraints.AssertTrue;
 
 public class PasswordUpdateDTO {
 	
-	@JsonProperty("senha")
+	@JsonProperty("password")
 	private String oldPassword;
 	
-	@JsonProperty("novaSenha")
+	@JsonProperty("new_password")
 	private String newPassword;
 	
-	@JsonProperty("confirmarNovaSenha")
+	@JsonProperty("confirm_new_password")
 	private String confirmNewPassword;
 	
 	public PasswordUpdateDTO() {

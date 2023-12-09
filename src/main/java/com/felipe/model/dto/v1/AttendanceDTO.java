@@ -24,12 +24,10 @@ public class AttendanceDTO extends RepresentationModel<AttendanceDTO> implements
 
 	@NotBlank(message = MessageUtils.CANNOT_BLANK)
 	@FutureDateTime(message = "The date and time must be in the future")
-	@JsonProperty("dataHora")
 	private String dateTime;
 
 
 	@NonNull
-	@JsonProperty("paciente")
 	private PatientDTO patient;
 
 	public AttendanceDTO() {

@@ -5,6 +5,7 @@ import java.util.Objects;
 
 import org.hibernate.validator.constraints.br.CPF;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.felipe.util.MessageUtils;
 
@@ -22,18 +23,16 @@ public class CreateUserDoctorDTO implements Serializable {
 	private String email;
 
 	@NotBlank(message = MessageUtils.CANNOT_BLANK)
-	@JsonProperty("nomeCompleto")
+	@JsonProperty("full_name")
 	private String fullName;
 
 	@NotBlank(message = MessageUtils.CANNOT_BLANK)
-	@JsonProperty("senha")
 	private String password;
 
 	@NotBlank(message = MessageUtils.CANNOT_BLANK)
-	@JsonProperty("confirmacaoSenha")
+	@JsonProperty("confirm_password")
 	private String confirmPassword;
 
-	@JsonProperty("especialidade")
 	@NotBlank(message = MessageUtils.CANNOT_BLANK)
 	private String specialty;
 	
@@ -42,14 +41,13 @@ public class CreateUserDoctorDTO implements Serializable {
 	private String cpf;
 
 	@NotBlank(message = MessageUtils.CANNOT_BLANK)
-	@JsonProperty("dataNascimento")
+	@JsonProperty("birth_date")
 	private String birthDate;
 
 	/**
 	 * Formats:
 	 * (XX) XXXX-XXXX ; (XX) XXXXX-XXXX ; 11XXXXXXXX ; 11XXXXXXXXX
 	 */
-	@JsonProperty("telefone")
 	@Pattern(regexp = "^\\(\\d{2}\\)\\s?\\d{4,5}-\\d{4}$|^\\d{11}$", message = "Invalid phone number format")
 	private String phone;
 
@@ -133,8 +131,9 @@ public class CreateUserDoctorDTO implements Serializable {
 	}
 
 	@AssertTrue(message = MessageUtils.PASSWORD_MISMATCH)
+	@JsonIgnore
 	public boolean isPasswordConfirmed() {
-		return password.equals(confirmPassword);
+	    return password.equals(confirmPassword);
 	}
 	
 	@Override

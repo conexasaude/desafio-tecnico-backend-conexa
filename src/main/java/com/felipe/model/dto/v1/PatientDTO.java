@@ -15,7 +15,7 @@ import com.felipe.util.MessageUtils;
 
 import jakarta.validation.constraints.NotBlank;
 
-@JsonPropertyOrder({ "id", "nome", "cpf", "planoDeSaude" })
+@JsonPropertyOrder({ "id", "full_name", "cpf", "health_insurance" })
 public class PatientDTO extends RepresentationModel<PatientDTO> implements Serializable  {
 	private static final long serialVersionUID = 1L;
 	
@@ -23,14 +23,14 @@ public class PatientDTO extends RepresentationModel<PatientDTO> implements Seria
 	private UUID key;
 	
 	@NotBlank(message = MessageUtils.CANNOT_BLANK)
-	@JsonProperty("nome")
+	@JsonProperty("full_name")
 	private String fullName;
 
 	@NotBlank(message = MessageUtils.CANNOT_BLANK)
 	@CPF(message = "CPF invalid")
 	private String cpf;
 
-	@JsonProperty("planoDeSaude")
+	@JsonProperty("health_insurance")
 	private String healthInsurance;
 
 //	@CreatedDate

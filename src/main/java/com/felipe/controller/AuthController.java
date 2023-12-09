@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.felipe.model.dto.v1.CreateUserDoctorDTO;
+import com.felipe.model.dto.v1.DoctorDTO;
 import com.felipe.model.dto.v1.security.AccessTokenDTO;
 import com.felipe.model.dto.v1.security.AccountCredentialsDTO;
 import com.felipe.service.AuthService;
@@ -31,7 +32,7 @@ public class AuthController {
 	@Autowired
 	AuthService authService;
 
-	@Operation(summary = "Authenticates a user and returns a token", responses = {
+	@Operation(summary = "Login", tags = { "Authentication Endpoint" }, description = "Authenticates a user and returns a token", responses = {
 			@ApiResponse(description = "Success", responseCode = "200", content = {
 					@Content(mediaType = "application/json", schema = @Schema(implementation = AccessTokenDTO.class)) }),
 			@ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
@@ -41,7 +42,7 @@ public class AuthController {
 		return authService.signin(data);
 	}
 
-	@Operation(summary = "Refresh token for an authenticated user and returns a new token", responses = {
+	@Operation(summary = "Refresh Token", tags = { "Authentication Endpoint" }, description = "Refresh token for an authenticated user and returns a new token", responses = {
 			@ApiResponse(description = "Success", responseCode = "200", content = {
 					@Content(mediaType = "application/json", schema = @Schema(implementation = AccessTokenDTO.class)) }),
 			@ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content) })
@@ -51,18 +52,17 @@ public class AuthController {
 		return authService.refreshToken(email, refreshToken, dto);
 	}
 
-	@SuppressWarnings("rawtypes")
-	@Operation(summary = "Create User", tags = {
+	@Operation(summary = "Signup", tags = {
 			"User" }, description = "Create a user by providing doctor details in JSON or XML format", responses = {
 					@ApiResponse(description = "No Content", responseCode = "204", content = @Content),
 					@ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
 					@ApiResponse(description = "Internal Error", responseCode = "500", content = @Content) })
 	@PostMapping(value = "/signup")
-	public ResponseEntity signup(@Valid @RequestBody CreateUserDoctorDTO data) throws Exception {
+	public ResponseEntity<DoctorDTO> signup(@Valid @RequestBody CreateUserDoctorDTO data) throws Exception {
 		return authService.signup(data);
 	}
 
-	@Operation(summary = "Logout", description = "Logout an authenticated user", responses = {
+	@Operation(summary = "Logout", tags = { "Authentication Endpoint" }, description = "Logout an authenticated user", responses = {
 			@ApiResponse(description = "Success", responseCode = "200", content = @Content),
 			@ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content) })
 	@PostMapping("/logout")

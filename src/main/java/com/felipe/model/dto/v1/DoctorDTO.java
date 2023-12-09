@@ -17,7 +17,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
-@JsonPropertyOrder({ "id", "email", "nome", "specialty", "cpf", "birth_date", "phone" })
+@JsonPropertyOrder({ "id", "email", "full_name", "specialty", "cpf", "birth_date", "phone" })
 public class DoctorDTO extends RepresentationModel<DoctorDTO> implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
@@ -29,7 +29,7 @@ public class DoctorDTO extends RepresentationModel<DoctorDTO> implements Seriali
 	private String email;
 	
 	@NotBlank(message = MessageUtils.CANNOT_BLANK)
-	@JsonProperty("nome")
+	@JsonProperty("full_name")
 	private String fullName;
 	
 	@NotBlank(message = MessageUtils.CANNOT_BLANK)
@@ -37,10 +37,9 @@ public class DoctorDTO extends RepresentationModel<DoctorDTO> implements Seriali
 	private String cpf;
 
 	@NotBlank(message = MessageUtils.CANNOT_BLANK)
-	@JsonProperty("dataNascimento")
+	@JsonProperty("birth_date")
 	private String birthDate;
 	
-	@JsonProperty("telefone")
 	@Pattern(regexp = "^\\(\\d{2}\\)\\s?\\d{4,5}-\\d{4}$|^\\d{11}$", message = "Invalid phone number format")
 	private String phone;
 	

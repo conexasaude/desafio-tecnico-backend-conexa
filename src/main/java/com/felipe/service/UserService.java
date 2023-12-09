@@ -25,7 +25,7 @@ public class UserService implements UserDetailsService {
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		logger.info("Finding one user by name" + username + "!");
+		logger.info("Finding one user by name " + username + "!");
 		
 		return repository.findByUserName(username)
 				.orElseThrow(() -> new ResourceNotFoundException(MessageUtils.NO_RECORDS_FOUND + ": Email " + username + " not found!"));

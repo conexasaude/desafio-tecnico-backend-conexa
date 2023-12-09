@@ -1,9 +1,8 @@
-package com.felipe.model.dto.v1.security;
+package com.felipe.integrationtests.model.dto;
 
 import java.io.Serializable;
 import java.util.Objects;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.felipe.util.MessageUtils;
 
 import jakarta.validation.constraints.NotBlank;
@@ -58,6 +57,13 @@ public class AccountCredentialsDTO implements Serializable {
 		AccountCredentialsDTO other = (AccountCredentialsDTO) obj;
 		return Objects.equals(password, other.password) && Objects.equals(email, other.email);
 	}
+
+	@Override
+	public String toString() {
+		return "AccountCredentialsDTO [email=" + email + ", password=" + password + "]";
+	}
+	
+	
 
 	
 }
