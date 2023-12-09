@@ -162,7 +162,7 @@ public class AuthControllerJson extends AbstractIntegrationTest {
 	public void testLogout() throws JsonMappingException, JsonProcessingException {
 
 		specification = new RequestSpecBuilder()
-				.addHeader(TestConfigs.HEADER_PARAM_AUTHORIZATION, "Bearer " + accessToken)
+				.addHeader(TestConfigs.HEADER_PARAM_AUTHORIZATION, "Bearer " + refreshToken)
 				.setBasePath("/api/v1/logout").setPort(TestConfigs.SERVER_PORT)
 				.addFilter(new RequestLoggingFilter(LogDetail.ALL)).addFilter(new ResponseLoggingFilter(LogDetail.ALL))
 				.build();

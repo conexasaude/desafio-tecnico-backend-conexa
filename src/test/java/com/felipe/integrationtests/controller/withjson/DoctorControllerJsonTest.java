@@ -57,6 +57,29 @@ public class DoctorControllerJsonTest extends AbstractIntegrationTest {
 	}
 	
 	
+//	@Test
+//	@Order(0)
+//	public void testSignup() throws JsonMappingException, JsonProcessingException {
+//		mockCreateDoctor();
+//		specification = new RequestSpecBuilder().addHeader(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_FRONT)
+//				.setBasePath("/api/v1/signup").setPort(TestConfigs.SERVER_PORT)
+//				.addFilter(new RequestLoggingFilter(LogDetail.ALL)).addFilter(new ResponseLoggingFilter(LogDetail.ALL))
+//				.build();
+//		var content = given().spec(specification).contentType(TestConfigs.CONTENT_TYPE_JSON).body(createDto).when().post()
+//				.then().statusCode(201).extract().body().asString();
+//
+//		logger.info("Persisted:  => " + content.toString());
+//		DoctorDTO persisted = objectMapper.readValue(content, DoctorDTO.class);
+//		dto = persisted;
+//
+//		assertNotNull(persisted);
+//		logger.info("Persisted:  => " + persisted.toString());
+//
+//		assertNotNull(persisted.getId());
+//
+//		assertTrue(!persisted.getId().toString().isBlank());
+//	}
+//	
 	@Test
 	@Order(0)
 	public void testSignup() throws JsonMappingException, JsonProcessingException {
@@ -65,11 +88,16 @@ public class DoctorControllerJsonTest extends AbstractIntegrationTest {
 				.setBasePath("/api/v1/signup").setPort(TestConfigs.SERVER_PORT)
 				.addFilter(new RequestLoggingFilter(LogDetail.ALL)).addFilter(new ResponseLoggingFilter(LogDetail.ALL))
 				.build();
-		var content = given().spec(specification).contentType(TestConfigs.CONTENT_TYPE_JSON).body(createDto).when().post()
-				.then().statusCode(201).extract().body().asString();
+		var content = given().spec(specification).contentType(TestConfigs.CONTENT_TYPE_JSON).body(createDto).when().post();
+		
 
+		logger.info("Status code: " + content.statusCode());
+		logger.info("Response body: " + content.getBody().asString());
+		
+		var contentString = content.then().statusCode(201).extract().body().asString();
+		
 		logger.info("Persisted:  => " + content.toString());
-		DoctorDTO persisted = objectMapper.readValue(content, DoctorDTO.class);
+		DoctorDTO persisted = objectMapper.readValue(contentString, DoctorDTO.class);
 		dto = persisted;
 
 		assertNotNull(persisted);
@@ -145,7 +173,7 @@ public class DoctorControllerJsonTest extends AbstractIntegrationTest {
 	@Order(3)
 	public void testUpdateDoctor() throws JsonMappingException, JsonProcessingException {
 		mockDoctor();
-		dto.setFullName("Marcia Oliveira Da Silva");
+		dto.setFullName("Ana Paula Aragão Da Silva");
 		dto.setSpecialty("Dermatologista");
 
 		var content = given().spec(specification)
@@ -175,11 +203,11 @@ public class DoctorControllerJsonTest extends AbstractIntegrationTest {
 		
 		assertTrue(!persisted.getId().toString().isBlank());
 		
-		assertEquals("Marcia Oliveira Da Silva", persisted.getFullName());
+		assertEquals("Ana Paula Aragão Da Silva", persisted.getFullName());
 		assertEquals("Dermatologista", persisted.getSpecialty());
 
-		assertEquals("marcia_oliveira@gmail.com", persisted.getEmail());
-		assertEquals("483.127.330-94", persisted.getCpf());
+		assertEquals("ana.paula@gmail.com", persisted.getEmail());
+		assertEquals("706.495.040-54", persisted.getCpf());
 		assertEquals("(21) 83232-6565", persisted.getPhone());
 		assertEquals("10/03/1980", persisted.getBirthDate());
 	}
@@ -218,10 +246,10 @@ public class DoctorControllerJsonTest extends AbstractIntegrationTest {
 		
 		assertTrue(!persisted.getId().toString().isBlank());
 		
-		assertEquals("Marcia Oliveira Da Silva", persisted.getFullName());
+		assertEquals("Ana Paula Aragão Da Silva", persisted.getFullName());
 		assertEquals("Dermatologista", persisted.getSpecialty());
-		assertEquals("marcia_oliveira@gmail.com", persisted.getEmail());
-		assertEquals("483.127.330-94", persisted.getCpf());
+		assertEquals("ana.paula@gmail.com", persisted.getEmail());
+		assertEquals("706.495.040-54", persisted.getCpf());
 		assertEquals("(21) 83232-6565", persisted.getPhone());
 		assertEquals("10/03/1980", persisted.getBirthDate());
 	}
@@ -289,9 +317,9 @@ public class DoctorControllerJsonTest extends AbstractIntegrationTest {
 	
 
 	private void mockDoctor() {
-		dto.setFullName("Marcia Oliveira");
-		dto.setEmail("marcia_oliveira@gmail.com");
-		dto.setCpf("483.127.330-94");
+		dto.setFullName("Ana Paula Aragão");
+		dto.setEmail("ana.paula@gmail.com");
+		dto.setCpf("706.495.040-54");
 		dto.setPhone("(21) 83232-6565");
 		dto.setSpecialty("Cardiologista");
 		dto.setBirthDate("10/03/1980");
@@ -299,9 +327,9 @@ public class DoctorControllerJsonTest extends AbstractIntegrationTest {
 	}
 	
 	private void mockCreateDoctor() {
-		createDto.setFullName("Marcia Oliveira");
-		createDto.setEmail("marcia_oliveira@gmail.com");
-		createDto.setCpf("483.127.330-94");
+		createDto.setFullName("Ana Paula Aragão");
+		createDto.setEmail("ana.paula@gmail.com");
+		createDto.setCpf("706.495.040-54");
 		createDto.setPhone("(21) 83232-6565");
 		createDto.setSpecialty("Cardiologista");
 		createDto.setBirthDate("10/03/1980");
