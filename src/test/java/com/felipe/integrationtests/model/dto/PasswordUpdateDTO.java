@@ -1,8 +1,7 @@
-package com.felipe.model.dto.v1;
+package com.felipe.integrationtests.model.dto;
 
 import java.util.Objects;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.felipe.util.MessageUtils;
 
@@ -54,7 +53,6 @@ public class PasswordUpdateDTO {
 	}
 	
 	@AssertTrue(message = MessageUtils.PASSWORD_MISMATCH)
-	@JsonIgnore
 	public boolean isPasswordConfirmed() {
 		return newPassword.equals(confirmNewPassword);
 	}

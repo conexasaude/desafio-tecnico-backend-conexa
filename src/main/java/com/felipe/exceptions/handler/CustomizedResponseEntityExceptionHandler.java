@@ -21,6 +21,7 @@ import com.felipe.exceptions.ExceptionResponse;
 import com.felipe.exceptions.ForbbidenException;
 import com.felipe.exceptions.InvalidJwtAuthenticationException;
 import com.felipe.exceptions.ResourceNotFoundException;
+import com.felipe.exceptions.UnauthorizedException;
 
 @ControllerAdvice
 public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
@@ -78,6 +79,13 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 		ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getMessage(),
 				request.getDescription(false));
 		return new ResponseEntity<>(exceptionResponse, HttpStatus.FORBIDDEN);
+	}
+	
+	@ExceptionHandler(UnauthorizedException.class)
+	public final ResponseEntity<ExceptionResponse> handleUnauthorizedExceptions(Exception ex, WebRequest request) {
+		ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getMessage(),
+				request.getDescription(false));
+		return new ResponseEntity<>(exceptionResponse, HttpStatus.UNAUTHORIZED);
 	}
 
 }

@@ -3,7 +3,6 @@ package com.felipe.model.dto.v1.security;
 import java.io.Serializable;
 import java.util.Objects;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.felipe.util.MessageUtils;
 
 import jakarta.validation.constraints.NotBlank;

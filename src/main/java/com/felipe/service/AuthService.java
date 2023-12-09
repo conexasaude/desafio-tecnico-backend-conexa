@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -15,6 +14,7 @@ import org.springframework.stereotype.Service;
 import com.felipe.exceptions.BadRequestException;
 import com.felipe.exceptions.ForbbidenException;
 import com.felipe.exceptions.ResourceNotFoundException;
+import com.felipe.exceptions.UnauthorizedException;
 import com.felipe.mapper.DoctorMapper;
 import com.felipe.model.Doctor;
 import com.felipe.model.User;
@@ -75,7 +75,8 @@ public class AuthService {
 
 			return ResponseEntity.ok().headers(headers).body(new AccessTokenDTO(tokenResponse.getAcessToken()));
 		} catch (Exception e) {
-			throw new BadCredentialsException(MessageUtils.INVALID_EMAIL_PASSWORD);
+			logger.info(e.getMessage());
+			throw new UnauthorizedException(MessageUtils.INVALID_EMAIL_PASSWORD);
 		}
 	}
 
