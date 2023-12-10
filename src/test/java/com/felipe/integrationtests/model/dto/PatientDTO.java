@@ -1,21 +1,22 @@
 package com.felipe.integrationtests.model.dto;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
 import org.hibernate.validator.constraints.br.CPF;
 import org.springframework.hateoas.RepresentationModel;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import com.felipe.model.Attendance;
 import com.felipe.util.MessageUtils;
 
 import jakarta.validation.constraints.NotBlank;
 
-@JsonPropertyOrder({ "id", "full_name", "cpf", "health_insurance" })
+@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class PatientDTO extends RepresentationModel<PatientDTO> implements Serializable  {
 	private static final long serialVersionUID = 1L;
 	
@@ -33,29 +34,21 @@ public class PatientDTO extends RepresentationModel<PatientDTO> implements Seria
 	@JsonProperty("health_insurance")
 	private String healthInsurance;
 
-//	@CreatedDate
-	@JsonIgnore
-	private LocalDateTime createdAt;
-
-//	@LastModifiedDate
-	@JsonIgnore
-	private LocalDateTime updatedAt;
+	private List<Attendance> attendances;
 
 	public PatientDTO() {
 	}
 
-	public PatientDTO(String fullName, String cpf, String healthInsurance) {
+	public PatientDTO(@NotBlank(message = "This value cannot be blank or null") String fullName,
+			@NotBlank(message = "This value cannot be blank or null") @CPF(message = "CPF invalid") String cpf,
+			String healthInsurance, List<Attendance> attendances) {
 		this.fullName = fullName;
 		this.cpf = cpf;
 		this.healthInsurance = healthInsurance;
+		this.attendances = attendances;
 	}
 
-	public PatientDTO(UUID id, String fullName, String cpf, String healthInsurance) {
-		this.id = id;
-		this.fullName = fullName;
-		this.cpf = cpf;
-		this.healthInsurance = healthInsurance;
-	}
+
 
 	public UUID getId() {
 		return id;
@@ -89,27 +82,20 @@ public class PatientDTO extends RepresentationModel<PatientDTO> implements Seria
 		this.healthInsurance = healthInsurance;
 	}
 
-	public LocalDateTime getCreatedAt() {
-		return createdAt;
+	public List<Attendance> getAttendances() {
+		return attendances;
 	}
 
-	public void setCreatedAt(LocalDateTime createdAt) {
-		this.createdAt = createdAt;
+	public void setAttendances(List<Attendance> attendances) {
+		this.attendances = attendances;
 	}
 
-	public LocalDateTime getUpdatedAt() {
-		return updatedAt;
-	}
-
-	public void setUpdatedAt(LocalDateTime updatedAt) {
-		this.updatedAt = updatedAt;
-	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + Objects.hash(cpf, createdAt, fullName, healthInsurance, id, updatedAt);
+		result = prime * result + Objects.hash(attendances, cpf, fullName, healthInsurance, id);
 		return result;
 	}
 
@@ -122,15 +108,18 @@ public class PatientDTO extends RepresentationModel<PatientDTO> implements Seria
 		if (getClass() != obj.getClass())
 			return false;
 		PatientDTO other = (PatientDTO) obj;
-		return Objects.equals(cpf, other.cpf) && Objects.equals(createdAt, other.createdAt)
-				&& Objects.equals(fullName, other.fullName) && Objects.equals(healthInsurance, other.healthInsurance)
-				&& Objects.equals(id, other.id) && Objects.equals(updatedAt, other.updatedAt);
+		return Objects.equals(attendances, other.attendances) && Objects.equals(cpf, other.cpf)
+				&& Objects.equals(fullName, other.fullName)
+				&& Objects.equals(healthInsurance, other.healthInsurance) && Objects.equals(id, other.id);
+
 	}
 
 	@Override
 	public String toString() {
 		return "PatientDTO [id=" + id + ", fullName=" + fullName + ", cpf=" + cpf + ", healthInsurance="
-				+ healthInsurance + "]";
+				+ healthInsurance + ", attendances=" + attendances + "]";
 	}
+
+
 
 }

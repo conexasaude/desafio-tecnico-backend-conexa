@@ -109,7 +109,6 @@ public class DoctorService {
 
 		DoctorDTO doctor = mapper.toDto(repository.save(entity));
 		return addDoctorSelfRel(doctor);
-
 	}
 	
     /**
