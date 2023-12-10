@@ -10,8 +10,12 @@ spring:
     name: rest-conexa-challenger
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/rest-conexa-challenger?useTimezone=true&serverTimezone=UTC&useSSL=false
-    username: root
+    # Descomentar se for rodar localmente sem ser por docker
+    # url: jdbc:mysql://localhost:3306/rest-conexa-challenger?useTimezone=true&serverTimezone=UTC&useSSL=false
+
+    # Deixar Comentado se for rodar localmente sem ser por docker
+    url: jdbc:mysql://db:3306/rest-conexa-challenger?useTimezone=true&serverTimezone=UTC&useSSL=false
+    username: docker
     password: admin123
   jpa:
     open-in-view: false
@@ -22,14 +26,18 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
   flyway:
-    url: jdbc:mysql://localhost:3306/
-    schemas: rest-conexa-challenger
-    user: root
+    url: jdbc:mysql://db:3306/
+    schemas: rest-conexa-challenger 
+    user: docker
     password: admin123
     locations: classpath:db/migration
   data:
     redis:
-      host: localhost
+      # Descomentar se for rodar localmente sem ser por docker
+      # host: localhost
+
+     # Comentar se for rodar localmente sem ser por docker
+      host: redis
       port: 6379
 springdoc:
   pathsToMatch: 

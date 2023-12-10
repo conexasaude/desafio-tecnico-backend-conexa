@@ -1,6 +1,8 @@
-# Desafio Técnico backend Conexa
+# Desafio Técnico backend Conexa - FELIPE
 
 Construir uma API REST para que nossos médicos de plantão consigam se logar na plataforma e agendar atendimentos para pacientes.
+
+Para mais informações e dúvidas do contruido acesse => https://github.com/Felipe-builder/desafio-tecnico-backend-conexa/wiki
 
 ## Autenticação
 
@@ -9,13 +11,14 @@ Precisamos de uma rota para que os médicos consigam realizar cadastro na plataf
 ```
 endpoint:  /api/v1/signup
 {
-  "email": "medico@email.com",
-  "senha": "",
-  "confirmacaoSenha": "",
-  "especialidade": "Cardiologista",
-  "cpf": "101.202.303-11",
-  "dataNascimento": "10/03/1980",
-  "telefone": "(21) 3232-6565"
+  "full_name": "Mauro Rodrigues",
+  "email": "mauro.rodrigues@gmail.com",
+  "cpf": "791.347.480-75",
+  "password": "senhaNova",
+  "confirm_password": "senhaNova",
+  "birth_date": "10/03/1980",
+  "specialty": "Cardiologista",
+  "phone": "(53)8079-4439"
 }
 ```
 
@@ -57,10 +60,10 @@ Precisamos de uma rota onde o médico logado realiza agendamento de consulta par
 endpoint: /api/v1/attendance
 Authorization: token_jwt
 {
-  "dataHora": "2020-08-03 09:00:00",
-  "paciente": {
-    "nome": "João Castro",
-    "cpf": "101.202.303"
+  "date_time": "2023-12-18 23:21:00",
+  "patient": {
+    "full_name": "Luana Ferreira",
+    "cpf": "467.141.940-80"
   }
 }
 ```

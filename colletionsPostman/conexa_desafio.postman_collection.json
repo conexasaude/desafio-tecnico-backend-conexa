@@ -1,0 +1,4474 @@
+{
+	"info": {
+		"_postman_id": "db3320cc-4ff9-4f20-b507-4ddf7581cddb",
+		"name": "RESTful Api Conexa Challenger Java 21 and Spring Boot 3",
+		"description": "Api RESTful for Conexa Challenger",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27750104"
+	},
+	"item": [
+		{
+			"name": "api/v1",
+			"item": [
+				{
+					"name": "patient",
+					"item": [
+						{
+							"name": "{id}",
+							"item": [
+								{
+									"name": "Find Patient by ID",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/patient/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"patient",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "ex sit eiusmod sunt Duis",
+													"description": "(Required) "
+												}
+											]
+										},
+										"description": "Retrieve patient details by providing a valid patient ID"
+									},
+									"response": [
+										{
+											"name": "Success",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/json"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/v1/patient/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"v1",
+														"patient",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "ex sit eiusmod sunt Duis",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"cpf\": \"sed sint eiusmod ut\",\n  \"full_name\": \"nostrud\",\n  \"id\": \"eb24a36a-5bfe-6b65-867d-b4c092e214f2\",\n  \"health_insurance\": \"officia laboris\",\n  \"_links\": {\n    \"ina0\": {\n      \"href\": \"irure et fugiat\",\n      \"hreflang\": \"sint\",\n      \"title\": \"ex nisi dolore sed\",\n      \"type\": \"sint\",\n      \"deprecation\": \"ullamco dolor\",\n      \"profile\": \"dolore velit tempor\",\n      \"name\": \"consequat qui\",\n      \"templated\": false\n    },\n    \"ullamco_c37\": {\n      \"href\": \"sit ut\",\n      \"hreflang\": \"ut sit veniam officia\",\n      \"title\": \"amet enim nisi\",\n      \"type\": \"adipisicing ut sint\",\n      \"deprecation\": \"officia mollit tempor enim est\",\n      \"profile\": \"dolore velit\",\n      \"name\": \"incididunt nulla\",\n      \"templated\": true\n    },\n    \"pariatur69\": {\n      \"href\": \"sit eu\",\n      \"hreflang\": \"in anim\",\n      \"title\": \"Excepteur\",\n      \"type\": \"amet elit\",\n      \"deprecation\": \"irure aliqua\",\n      \"profile\": \"sed reprehenderit\",\n      \"name\": \"nulla tempor nostrud\",\n      \"templated\": false\n    }\n  }\n}"
+										},
+										{
+											"name": "No Content",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/v1/patient/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"v1",
+														"patient",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "ex sit eiusmod sunt Duis",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "No Content",
+											"code": 204,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										},
+										{
+											"name": "Bad Request",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/v1/patient/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"v1",
+														"patient",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "ex sit eiusmod sunt Duis",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "Bad Request",
+											"code": 400,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										},
+										{
+											"name": "Unathorized",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/v1/patient/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"v1",
+														"patient",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "ex sit eiusmod sunt Duis",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "Unauthorized",
+											"code": 401,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										},
+										{
+											"name": "Not Found",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/v1/patient/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"v1",
+														"patient",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "ex sit eiusmod sunt Duis",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "Not Found",
+											"code": 404,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										},
+										{
+											"name": "Internal Error",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/v1/patient/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"v1",
+														"patient",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "ex sit eiusmod sunt Duis",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "Internal Server Error",
+											"code": 500,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								},
+								{
+									"name": "Delete Patient",
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/patient/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"patient",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "ex sit eiusmod sunt Duis",
+													"description": "(Required) "
+												}
+											]
+										},
+										"description": "Delete an existing patient by providing the patient ID"
+									},
+									"response": [
+										{
+											"name": "No Content",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/v1/patient/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"v1",
+														"patient",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "ex sit eiusmod sunt Duis",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "No Content",
+											"code": 204,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										},
+										{
+											"name": "Bad Request",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/v1/patient/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"v1",
+														"patient",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "ex sit eiusmod sunt Duis",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "Bad Request",
+											"code": 400,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										},
+										{
+											"name": "Unathorized",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/v1/patient/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"v1",
+														"patient",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "ex sit eiusmod sunt Duis",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "Unauthorized",
+											"code": 401,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										},
+										{
+											"name": "Not Found",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/v1/patient/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"v1",
+														"patient",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "ex sit eiusmod sunt Duis",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "Not Found",
+											"code": 404,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										},
+										{
+											"name": "Internal Error",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/v1/patient/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"v1",
+														"patient",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "ex sit eiusmod sunt Duis",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "Internal Server Error",
+											"code": 500,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "Finds all Patients",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{bearerToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/patient",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"patient"
+									]
+								},
+								"description": "Retrieve a list of all patients"
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/patient",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"patient"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "[\n  {\n    \"cpf\": \"Lorem\",\n    \"full_name\": \"ut iru\",\n    \"id\": \"e974aaf9-fdca-015c-327b-7159cda571c7\",\n    \"health_insurance\": \"dolore consectetur anim proide\",\n    \"_links\": {\n      \"anim_ee\": {\n        \"href\": \"exercitation\",\n        \"hreflang\": \"laboris\",\n        \"title\": \"ut\",\n        \"type\": \"dolore eu in\",\n        \"deprecation\": \"mollit consectetur\",\n        \"profile\": \"ipsum exercitation\",\n        \"name\": \"reprehenderit adipisicing nulla laboris\",\n        \"templated\": false\n      },\n      \"consecteturc3\": {\n        \"href\": \"pariatur eiusmod anim\",\n        \"hreflang\": \"consectetur voluptate sunt officia\",\n        \"title\": \"ullamco commodo sit\",\n        \"type\": \"ul\",\n        \"deprecation\": \"irure\",\n        \"profile\": \"nulla ea el\",\n        \"name\": \"sit nisi est Excepteur\",\n        \"templated\": false\n      },\n      \"sedaf9\": {\n        \"href\": \"irure elit qui\",\n        \"hreflang\": \"dolor sed\",\n        \"title\": \"magna irure\",\n        \"type\": \"reprehenderit pariat\",\n        \"deprecation\": \"minim nostrud proident\",\n        \"profile\": \"p\",\n        \"name\": \"nostrud sed ipsum\",\n        \"templated\": false\n      }\n    }\n  },\n  {\n    \"cpf\": \"reprehenderit\",\n    \"full_name\": \"voluptate\",\n    \"id\": \"urn:uuid:5e503e54-411f-2947-d323-99b5485e92f6\",\n    \"health_insurance\": \"id proident ut et\",\n    \"_links\": {\n      \"exercitation_eb6\": {\n        \"href\": \"Ut\",\n        \"hreflang\": \"velit sed\",\n        \"title\": \"amet cillum incidi\",\n        \"type\": \"magna ullamco laboris aliq\",\n        \"deprecation\": \"ullamco incididunt laborum\",\n        \"profile\": \"eu Lorem\",\n        \"name\": \"qui\",\n        \"templated\": true\n      }\n    }\n  }\n]"
+								},
+								{
+									"name": "Bad Request",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/patient",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"patient"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Unathorized",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/patient",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"patient"
+											]
+										}
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Not Found",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/patient",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"patient"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Internal Error",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/patient",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"patient"
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Update Patient",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{bearerToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"65f91641-b20a-46a4-afcf-331b76a599c1\",\n    \"full_name\": \"Luana Ferreira do Santos\",\n    \"health_insurance\": \"Bradesco\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/patient",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"patient"
+									]
+								},
+								"description": "Update an existing patient by providing updated patient details in JSON or XML format"
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"cpf\": \"sed sint eiusmod ut\",\n  \"full_name\": \"nostrud\",\n  \"id\": \"eb24a36a-5bfe-6b65-867d-b4c092e214f2\",\n  \"health_insurance\": \"officia laboris\",\n  \"_links\": {\n    \"ina0\": {\n      \"href\": \"irure et fugiat\",\n      \"hreflang\": \"sint\",\n      \"title\": \"ex nisi dolore sed\",\n      \"type\": \"sint\",\n      \"deprecation\": \"ullamco dolor\",\n      \"profile\": \"dolore velit tempor\",\n      \"name\": \"consequat qui\",\n      \"templated\": false\n    },\n    \"ullamco_c37\": {\n      \"href\": \"sit ut\",\n      \"hreflang\": \"ut sit veniam officia\",\n      \"title\": \"amet enim nisi\",\n      \"type\": \"adipisicing ut sint\",\n      \"deprecation\": \"officia mollit tempor enim est\",\n      \"profile\": \"dolore velit\",\n      \"name\": \"incididunt nulla\",\n      \"templated\": true\n    },\n    \"pariatur69\": {\n      \"href\": \"sit eu\",\n      \"hreflang\": \"in anim\",\n      \"title\": \"Excepteur\",\n      \"type\": \"amet elit\",\n      \"deprecation\": \"irure aliqua\",\n      \"profile\": \"sed reprehenderit\",\n      \"name\": \"nulla tempor nostrud\",\n      \"templated\": false\n    }\n  }\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/patient",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"patient"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"cpf\": \"sed sint eiusmod ut\",\n  \"full_name\": \"nostrud\",\n  \"id\": \"eb24a36a-5bfe-6b65-867d-b4c092e214f2\",\n  \"health_insurance\": \"officia laboris\",\n  \"_links\": {\n    \"ina0\": {\n      \"href\": \"irure et fugiat\",\n      \"hreflang\": \"sint\",\n      \"title\": \"ex nisi dolore sed\",\n      \"type\": \"sint\",\n      \"deprecation\": \"ullamco dolor\",\n      \"profile\": \"dolore velit tempor\",\n      \"name\": \"consequat qui\",\n      \"templated\": false\n    },\n    \"ullamco_c37\": {\n      \"href\": \"sit ut\",\n      \"hreflang\": \"ut sit veniam officia\",\n      \"title\": \"amet enim nisi\",\n      \"type\": \"adipisicing ut sint\",\n      \"deprecation\": \"officia mollit tempor enim est\",\n      \"profile\": \"dolore velit\",\n      \"name\": \"incididunt nulla\",\n      \"templated\": true\n    },\n    \"pariatur69\": {\n      \"href\": \"sit eu\",\n      \"hreflang\": \"in anim\",\n      \"title\": \"Excepteur\",\n      \"type\": \"amet elit\",\n      \"deprecation\": \"irure aliqua\",\n      \"profile\": \"sed reprehenderit\",\n      \"name\": \"nulla tempor nostrud\",\n      \"templated\": false\n    }\n  }\n}"
+								},
+								{
+									"name": "No Content",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"cpf\": \"sed sint eiusmod ut\",\n  \"full_name\": \"nostrud\",\n  \"id\": \"eb24a36a-5bfe-6b65-867d-b4c092e214f2\",\n  \"health_insurance\": \"officia laboris\",\n  \"_links\": {\n    \"ina0\": {\n      \"href\": \"irure et fugiat\",\n      \"hreflang\": \"sint\",\n      \"title\": \"ex nisi dolore sed\",\n      \"type\": \"sint\",\n      \"deprecation\": \"ullamco dolor\",\n      \"profile\": \"dolore velit tempor\",\n      \"name\": \"consequat qui\",\n      \"templated\": false\n    },\n    \"ullamco_c37\": {\n      \"href\": \"sit ut\",\n      \"hreflang\": \"ut sit veniam officia\",\n      \"title\": \"amet enim nisi\",\n      \"type\": \"adipisicing ut sint\",\n      \"deprecation\": \"officia mollit tempor enim est\",\n      \"profile\": \"dolore velit\",\n      \"name\": \"incididunt nulla\",\n      \"templated\": true\n    },\n    \"pariatur69\": {\n      \"href\": \"sit eu\",\n      \"hreflang\": \"in anim\",\n      \"title\": \"Excepteur\",\n      \"type\": \"amet elit\",\n      \"deprecation\": \"irure aliqua\",\n      \"profile\": \"sed reprehenderit\",\n      \"name\": \"nulla tempor nostrud\",\n      \"templated\": false\n    }\n  }\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/patient",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"patient"
+											]
+										}
+									},
+									"status": "No Content",
+									"code": 204,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Bad Request",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"cpf\": \"sed sint eiusmod ut\",\n  \"full_name\": \"nostrud\",\n  \"id\": \"eb24a36a-5bfe-6b65-867d-b4c092e214f2\",\n  \"health_insurance\": \"officia laboris\",\n  \"_links\": {\n    \"ina0\": {\n      \"href\": \"irure et fugiat\",\n      \"hreflang\": \"sint\",\n      \"title\": \"ex nisi dolore sed\",\n      \"type\": \"sint\",\n      \"deprecation\": \"ullamco dolor\",\n      \"profile\": \"dolore velit tempor\",\n      \"name\": \"consequat qui\",\n      \"templated\": false\n    },\n    \"ullamco_c37\": {\n      \"href\": \"sit ut\",\n      \"hreflang\": \"ut sit veniam officia\",\n      \"title\": \"amet enim nisi\",\n      \"type\": \"adipisicing ut sint\",\n      \"deprecation\": \"officia mollit tempor enim est\",\n      \"profile\": \"dolore velit\",\n      \"name\": \"incididunt nulla\",\n      \"templated\": true\n    },\n    \"pariatur69\": {\n      \"href\": \"sit eu\",\n      \"hreflang\": \"in anim\",\n      \"title\": \"Excepteur\",\n      \"type\": \"amet elit\",\n      \"deprecation\": \"irure aliqua\",\n      \"profile\": \"sed reprehenderit\",\n      \"name\": \"nulla tempor nostrud\",\n      \"templated\": false\n    }\n  }\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/patient",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"patient"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Unathorized",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"cpf\": \"sed sint eiusmod ut\",\n  \"full_name\": \"nostrud\",\n  \"id\": \"eb24a36a-5bfe-6b65-867d-b4c092e214f2\",\n  \"health_insurance\": \"officia laboris\",\n  \"_links\": {\n    \"ina0\": {\n      \"href\": \"irure et fugiat\",\n      \"hreflang\": \"sint\",\n      \"title\": \"ex nisi dolore sed\",\n      \"type\": \"sint\",\n      \"deprecation\": \"ullamco dolor\",\n      \"profile\": \"dolore velit tempor\",\n      \"name\": \"consequat qui\",\n      \"templated\": false\n    },\n    \"ullamco_c37\": {\n      \"href\": \"sit ut\",\n      \"hreflang\": \"ut sit veniam officia\",\n      \"title\": \"amet enim nisi\",\n      \"type\": \"adipisicing ut sint\",\n      \"deprecation\": \"officia mollit tempor enim est\",\n      \"profile\": \"dolore velit\",\n      \"name\": \"incididunt nulla\",\n      \"templated\": true\n    },\n    \"pariatur69\": {\n      \"href\": \"sit eu\",\n      \"hreflang\": \"in anim\",\n      \"title\": \"Excepteur\",\n      \"type\": \"amet elit\",\n      \"deprecation\": \"irure aliqua\",\n      \"profile\": \"sed reprehenderit\",\n      \"name\": \"nulla tempor nostrud\",\n      \"templated\": false\n    }\n  }\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/patient",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"patient"
+											]
+										}
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Not Found",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"cpf\": \"sed sint eiusmod ut\",\n  \"full_name\": \"nostrud\",\n  \"id\": \"eb24a36a-5bfe-6b65-867d-b4c092e214f2\",\n  \"health_insurance\": \"officia laboris\",\n  \"_links\": {\n    \"ina0\": {\n      \"href\": \"irure et fugiat\",\n      \"hreflang\": \"sint\",\n      \"title\": \"ex nisi dolore sed\",\n      \"type\": \"sint\",\n      \"deprecation\": \"ullamco dolor\",\n      \"profile\": \"dolore velit tempor\",\n      \"name\": \"consequat qui\",\n      \"templated\": false\n    },\n    \"ullamco_c37\": {\n      \"href\": \"sit ut\",\n      \"hreflang\": \"ut sit veniam officia\",\n      \"title\": \"amet enim nisi\",\n      \"type\": \"adipisicing ut sint\",\n      \"deprecation\": \"officia mollit tempor enim est\",\n      \"profile\": \"dolore velit\",\n      \"name\": \"incididunt nulla\",\n      \"templated\": true\n    },\n    \"pariatur69\": {\n      \"href\": \"sit eu\",\n      \"hreflang\": \"in anim\",\n      \"title\": \"Excepteur\",\n      \"type\": \"amet elit\",\n      \"deprecation\": \"irure aliqua\",\n      \"profile\": \"sed reprehenderit\",\n      \"name\": \"nulla tempor nostrud\",\n      \"templated\": false\n    }\n  }\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/patient",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"patient"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Internal Error",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"cpf\": \"sed sint eiusmod ut\",\n  \"full_name\": \"nostrud\",\n  \"id\": \"eb24a36a-5bfe-6b65-867d-b4c092e214f2\",\n  \"health_insurance\": \"officia laboris\",\n  \"_links\": {\n    \"ina0\": {\n      \"href\": \"irure et fugiat\",\n      \"hreflang\": \"sint\",\n      \"title\": \"ex nisi dolore sed\",\n      \"type\": \"sint\",\n      \"deprecation\": \"ullamco dolor\",\n      \"profile\": \"dolore velit tempor\",\n      \"name\": \"consequat qui\",\n      \"templated\": false\n    },\n    \"ullamco_c37\": {\n      \"href\": \"sit ut\",\n      \"hreflang\": \"ut sit veniam officia\",\n      \"title\": \"amet enim nisi\",\n      \"type\": \"adipisicing ut sint\",\n      \"deprecation\": \"officia mollit tempor enim est\",\n      \"profile\": \"dolore velit\",\n      \"name\": \"incididunt nulla\",\n      \"templated\": true\n    },\n    \"pariatur69\": {\n      \"href\": \"sit eu\",\n      \"hreflang\": \"in anim\",\n      \"title\": \"Excepteur\",\n      \"type\": \"amet elit\",\n      \"deprecation\": \"irure aliqua\",\n      \"profile\": \"sed reprehenderit\",\n      \"name\": \"nulla tempor nostrud\",\n      \"templated\": false\n    }\n  }\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/patient",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"patient"
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Create Patient",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{bearerToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"full_name\": \"Teste saas1\",\n    \"cpf\": \"58022357057\",\n    \"health_insurance\": \"Bradesco\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/patient",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"patient"
+									]
+								},
+								"description": "Update an existing patient by providing updated patient details in JSON or XML format"
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"cpf\": \"sed sint eiusmod ut\",\n  \"full_name\": \"nostrud\",\n  \"id\": \"eb24a36a-5bfe-6b65-867d-b4c092e214f2\",\n  \"health_insurance\": \"officia laboris\",\n  \"_links\": {\n    \"ina0\": {\n      \"href\": \"irure et fugiat\",\n      \"hreflang\": \"sint\",\n      \"title\": \"ex nisi dolore sed\",\n      \"type\": \"sint\",\n      \"deprecation\": \"ullamco dolor\",\n      \"profile\": \"dolore velit tempor\",\n      \"name\": \"consequat qui\",\n      \"templated\": false\n    },\n    \"ullamco_c37\": {\n      \"href\": \"sit ut\",\n      \"hreflang\": \"ut sit veniam officia\",\n      \"title\": \"amet enim nisi\",\n      \"type\": \"adipisicing ut sint\",\n      \"deprecation\": \"officia mollit tempor enim est\",\n      \"profile\": \"dolore velit\",\n      \"name\": \"incididunt nulla\",\n      \"templated\": true\n    },\n    \"pariatur69\": {\n      \"href\": \"sit eu\",\n      \"hreflang\": \"in anim\",\n      \"title\": \"Excepteur\",\n      \"type\": \"amet elit\",\n      \"deprecation\": \"irure aliqua\",\n      \"profile\": \"sed reprehenderit\",\n      \"name\": \"nulla tempor nostrud\",\n      \"templated\": false\n    }\n  }\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/patient",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"patient"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"cpf\": \"sed sint eiusmod ut\",\n  \"full_name\": \"nostrud\",\n  \"id\": \"eb24a36a-5bfe-6b65-867d-b4c092e214f2\",\n  \"health_insurance\": \"officia laboris\",\n  \"_links\": {\n    \"ina0\": {\n      \"href\": \"irure et fugiat\",\n      \"hreflang\": \"sint\",\n      \"title\": \"ex nisi dolore sed\",\n      \"type\": \"sint\",\n      \"deprecation\": \"ullamco dolor\",\n      \"profile\": \"dolore velit tempor\",\n      \"name\": \"consequat qui\",\n      \"templated\": false\n    },\n    \"ullamco_c37\": {\n      \"href\": \"sit ut\",\n      \"hreflang\": \"ut sit veniam officia\",\n      \"title\": \"amet enim nisi\",\n      \"type\": \"adipisicing ut sint\",\n      \"deprecation\": \"officia mollit tempor enim est\",\n      \"profile\": \"dolore velit\",\n      \"name\": \"incididunt nulla\",\n      \"templated\": true\n    },\n    \"pariatur69\": {\n      \"href\": \"sit eu\",\n      \"hreflang\": \"in anim\",\n      \"title\": \"Excepteur\",\n      \"type\": \"amet elit\",\n      \"deprecation\": \"irure aliqua\",\n      \"profile\": \"sed reprehenderit\",\n      \"name\": \"nulla tempor nostrud\",\n      \"templated\": false\n    }\n  }\n}"
+								},
+								{
+									"name": "No Content",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"cpf\": \"sed sint eiusmod ut\",\n  \"full_name\": \"nostrud\",\n  \"id\": \"eb24a36a-5bfe-6b65-867d-b4c092e214f2\",\n  \"health_insurance\": \"officia laboris\",\n  \"_links\": {\n    \"ina0\": {\n      \"href\": \"irure et fugiat\",\n      \"hreflang\": \"sint\",\n      \"title\": \"ex nisi dolore sed\",\n      \"type\": \"sint\",\n      \"deprecation\": \"ullamco dolor\",\n      \"profile\": \"dolore velit tempor\",\n      \"name\": \"consequat qui\",\n      \"templated\": false\n    },\n    \"ullamco_c37\": {\n      \"href\": \"sit ut\",\n      \"hreflang\": \"ut sit veniam officia\",\n      \"title\": \"amet enim nisi\",\n      \"type\": \"adipisicing ut sint\",\n      \"deprecation\": \"officia mollit tempor enim est\",\n      \"profile\": \"dolore velit\",\n      \"name\": \"incididunt nulla\",\n      \"templated\": true\n    },\n    \"pariatur69\": {\n      \"href\": \"sit eu\",\n      \"hreflang\": \"in anim\",\n      \"title\": \"Excepteur\",\n      \"type\": \"amet elit\",\n      \"deprecation\": \"irure aliqua\",\n      \"profile\": \"sed reprehenderit\",\n      \"name\": \"nulla tempor nostrud\",\n      \"templated\": false\n    }\n  }\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/patient",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"patient"
+											]
+										}
+									},
+									"status": "No Content",
+									"code": 204,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Bad Request",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"cpf\": \"sed sint eiusmod ut\",\n  \"full_name\": \"nostrud\",\n  \"id\": \"eb24a36a-5bfe-6b65-867d-b4c092e214f2\",\n  \"health_insurance\": \"officia laboris\",\n  \"_links\": {\n    \"ina0\": {\n      \"href\": \"irure et fugiat\",\n      \"hreflang\": \"sint\",\n      \"title\": \"ex nisi dolore sed\",\n      \"type\": \"sint\",\n      \"deprecation\": \"ullamco dolor\",\n      \"profile\": \"dolore velit tempor\",\n      \"name\": \"consequat qui\",\n      \"templated\": false\n    },\n    \"ullamco_c37\": {\n      \"href\": \"sit ut\",\n      \"hreflang\": \"ut sit veniam officia\",\n      \"title\": \"amet enim nisi\",\n      \"type\": \"adipisicing ut sint\",\n      \"deprecation\": \"officia mollit tempor enim est\",\n      \"profile\": \"dolore velit\",\n      \"name\": \"incididunt nulla\",\n      \"templated\": true\n    },\n    \"pariatur69\": {\n      \"href\": \"sit eu\",\n      \"hreflang\": \"in anim\",\n      \"title\": \"Excepteur\",\n      \"type\": \"amet elit\",\n      \"deprecation\": \"irure aliqua\",\n      \"profile\": \"sed reprehenderit\",\n      \"name\": \"nulla tempor nostrud\",\n      \"templated\": false\n    }\n  }\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/patient",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"patient"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Unathorized",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"cpf\": \"sed sint eiusmod ut\",\n  \"full_name\": \"nostrud\",\n  \"id\": \"eb24a36a-5bfe-6b65-867d-b4c092e214f2\",\n  \"health_insurance\": \"officia laboris\",\n  \"_links\": {\n    \"ina0\": {\n      \"href\": \"irure et fugiat\",\n      \"hreflang\": \"sint\",\n      \"title\": \"ex nisi dolore sed\",\n      \"type\": \"sint\",\n      \"deprecation\": \"ullamco dolor\",\n      \"profile\": \"dolore velit tempor\",\n      \"name\": \"consequat qui\",\n      \"templated\": false\n    },\n    \"ullamco_c37\": {\n      \"href\": \"sit ut\",\n      \"hreflang\": \"ut sit veniam officia\",\n      \"title\": \"amet enim nisi\",\n      \"type\": \"adipisicing ut sint\",\n      \"deprecation\": \"officia mollit tempor enim est\",\n      \"profile\": \"dolore velit\",\n      \"name\": \"incididunt nulla\",\n      \"templated\": true\n    },\n    \"pariatur69\": {\n      \"href\": \"sit eu\",\n      \"hreflang\": \"in anim\",\n      \"title\": \"Excepteur\",\n      \"type\": \"amet elit\",\n      \"deprecation\": \"irure aliqua\",\n      \"profile\": \"sed reprehenderit\",\n      \"name\": \"nulla tempor nostrud\",\n      \"templated\": false\n    }\n  }\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/patient",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"patient"
+											]
+										}
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Internal Error",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"cpf\": \"sed sint eiusmod ut\",\n  \"full_name\": \"nostrud\",\n  \"id\": \"eb24a36a-5bfe-6b65-867d-b4c092e214f2\",\n  \"health_insurance\": \"officia laboris\",\n  \"_links\": {\n    \"ina0\": {\n      \"href\": \"irure et fugiat\",\n      \"hreflang\": \"sint\",\n      \"title\": \"ex nisi dolore sed\",\n      \"type\": \"sint\",\n      \"deprecation\": \"ullamco dolor\",\n      \"profile\": \"dolore velit tempor\",\n      \"name\": \"consequat qui\",\n      \"templated\": false\n    },\n    \"ullamco_c37\": {\n      \"href\": \"sit ut\",\n      \"hreflang\": \"ut sit veniam officia\",\n      \"title\": \"amet enim nisi\",\n      \"type\": \"adipisicing ut sint\",\n      \"deprecation\": \"officia mollit tempor enim est\",\n      \"profile\": \"dolore velit\",\n      \"name\": \"incididunt nulla\",\n      \"templated\": true\n    },\n    \"pariatur69\": {\n      \"href\": \"sit eu\",\n      \"hreflang\": \"in anim\",\n      \"title\": \"Excepteur\",\n      \"type\": \"amet elit\",\n      \"deprecation\": \"irure aliqua\",\n      \"profile\": \"sed reprehenderit\",\n      \"name\": \"nulla tempor nostrud\",\n      \"templated\": false\n    }\n  }\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/patient",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"patient"
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "doctor",
+					"item": [
+						{
+							"name": "{id}",
+							"item": [
+								{
+									"name": "Find Doctor by ID",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{bearerToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/doctor/71db62b1-1c51-4e17-9322-49da17446e2d",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"doctor",
+												"71db62b1-1c51-4e17-9322-49da17446e2d"
+											]
+										},
+										"description": "Retrieve doctor details by providing a valid doctor ID"
+									},
+									"response": [
+										{
+											"name": "Success",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/json"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/v1/doctor/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"v1",
+														"doctor",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "ex sit eiusmod sunt Duis",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"birth_date\": \"nis\",\n  \"cpf\": \"labore\",\n  \"email\": \"consequat sint laborum\",\n  \"full_name\": \"do Ut\",\n  \"specialty\": \"Excepteur\",\n  \"id\": \"ade8afea-956e-ebd8-503c-f899f0477557\",\n  \"phone\": \"29526511560\",\n  \"_links\": {\n    \"Excepteur_59\": {\n      \"href\": \"esse\",\n      \"hreflang\": \"\",\n      \"title\": \"esse officia\",\n      \"type\": \"tempor ullamco veniam aute\",\n      \"deprecation\": \"est irure dolore\",\n      \"profile\": \"se\",\n      \"name\": \"occaecat voluptate est incididunt\",\n      \"templated\": false\n    }\n  }\n}"
+										},
+										{
+											"name": "No Content",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/v1/doctor/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"v1",
+														"doctor",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "ex sit eiusmod sunt Duis",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "No Content",
+											"code": 204,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										},
+										{
+											"name": "Bad Request",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/v1/doctor/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"v1",
+														"doctor",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "ex sit eiusmod sunt Duis",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "Bad Request",
+											"code": 400,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										},
+										{
+											"name": "Unathorized",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/v1/doctor/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"v1",
+														"doctor",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "ex sit eiusmod sunt Duis",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "Unauthorized",
+											"code": 401,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										},
+										{
+											"name": "Not Found",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/v1/doctor/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"v1",
+														"doctor",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "ex sit eiusmod sunt Duis",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "Not Found",
+											"code": 404,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										},
+										{
+											"name": "Internal Error",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/v1/doctor/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"v1",
+														"doctor",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "ex sit eiusmod sunt Duis",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "Internal Server Error",
+											"code": 500,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								},
+								{
+									"name": "Delete Doctor",
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/doctor/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"doctor",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "ex sit eiusmod sunt Duis",
+													"description": "(Required) "
+												}
+											]
+										},
+										"description": "Delete an existing doctor by providing the doctor ID"
+									},
+									"response": [
+										{
+											"name": "No Content",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/v1/doctor/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"v1",
+														"doctor",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "ex sit eiusmod sunt Duis",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "No Content",
+											"code": 204,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										},
+										{
+											"name": "Bad Request",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/v1/doctor/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"v1",
+														"doctor",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "ex sit eiusmod sunt Duis",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "Bad Request",
+											"code": 400,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										},
+										{
+											"name": "Unathorized",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/v1/doctor/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"v1",
+														"doctor",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "ex sit eiusmod sunt Duis",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "Unauthorized",
+											"code": 401,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										},
+										{
+											"name": "Not Found",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/v1/doctor/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"v1",
+														"doctor",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "ex sit eiusmod sunt Duis",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "Not Found",
+											"code": 404,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										},
+										{
+											"name": "Internal Error",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/v1/doctor/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"v1",
+														"doctor",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "ex sit eiusmod sunt Duis",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "Internal Server Error",
+											"code": 500,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "Finds all Doctors",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/doctor",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"doctor"
+									]
+								},
+								"description": "Retrieve a list of all doctors"
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/doctor",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"doctor"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "[\n  {\n    \"birth_date\": \"velit irure elit do sint\",\n    \"cpf\": \"dolor ut esse sunt\",\n    \"email\": \"Excepteur\",\n    \"full_name\": \"est adipisicing\",\n    \"specialty\": \"sunt laborum enim magna\",\n    \"id\": \"urn:uuid:0fddfe40-ce74-98d8-7d8a-5c1a4b8dba9b\",\n    \"phone\": \"(36)3164-3202\",\n    \"_links\": {\n      \"fugiat_93\": {\n        \"href\": \"proident do\",\n        \"hreflang\": \"ut voluptate velit\",\n        \"title\": \"Duis labore aute\",\n        \"type\": \"incididunt fugiat magna ut\",\n        \"deprecation\": \"exercitation\",\n        \"profile\": \"laboris sunt veniam Excepteur incididunt\",\n        \"name\": \"proident sunt velit\",\n        \"templated\": false\n      },\n      \"nulla_4\": {\n        \"href\": \"id sed in amet officia\",\n        \"hreflang\": \"sit anim\",\n        \"title\": \"vol\",\n        \"type\": \"adipisicing occaecat esse eu\",\n        \"deprecation\": \"Lorem\",\n        \"profile\": \"culpa Excepteur cupidatat dolore do\",\n        \"name\": \"dolor mollit culpa et sint\",\n        \"templated\": false\n      }\n    }\n  },\n  {\n    \"birth_date\": \"nisi dolor proident culpa\",\n    \"cpf\": \"voluptate dolor nulla aliqua sit\",\n    \"email\": \"proident ad tempor\",\n    \"full_name\": \"deserunt officia\",\n    \"specialty\": \"magna culpa \",\n    \"id\": \"urn:uuid:2c400bd0-3329-7158-b18d-7d21f6f88058\",\n    \"phone\": \"16496253565\",\n    \"_links\": {\n      \"sed55\": {\n        \"href\": \"commodo ut aliqua\",\n        \"hreflang\": \"commodo veniam in\",\n        \"title\": \"nisi elit in qui\",\n        \"type\": \"ut eiusmod officia deserunt exercitation\",\n        \"deprecation\": \"pariatur cillum in consectetur ut\",\n        \"profile\": \"id non in dolore\",\n        \"name\": \"laborum\",\n        \"templated\": false\n      },\n      \"elit819\": {\n        \"href\": \"est\",\n        \"hreflang\": \"id\",\n        \"title\": \"minim\",\n        \"type\": \"incididunt eiusmod est\",\n        \"deprecation\": \"incididunt\",\n        \"profile\": \"qu\",\n        \"name\": \"est\",\n        \"templated\": false\n      },\n      \"laboris_5\": {\n        \"href\": \"minim dolore pariatur ut sint\",\n        \"hreflang\": \"enim in culpa pariatur\",\n        \"title\": \"ut culpa cillum\",\n        \"type\": \"labore\",\n        \"deprecation\": \"irure quis magna adipisic\",\n        \"profile\": \"ipsum dolore adipisicing\",\n        \"name\": \"qui tempor\",\n        \"templated\": true\n      }\n    }\n  }\n]"
+								},
+								{
+									"name": "Bad Request",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/doctor",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"doctor"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Unathorized",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/doctor",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"doctor"
+											]
+										}
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Not Found",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/doctor",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"doctor"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Internal Error",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/doctor",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"doctor"
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Update Doctor",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"birth_date\": \"nis\",\n  \"cpf\": \"labore\",\n  \"email\": \"consequat sint laborum\",\n  \"full_name\": \"do Ut\",\n  \"specialty\": \"Excepteur\",\n  \"id\": \"ade8afea-956e-ebd8-503c-f899f0477557\",\n  \"phone\": \"29526511560\",\n  \"_links\": {\n    \"Excepteur_59\": {\n      \"href\": \"esse\",\n      \"hreflang\": \"\",\n      \"title\": \"esse officia\",\n      \"type\": \"tempor ullamco veniam aute\",\n      \"deprecation\": \"est irure dolore\",\n      \"profile\": \"se\",\n      \"name\": \"occaecat voluptate est incididunt\",\n      \"templated\": false\n    }\n  }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/doctor",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"doctor"
+									]
+								},
+								"description": "Update an existing doctor by providing updated doctor details in JSON or XML format"
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"birth_date\": \"nis\",\n  \"cpf\": \"labore\",\n  \"email\": \"consequat sint laborum\",\n  \"full_name\": \"do Ut\",\n  \"specialty\": \"Excepteur\",\n  \"id\": \"ade8afea-956e-ebd8-503c-f899f0477557\",\n  \"phone\": \"29526511560\",\n  \"_links\": {\n    \"Excepteur_59\": {\n      \"href\": \"esse\",\n      \"hreflang\": \"\",\n      \"title\": \"esse officia\",\n      \"type\": \"tempor ullamco veniam aute\",\n      \"deprecation\": \"est irure dolore\",\n      \"profile\": \"se\",\n      \"name\": \"occaecat voluptate est incididunt\",\n      \"templated\": false\n    }\n  }\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/doctor",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"doctor"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"birth_date\": \"nis\",\n  \"cpf\": \"labore\",\n  \"email\": \"consequat sint laborum\",\n  \"full_name\": \"do Ut\",\n  \"specialty\": \"Excepteur\",\n  \"id\": \"ade8afea-956e-ebd8-503c-f899f0477557\",\n  \"phone\": \"29526511560\",\n  \"_links\": {\n    \"Excepteur_59\": {\n      \"href\": \"esse\",\n      \"hreflang\": \"\",\n      \"title\": \"esse officia\",\n      \"type\": \"tempor ullamco veniam aute\",\n      \"deprecation\": \"est irure dolore\",\n      \"profile\": \"se\",\n      \"name\": \"occaecat voluptate est incididunt\",\n      \"templated\": false\n    }\n  }\n}"
+								},
+								{
+									"name": "No Content",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"birth_date\": \"nis\",\n  \"cpf\": \"labore\",\n  \"email\": \"consequat sint laborum\",\n  \"full_name\": \"do Ut\",\n  \"specialty\": \"Excepteur\",\n  \"id\": \"ade8afea-956e-ebd8-503c-f899f0477557\",\n  \"phone\": \"29526511560\",\n  \"_links\": {\n    \"Excepteur_59\": {\n      \"href\": \"esse\",\n      \"hreflang\": \"\",\n      \"title\": \"esse officia\",\n      \"type\": \"tempor ullamco veniam aute\",\n      \"deprecation\": \"est irure dolore\",\n      \"profile\": \"se\",\n      \"name\": \"occaecat voluptate est incididunt\",\n      \"templated\": false\n    }\n  }\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/doctor",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"doctor"
+											]
+										}
+									},
+									"status": "No Content",
+									"code": 204,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Bad Request",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"birth_date\": \"nis\",\n  \"cpf\": \"labore\",\n  \"email\": \"consequat sint laborum\",\n  \"full_name\": \"do Ut\",\n  \"specialty\": \"Excepteur\",\n  \"id\": \"ade8afea-956e-ebd8-503c-f899f0477557\",\n  \"phone\": \"29526511560\",\n  \"_links\": {\n    \"Excepteur_59\": {\n      \"href\": \"esse\",\n      \"hreflang\": \"\",\n      \"title\": \"esse officia\",\n      \"type\": \"tempor ullamco veniam aute\",\n      \"deprecation\": \"est irure dolore\",\n      \"profile\": \"se\",\n      \"name\": \"occaecat voluptate est incididunt\",\n      \"templated\": false\n    }\n  }\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/doctor",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"doctor"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Unathorized",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"birth_date\": \"nis\",\n  \"cpf\": \"labore\",\n  \"email\": \"consequat sint laborum\",\n  \"full_name\": \"do Ut\",\n  \"specialty\": \"Excepteur\",\n  \"id\": \"ade8afea-956e-ebd8-503c-f899f0477557\",\n  \"phone\": \"29526511560\",\n  \"_links\": {\n    \"Excepteur_59\": {\n      \"href\": \"esse\",\n      \"hreflang\": \"\",\n      \"title\": \"esse officia\",\n      \"type\": \"tempor ullamco veniam aute\",\n      \"deprecation\": \"est irure dolore\",\n      \"profile\": \"se\",\n      \"name\": \"occaecat voluptate est incididunt\",\n      \"templated\": false\n    }\n  }\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/doctor",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"doctor"
+											]
+										}
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Not Found",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"birth_date\": \"nis\",\n  \"cpf\": \"labore\",\n  \"email\": \"consequat sint laborum\",\n  \"full_name\": \"do Ut\",\n  \"specialty\": \"Excepteur\",\n  \"id\": \"ade8afea-956e-ebd8-503c-f899f0477557\",\n  \"phone\": \"29526511560\",\n  \"_links\": {\n    \"Excepteur_59\": {\n      \"href\": \"esse\",\n      \"hreflang\": \"\",\n      \"title\": \"esse officia\",\n      \"type\": \"tempor ullamco veniam aute\",\n      \"deprecation\": \"est irure dolore\",\n      \"profile\": \"se\",\n      \"name\": \"occaecat voluptate est incididunt\",\n      \"templated\": false\n    }\n  }\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/doctor",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"doctor"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Internal Error",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"birth_date\": \"nis\",\n  \"cpf\": \"labore\",\n  \"email\": \"consequat sint laborum\",\n  \"full_name\": \"do Ut\",\n  \"specialty\": \"Excepteur\",\n  \"id\": \"ade8afea-956e-ebd8-503c-f899f0477557\",\n  \"phone\": \"29526511560\",\n  \"_links\": {\n    \"Excepteur_59\": {\n      \"href\": \"esse\",\n      \"hreflang\": \"\",\n      \"title\": \"esse officia\",\n      \"type\": \"tempor ullamco veniam aute\",\n      \"deprecation\": \"est irure dolore\",\n      \"profile\": \"se\",\n      \"name\": \"occaecat voluptate est incididunt\",\n      \"templated\": false\n    }\n  }\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/doctor",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"doctor"
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Attendance",
+					"item": [
+						{
+							"name": "{id}",
+							"item": [
+								{
+									"name": "Find attendance by ID",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{bearerToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/attendance/92e6050e-c954-43f8-b175-4c2d6970d82e",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"attendance",
+												"92e6050e-c954-43f8-b175-4c2d6970d82e"
+											]
+										},
+										"description": "Retrieve doctor details by providing a valid doctor ID"
+									},
+									"response": [
+										{
+											"name": "Success",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/json"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/v1/doctor/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"v1",
+														"doctor",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "eiusmod",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"id\": \"ef03ef56-0f70-c987-46fa-9c011431e4c1\",\n  \"email\": \"magna exercitation laboris consequat\",\n  \"full_name\": \"ex sed dolore\",\n  \"specialty\": \"non ipsum Lorem\",\n  \"cpf\": \"reprehenderit nisi ipsum minim\",\n  \"birth_date\": \"2018-11-26\",\n  \"phone\": \"Lorem exercitation fugiat\",\n  \"_links\": {\n    \"magna_bd\": {\n      \"href\": \"aliquip aliqua\",\n      \"hreflang\": \"adi\",\n      \"title\": \"aliqua sed laboris\",\n      \"type\": \"cillum pariatur\",\n      \"deprecation\": \"commodo labore\",\n      \"profile\": \"Excepteur\",\n      \"name\": \"occaecat commodo reprehenderit\",\n      \"templated\": false\n    },\n    \"in__1\": {\n      \"href\": \"sunt \",\n      \"hreflang\": \"nisi amet\",\n      \"title\": \"deserunt est\",\n      \"type\": \"ad\",\n      \"deprecation\": \"ut nostrud aute aliqua\",\n      \"profile\": \"esse cupidatat aute\",\n      \"name\": \"voluptate deserunt\",\n      \"templated\": false\n    }\n  },\n  \"medical_license\": \"dolore fugiat\"\n}"
+										},
+										{
+											"name": "No Content",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/v1/doctor/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"v1",
+														"doctor",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "eiusmod",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "No Content",
+											"code": 204,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										},
+										{
+											"name": "Bad Request",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/v1/doctor/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"v1",
+														"doctor",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "eiusmod",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "Bad Request",
+											"code": 400,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										},
+										{
+											"name": "Unathorized",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/v1/doctor/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"v1",
+														"doctor",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "eiusmod",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "Unauthorized",
+											"code": 401,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										},
+										{
+											"name": "Not Found",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/v1/doctor/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"v1",
+														"doctor",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "eiusmod",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "Not Found",
+											"code": 404,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										},
+										{
+											"name": "Internal Error",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/v1/doctor/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"v1",
+														"doctor",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "eiusmod",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "Internal Server Error",
+											"code": 500,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								},
+								{
+									"name": "Delete attendance",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{bearerToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/attendance/92e6050e-c954-43f8-b175-4c2d6970d82e",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"attendance",
+												"92e6050e-c954-43f8-b175-4c2d6970d82e"
+											]
+										},
+										"description": "Delete an existing doctor by providing the doctor ID"
+									},
+									"response": [
+										{
+											"name": "No Content",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/v1/doctor/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"v1",
+														"doctor",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "eiusmod",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "No Content",
+											"code": 204,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										},
+										{
+											"name": "Bad Request",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/v1/doctor/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"v1",
+														"doctor",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "eiusmod",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "Bad Request",
+											"code": 400,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										},
+										{
+											"name": "Unathorized",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/v1/doctor/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"v1",
+														"doctor",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "eiusmod",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "Unauthorized",
+											"code": 401,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										},
+										{
+											"name": "Not Found",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/v1/doctor/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"v1",
+														"doctor",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "eiusmod",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "Not Found",
+											"code": 404,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										},
+										{
+											"name": "Internal Error",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/v1/doctor/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"v1",
+														"doctor",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "eiusmod",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "Internal Server Error",
+											"code": 500,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "Create attendance",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{bearerToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"dateTime\": \"2023-12-08 23:21:00\",\n  \"patient\": {\n    \"full_name\": \"Luana Ferreira\",\n    \"cpf\": \"467.141.940-80\"\n  }\n}\n\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/attendance",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"attendance"
+									]
+								},
+								"description": "Update an existing patient by providing updated patient details in JSON or XML format"
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"id\": \"urn:uuid:8c54b373-dbfd-e683-2a76-025eecf50fe3\",\n  \"email\": \"ullamco ut\",\n  \"full_name\": \"et tempor nulla\",\n  \"cpf\": \"aut\",\n  \"birth_date\": \"1963-02-22\",\n  \"phone\": \"Excepteur ut nulla\",\n  \"health_insurance\": \"eiusmod velit elit nostrud\",\n  \"_links\": {\n    \"Lorem_4\": {\n      \"href\": \"Duis anim occaecat\",\n      \"hreflang\": \"elit ex in eu\",\n      \"title\": \"laborum esse et\",\n      \"type\": \"irure est\",\n      \"deprecation\": \"nostrud dolore aliqua\",\n      \"profile\": \"adipisicing dolor pariatur sed\",\n      \"name\": \"magna nisi in\",\n      \"templated\": true\n    }\n  }\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/patient",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"patient"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"id\": \"urn:uuid:8c54b373-dbfd-e683-2a76-025eecf50fe3\",\n  \"email\": \"ullamco ut\",\n  \"full_name\": \"et tempor nulla\",\n  \"cpf\": \"aut\",\n  \"birth_date\": \"1963-02-22\",\n  \"phone\": \"Excepteur ut nulla\",\n  \"health_insurance\": \"eiusmod velit elit nostrud\",\n  \"_links\": {\n    \"Lorem_4\": {\n      \"href\": \"Duis anim occaecat\",\n      \"hreflang\": \"elit ex in eu\",\n      \"title\": \"laborum esse et\",\n      \"type\": \"irure est\",\n      \"deprecation\": \"nostrud dolore aliqua\",\n      \"profile\": \"adipisicing dolor pariatur sed\",\n      \"name\": \"magna nisi in\",\n      \"templated\": true\n    }\n  }\n}"
+								},
+								{
+									"name": "No Content",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"id\": \"urn:uuid:8c54b373-dbfd-e683-2a76-025eecf50fe3\",\n  \"email\": \"ullamco ut\",\n  \"full_name\": \"et tempor nulla\",\n  \"cpf\": \"aut\",\n  \"birth_date\": \"1963-02-22\",\n  \"phone\": \"Excepteur ut nulla\",\n  \"health_insurance\": \"eiusmod velit elit nostrud\",\n  \"_links\": {\n    \"Lorem_4\": {\n      \"href\": \"Duis anim occaecat\",\n      \"hreflang\": \"elit ex in eu\",\n      \"title\": \"laborum esse et\",\n      \"type\": \"irure est\",\n      \"deprecation\": \"nostrud dolore aliqua\",\n      \"profile\": \"adipisicing dolor pariatur sed\",\n      \"name\": \"magna nisi in\",\n      \"templated\": true\n    }\n  }\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/patient",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"patient"
+											]
+										}
+									},
+									"status": "No Content",
+									"code": 204,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Bad Request",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"id\": \"urn:uuid:8c54b373-dbfd-e683-2a76-025eecf50fe3\",\n  \"email\": \"ullamco ut\",\n  \"full_name\": \"et tempor nulla\",\n  \"cpf\": \"aut\",\n  \"birth_date\": \"1963-02-22\",\n  \"phone\": \"Excepteur ut nulla\",\n  \"health_insurance\": \"eiusmod velit elit nostrud\",\n  \"_links\": {\n    \"Lorem_4\": {\n      \"href\": \"Duis anim occaecat\",\n      \"hreflang\": \"elit ex in eu\",\n      \"title\": \"laborum esse et\",\n      \"type\": \"irure est\",\n      \"deprecation\": \"nostrud dolore aliqua\",\n      \"profile\": \"adipisicing dolor pariatur sed\",\n      \"name\": \"magna nisi in\",\n      \"templated\": true\n    }\n  }\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/patient",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"patient"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Unathorized",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"id\": \"urn:uuid:8c54b373-dbfd-e683-2a76-025eecf50fe3\",\n  \"email\": \"ullamco ut\",\n  \"full_name\": \"et tempor nulla\",\n  \"cpf\": \"aut\",\n  \"birth_date\": \"1963-02-22\",\n  \"phone\": \"Excepteur ut nulla\",\n  \"health_insurance\": \"eiusmod velit elit nostrud\",\n  \"_links\": {\n    \"Lorem_4\": {\n      \"href\": \"Duis anim occaecat\",\n      \"hreflang\": \"elit ex in eu\",\n      \"title\": \"laborum esse et\",\n      \"type\": \"irure est\",\n      \"deprecation\": \"nostrud dolore aliqua\",\n      \"profile\": \"adipisicing dolor pariatur sed\",\n      \"name\": \"magna nisi in\",\n      \"templated\": true\n    }\n  }\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/patient",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"patient"
+											]
+										}
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Internal Error",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"id\": \"urn:uuid:8c54b373-dbfd-e683-2a76-025eecf50fe3\",\n  \"email\": \"ullamco ut\",\n  \"full_name\": \"et tempor nulla\",\n  \"cpf\": \"aut\",\n  \"birth_date\": \"1963-02-22\",\n  \"phone\": \"Excepteur ut nulla\",\n  \"health_insurance\": \"eiusmod velit elit nostrud\",\n  \"_links\": {\n    \"Lorem_4\": {\n      \"href\": \"Duis anim occaecat\",\n      \"hreflang\": \"elit ex in eu\",\n      \"title\": \"laborum esse et\",\n      \"type\": \"irure est\",\n      \"deprecation\": \"nostrud dolore aliqua\",\n      \"profile\": \"adipisicing dolor pariatur sed\",\n      \"name\": \"magna nisi in\",\n      \"templated\": true\n    }\n  }\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/patient",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"patient"
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Finds all attendance",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{bearerToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/xml",
+										"disabled": true
+									},
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlcyI6WyJBRE1JTiIsIk1BTkFHRVIiXSwiaWF0IjoxNzAxODE3NzQ3LCJleHAiOjE3MDE4MjEzNDcsInN1YiI6ImZlbGlwZSIsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6ODA4MCJ9.E7jIfsgfQJif9kaByanveKuaiIBlADB51o7eOCrYGMI",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/attendance",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"attendance"
+									]
+								},
+								"description": "Retrieve a list of all doctors"
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/doctor",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"doctor"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "[\n  {\n    \"id\": \"60ecda6b-9500-a452-a283-596e7b4213a5\",\n    \"email\": \"laboris in irure aliqua\",\n    \"full_name\": \"cillum laborum\",\n    \"specialty\": \"laboris amet eu dolore\",\n    \"cpf\": \"pariatur adipisicing culpa esse\",\n    \"birth_date\": \"1950-05-01\",\n    \"phone\": \"eu laborum cupidatat\",\n    \"_links\": {\n      \"dolore42\": {\n        \"href\": \"eiusmod\",\n        \"hreflang\": \"ut proident pariatur labore\",\n        \"title\": \"id eius\",\n        \"type\": \"amet cillum adipisicing officia\",\n        \"deprecation\": \"aliqua occaecat\",\n        \"profile\": \"commodo Duis aliquip\",\n        \"name\": \"dolore incididunt\",\n        \"templated\": true\n      },\n      \"ut_daa\": {\n        \"href\": \"nulla ea ut aliquip\",\n        \"hreflang\": \"dolor enim in quis\",\n        \"title\": \"veniam reprehenderit Ut anim\",\n        \"type\": \"ipsum qui magna do adipisicing\",\n        \"deprecation\": \"irure mollit aute conse\",\n        \"profile\": \"volu\",\n        \"name\": \"laborum laboris\",\n        \"templated\": false\n      },\n      \"fugiatb5b\": {\n        \"href\": \"con\",\n        \"hreflang\": \"veniam consectetur quis qui\",\n        \"title\": \"enim occaecat\",\n        \"type\": \"amet\",\n        \"deprecation\": \"cillum ex velit reprehenderit\",\n        \"profile\": \"cillum occaecat magna\",\n        \"name\": \"sit esse Lorem\",\n        \"templated\": false\n      }\n    },\n    \"medical_license\": \"exercitation do\"\n  },\n  {\n    \"id\": \"5770e8b9-bffd-3ff4-6b85-7a521202d933\",\n    \"email\": \"veniam tempor incididunt exercitation labore\",\n    \"full_name\": \"ut incididunt ea\",\n    \"specialty\": \"veniam\",\n    \"cpf\": \"esse labore\",\n    \"birth_date\": \"1976-11-11\",\n    \"phone\": \"voluptate in\",\n    \"_links\": {\n      \"esse_2e\": {\n        \"href\": \"Lorem quis c\",\n        \"hreflang\": \"ad proident adipisicing\",\n        \"title\": \"tempor id\",\n        \"type\": \"amet ex\",\n        \"deprecation\": \"exercitation nulla ipsum\",\n        \"profile\": \"cupidatat in laboris\",\n        \"name\": \"consequat\",\n        \"templated\": false\n      }\n    },\n    \"medical_license\": \"labore Duis nisi dolore\"\n  }\n]"
+								},
+								{
+									"name": "Bad Request",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/doctor",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"doctor"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Unathorized",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/doctor",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"doctor"
+											]
+										}
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Not Found",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/doctor",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"doctor"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Internal Error",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/doctor",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"doctor"
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Update attendance",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{bearerToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n        \"id\": \"55e1bdc2-930b-11ee-b8df-0242ac110003\",\n        \"email\": \"givonaldo_pereira011@gmail.com\",\n        \"full_name\": \"Givonaldo Pereira 12321\",\n        \"specialty\": \"Cardiologista - SR 1221\"\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/attendance",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"attendance"
+									]
+								},
+								"description": "Update an existing doctor by providing updated doctor details in JSON or XML format"
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"id\": \"ef03ef56-0f70-c987-46fa-9c011431e4c1\",\n  \"email\": \"magna exercitation laboris consequat\",\n  \"full_name\": \"ex sed dolore\",\n  \"specialty\": \"non ipsum Lorem\",\n  \"cpf\": \"reprehenderit nisi ipsum minim\",\n  \"birth_date\": \"2018-11-26\",\n  \"phone\": \"Lorem exercitation fugiat\",\n  \"_links\": {\n    \"magna_bd\": {\n      \"href\": \"aliquip aliqua\",\n      \"hreflang\": \"adi\",\n      \"title\": \"aliqua sed laboris\",\n      \"type\": \"cillum pariatur\",\n      \"deprecation\": \"commodo labore\",\n      \"profile\": \"Excepteur\",\n      \"name\": \"occaecat commodo reprehenderit\",\n      \"templated\": false\n    },\n    \"in__1\": {\n      \"href\": \"sunt \",\n      \"hreflang\": \"nisi amet\",\n      \"title\": \"deserunt est\",\n      \"type\": \"ad\",\n      \"deprecation\": \"ut nostrud aute aliqua\",\n      \"profile\": \"esse cupidatat aute\",\n      \"name\": \"voluptate deserunt\",\n      \"templated\": false\n    }\n  },\n  \"medical_license\": \"dolore fugiat\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/doctor",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"doctor"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"id\": \"ef03ef56-0f70-c987-46fa-9c011431e4c1\",\n  \"email\": \"magna exercitation laboris consequat\",\n  \"full_name\": \"ex sed dolore\",\n  \"specialty\": \"non ipsum Lorem\",\n  \"cpf\": \"reprehenderit nisi ipsum minim\",\n  \"birth_date\": \"2018-11-26\",\n  \"phone\": \"Lorem exercitation fugiat\",\n  \"_links\": {\n    \"magna_bd\": {\n      \"href\": \"aliquip aliqua\",\n      \"hreflang\": \"adi\",\n      \"title\": \"aliqua sed laboris\",\n      \"type\": \"cillum pariatur\",\n      \"deprecation\": \"commodo labore\",\n      \"profile\": \"Excepteur\",\n      \"name\": \"occaecat commodo reprehenderit\",\n      \"templated\": false\n    },\n    \"in__1\": {\n      \"href\": \"sunt \",\n      \"hreflang\": \"nisi amet\",\n      \"title\": \"deserunt est\",\n      \"type\": \"ad\",\n      \"deprecation\": \"ut nostrud aute aliqua\",\n      \"profile\": \"esse cupidatat aute\",\n      \"name\": \"voluptate deserunt\",\n      \"templated\": false\n    }\n  },\n  \"medical_license\": \"dolore fugiat\"\n}"
+								},
+								{
+									"name": "No Content",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"id\": \"ef03ef56-0f70-c987-46fa-9c011431e4c1\",\n  \"email\": \"magna exercitation laboris consequat\",\n  \"full_name\": \"ex sed dolore\",\n  \"specialty\": \"non ipsum Lorem\",\n  \"cpf\": \"reprehenderit nisi ipsum minim\",\n  \"birth_date\": \"2018-11-26\",\n  \"phone\": \"Lorem exercitation fugiat\",\n  \"_links\": {\n    \"magna_bd\": {\n      \"href\": \"aliquip aliqua\",\n      \"hreflang\": \"adi\",\n      \"title\": \"aliqua sed laboris\",\n      \"type\": \"cillum pariatur\",\n      \"deprecation\": \"commodo labore\",\n      \"profile\": \"Excepteur\",\n      \"name\": \"occaecat commodo reprehenderit\",\n      \"templated\": false\n    },\n    \"in__1\": {\n      \"href\": \"sunt \",\n      \"hreflang\": \"nisi amet\",\n      \"title\": \"deserunt est\",\n      \"type\": \"ad\",\n      \"deprecation\": \"ut nostrud aute aliqua\",\n      \"profile\": \"esse cupidatat aute\",\n      \"name\": \"voluptate deserunt\",\n      \"templated\": false\n    }\n  },\n  \"medical_license\": \"dolore fugiat\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/doctor",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"doctor"
+											]
+										}
+									},
+									"status": "No Content",
+									"code": 204,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Bad Request",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"id\": \"ef03ef56-0f70-c987-46fa-9c011431e4c1\",\n  \"email\": \"magna exercitation laboris consequat\",\n  \"full_name\": \"ex sed dolore\",\n  \"specialty\": \"non ipsum Lorem\",\n  \"cpf\": \"reprehenderit nisi ipsum minim\",\n  \"birth_date\": \"2018-11-26\",\n  \"phone\": \"Lorem exercitation fugiat\",\n  \"_links\": {\n    \"magna_bd\": {\n      \"href\": \"aliquip aliqua\",\n      \"hreflang\": \"adi\",\n      \"title\": \"aliqua sed laboris\",\n      \"type\": \"cillum pariatur\",\n      \"deprecation\": \"commodo labore\",\n      \"profile\": \"Excepteur\",\n      \"name\": \"occaecat commodo reprehenderit\",\n      \"templated\": false\n    },\n    \"in__1\": {\n      \"href\": \"sunt \",\n      \"hreflang\": \"nisi amet\",\n      \"title\": \"deserunt est\",\n      \"type\": \"ad\",\n      \"deprecation\": \"ut nostrud aute aliqua\",\n      \"profile\": \"esse cupidatat aute\",\n      \"name\": \"voluptate deserunt\",\n      \"templated\": false\n    }\n  },\n  \"medical_license\": \"dolore fugiat\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/doctor",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"doctor"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Unathorized",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"id\": \"ef03ef56-0f70-c987-46fa-9c011431e4c1\",\n  \"email\": \"magna exercitation laboris consequat\",\n  \"full_name\": \"ex sed dolore\",\n  \"specialty\": \"non ipsum Lorem\",\n  \"cpf\": \"reprehenderit nisi ipsum minim\",\n  \"birth_date\": \"2018-11-26\",\n  \"phone\": \"Lorem exercitation fugiat\",\n  \"_links\": {\n    \"magna_bd\": {\n      \"href\": \"aliquip aliqua\",\n      \"hreflang\": \"adi\",\n      \"title\": \"aliqua sed laboris\",\n      \"type\": \"cillum pariatur\",\n      \"deprecation\": \"commodo labore\",\n      \"profile\": \"Excepteur\",\n      \"name\": \"occaecat commodo reprehenderit\",\n      \"templated\": false\n    },\n    \"in__1\": {\n      \"href\": \"sunt \",\n      \"hreflang\": \"nisi amet\",\n      \"title\": \"deserunt est\",\n      \"type\": \"ad\",\n      \"deprecation\": \"ut nostrud aute aliqua\",\n      \"profile\": \"esse cupidatat aute\",\n      \"name\": \"voluptate deserunt\",\n      \"templated\": false\n    }\n  },\n  \"medical_license\": \"dolore fugiat\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/doctor",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"doctor"
+											]
+										}
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Not Found",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"id\": \"ef03ef56-0f70-c987-46fa-9c011431e4c1\",\n  \"email\": \"magna exercitation laboris consequat\",\n  \"full_name\": \"ex sed dolore\",\n  \"specialty\": \"non ipsum Lorem\",\n  \"cpf\": \"reprehenderit nisi ipsum minim\",\n  \"birth_date\": \"2018-11-26\",\n  \"phone\": \"Lorem exercitation fugiat\",\n  \"_links\": {\n    \"magna_bd\": {\n      \"href\": \"aliquip aliqua\",\n      \"hreflang\": \"adi\",\n      \"title\": \"aliqua sed laboris\",\n      \"type\": \"cillum pariatur\",\n      \"deprecation\": \"commodo labore\",\n      \"profile\": \"Excepteur\",\n      \"name\": \"occaecat commodo reprehenderit\",\n      \"templated\": false\n    },\n    \"in__1\": {\n      \"href\": \"sunt \",\n      \"hreflang\": \"nisi amet\",\n      \"title\": \"deserunt est\",\n      \"type\": \"ad\",\n      \"deprecation\": \"ut nostrud aute aliqua\",\n      \"profile\": \"esse cupidatat aute\",\n      \"name\": \"voluptate deserunt\",\n      \"templated\": false\n    }\n  },\n  \"medical_license\": \"dolore fugiat\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/doctor",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"doctor"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Internal Error",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"id\": \"ef03ef56-0f70-c987-46fa-9c011431e4c1\",\n  \"email\": \"magna exercitation laboris consequat\",\n  \"full_name\": \"ex sed dolore\",\n  \"specialty\": \"non ipsum Lorem\",\n  \"cpf\": \"reprehenderit nisi ipsum minim\",\n  \"birth_date\": \"2018-11-26\",\n  \"phone\": \"Lorem exercitation fugiat\",\n  \"_links\": {\n    \"magna_bd\": {\n      \"href\": \"aliquip aliqua\",\n      \"hreflang\": \"adi\",\n      \"title\": \"aliqua sed laboris\",\n      \"type\": \"cillum pariatur\",\n      \"deprecation\": \"commodo labore\",\n      \"profile\": \"Excepteur\",\n      \"name\": \"occaecat commodo reprehenderit\",\n      \"templated\": false\n    },\n    \"in__1\": {\n      \"href\": \"sunt \",\n      \"hreflang\": \"nisi amet\",\n      \"title\": \"deserunt est\",\n      \"type\": \"ad\",\n      \"deprecation\": \"ut nostrud aute aliqua\",\n      \"profile\": \"esse cupidatat aute\",\n      \"name\": \"voluptate deserunt\",\n      \"templated\": false\n    }\n  },\n  \"medical_license\": \"dolore fugiat\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/doctor",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"doctor"
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Refresh token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (responseCode.code >= 200 && responseCode.code <= 299) {",
+									"    const { token } = JSON.parse(responseBody);",
+									"    postman.setEnvironmentVariable('bearerToken', token);",
+									"    postman.setEnvironmentVariable('refreshToken',  pm.response.headers.get(\"Refresh-Token\"));",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{refreshToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"token\": \"{{bearerToken}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/refresh/{{email}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"refresh",
+								"{{email}}"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"description": "(Required) ",
+										"key": "Authorization",
+										"value": "ex sit eiusmod sunt Duis"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"token\": \"Excepteur et do\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/refresh/:email",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"refresh",
+										":email"
+									],
+									"variable": [
+										{
+											"key": "email",
+											"value": "ex sit eiusmod sunt Duis",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"token\": \"Excepteur et do\"\n}"
+						},
+						{
+							"name": "Unauthorized",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"description": "(Required) ",
+										"key": "Authorization",
+										"value": "ex sit eiusmod sunt Duis"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"token\": \"Excepteur et do\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/refresh/:email",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"refresh",
+										":email"
+									],
+									"variable": [
+										{
+											"key": "email",
+											"value": "ex sit eiusmod sunt Duis",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Create User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"full_name\": \"Marcia Oliveira\",\n    \"email\": \"fe211@gmail.com\",\n    \"cpf\": \"791.347.480-75\",\n    \"password\": \"senhaNova\",\n    \"confirm_password\": \"senhaNova\",\n    \"birth_date\": \"10/03/1980\",\n    \"specialty\": \"Cardiologista\",\n    \"phone\": \"(53)8079-4439\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/signup",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"signup"
+							]
+						},
+						"description": "Create a user by providing doctor details in JSON or XML format"
+					},
+					"response": [
+						{
+							"name": "No Content",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"birth_date\": \"dolor proident sed\",\n  \"confirm_password\": \"cillum ad\",\n  \"cpf\": \"laboris cupidatat sed\",\n  \"email\": \"incididunt ex ullamco\",\n  \"full_name\": \"fugiat ut voluptate\",\n  \"password\": \"ullamco reprehenderit sit fugiat\",\n  \"specialty\": \"eu ipsum proident\",\n  \"phone\": \"(53)8079-4439\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/signup",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"signup"
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Bad Request",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"birth_date\": \"dolor proident sed\",\n  \"confirm_password\": \"cillum ad\",\n  \"cpf\": \"laboris cupidatat sed\",\n  \"email\": \"incididunt ex ullamco\",\n  \"full_name\": \"fugiat ut voluptate\",\n  \"password\": \"ullamco reprehenderit sit fugiat\",\n  \"specialty\": \"eu ipsum proident\",\n  \"phone\": \"(53)8079-4439\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/signup",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"signup"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Internal Error",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"birth_date\": \"dolor proident sed\",\n  \"confirm_password\": \"cillum ad\",\n  \"cpf\": \"laboris cupidatat sed\",\n  \"email\": \"incididunt ex ullamco\",\n  \"full_name\": \"fugiat ut voluptate\",\n  \"password\": \"ullamco reprehenderit sit fugiat\",\n  \"specialty\": \"eu ipsum proident\",\n  \"phone\": \"(53)8079-4439\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/signup",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"signup"
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{bearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/logout",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"logout"
+							]
+						},
+						"description": "Logout an authenticated user"
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"description": "(Required) ",
+										"key": "Authorization",
+										"value": "ex sit eiusmod sunt Duis"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/logout",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"logout"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Unauthorized",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"description": "(Required) ",
+										"key": "Authorization",
+										"value": "ex sit eiusmod sunt Duis"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/logout",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"logout"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (responseCode.code >= 200 && responseCode.code <= 299) {",
+									"    const { token } = JSON.parse(responseBody);",
+									"    postman.setEnvironmentVariable('bearerToken', token);",
+									"    postman.setEnvironmentVariable('refreshToken',  pm.response.headers.get(\"Refresh-Token\"));",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"{{email}}\",\n  \"password\": \"senhaNova1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"login"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"anim consectetur mollit sint in\",\n  \"password\": \"enim et Duis consequat aliqua\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/login",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"token\": \"Excepteur et do\"\n}"
+						},
+						{
+							"name": "Bad Request",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"anim consectetur mollit sint in\",\n  \"password\": \"enim et Duis consequat aliqua\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/login",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"login"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Unauthorized",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"anim consectetur mollit sint in\",\n  \"password\": \"enim et Duis consequat aliqua\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/login",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"login"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Create an Attendance",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{bearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"dateTime\": \"in\",\n  \"paciente\": {\n    \"cpf\": \"est ex non r\",\n    \"full_name\": \"incid\",\n    \"health_insurance\": \"occaecat tempor culpa\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/attendance",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"attendance"
+							]
+						},
+						"description": "Create an attendance, if not exists patient create too"
+					},
+					"response": [
+						{
+							"name": "No Content",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"dateTime\": \"in\",\n  \"paciente\": {\n    \"cpf\": \"est ex non r\",\n    \"full_name\": \"incid\",\n    \"id\": \"urn:uuid:ee0382b1-ff68-2387-ced6-a35ce77b7fcf\",\n    \"health_insurance\": \"occaecat tempor culpa\",\n    \"_links\": {\n      \"exercitation_0\": {\n        \"href\": \"ad nulla\",\n        \"hreflang\": \"do esse consequat aute\",\n        \"title\": \"cupidatat laboris est occaecat\",\n        \"type\": \"Ut in veniam reprehenderit qui\",\n        \"deprecation\": \"consequat Excepteur est\",\n        \"profile\": \"ullamco ea\",\n        \"name\": \"in\",\n        \"templated\": false\n      },\n      \"aliqua_d\": {\n        \"href\": \"tempor et laborum non\",\n        \"hreflang\": \"pariatur do aliqua ex\",\n        \"title\": \"dolor\",\n        \"type\": \"proident sint amet do\",\n        \"deprecation\": \"consequat\",\n        \"profile\": \"et adipisicing in cupidatat\",\n        \"name\": \"commodo officia velit Excepte\",\n        \"templated\": false\n      },\n      \"Lorem_0e4\": {\n        \"href\": \"tempor in quis amet esse\",\n        \"hreflang\": \"nulla aliquip\",\n        \"title\": \"dolor ullamco eu\",\n        \"type\": \"ut id\",\n        \"deprecation\": \"consequat reprehenderit in qui\",\n        \"profile\": \"fugiat Lorem dolore\",\n        \"name\": \"velit sit amet anim\",\n        \"templated\": false\n      },\n      \"aliqua70\": {\n        \"href\": \"dolore sed non\",\n        \"hreflang\": \"\",\n        \"title\": \"nostrud consectetur dolor Ut\",\n        \"type\": \"do exercitation fugiat Duis\",\n        \"deprecation\": \"aute eu ut\",\n        \"profile\": \"anim Duis\",\n        \"name\": \"m\",\n        \"templated\": false\n      }\n    }\n  },\n  \"id\": \"urn:uuid:a664fe18-ef49-edc6-df54-07e7a9422a86\",\n  \"_links\": {\n    \"officia6\": {\n      \"href\": \"quis occaecat\",\n      \"hreflang\": \"magna nisi \",\n      \"title\": \"ut ad laborum velit tempor\",\n      \"type\": \"occaecat sed qui\",\n      \"deprecation\": \"sed do laborum\",\n      \"profile\": \"sed laborum aliquip \",\n      \"name\": \"fugiat dolor ullamco irure\",\n      \"templated\": true\n    }\n  }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/attendance",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"attendance"
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Bad Request",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"dateTime\": \"in\",\n  \"paciente\": {\n    \"cpf\": \"est ex non r\",\n    \"full_name\": \"incid\",\n    \"id\": \"urn:uuid:ee0382b1-ff68-2387-ced6-a35ce77b7fcf\",\n    \"health_insurance\": \"occaecat tempor culpa\",\n    \"_links\": {\n      \"exercitation_0\": {\n        \"href\": \"ad nulla\",\n        \"hreflang\": \"do esse consequat aute\",\n        \"title\": \"cupidatat laboris est occaecat\",\n        \"type\": \"Ut in veniam reprehenderit qui\",\n        \"deprecation\": \"consequat Excepteur est\",\n        \"profile\": \"ullamco ea\",\n        \"name\": \"in\",\n        \"templated\": false\n      },\n      \"aliqua_d\": {\n        \"href\": \"tempor et laborum non\",\n        \"hreflang\": \"pariatur do aliqua ex\",\n        \"title\": \"dolor\",\n        \"type\": \"proident sint amet do\",\n        \"deprecation\": \"consequat\",\n        \"profile\": \"et adipisicing in cupidatat\",\n        \"name\": \"commodo officia velit Excepte\",\n        \"templated\": false\n      },\n      \"Lorem_0e4\": {\n        \"href\": \"tempor in quis amet esse\",\n        \"hreflang\": \"nulla aliquip\",\n        \"title\": \"dolor ullamco eu\",\n        \"type\": \"ut id\",\n        \"deprecation\": \"consequat reprehenderit in qui\",\n        \"profile\": \"fugiat Lorem dolore\",\n        \"name\": \"velit sit amet anim\",\n        \"templated\": false\n      },\n      \"aliqua70\": {\n        \"href\": \"dolore sed non\",\n        \"hreflang\": \"\",\n        \"title\": \"nostrud consectetur dolor Ut\",\n        \"type\": \"do exercitation fugiat Duis\",\n        \"deprecation\": \"aute eu ut\",\n        \"profile\": \"anim Duis\",\n        \"name\": \"m\",\n        \"templated\": false\n      }\n    }\n  },\n  \"id\": \"urn:uuid:a664fe18-ef49-edc6-df54-07e7a9422a86\",\n  \"_links\": {\n    \"officia6\": {\n      \"href\": \"quis occaecat\",\n      \"hreflang\": \"magna nisi \",\n      \"title\": \"ut ad laborum velit tempor\",\n      \"type\": \"occaecat sed qui\",\n      \"deprecation\": \"sed do laborum\",\n      \"profile\": \"sed laborum aliquip \",\n      \"name\": \"fugiat dolor ullamco irure\",\n      \"templated\": true\n    }\n  }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/attendance",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"attendance"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Unathorized",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"dateTime\": \"in\",\n  \"paciente\": {\n    \"cpf\": \"est ex non r\",\n    \"full_name\": \"incid\",\n    \"id\": \"urn:uuid:ee0382b1-ff68-2387-ced6-a35ce77b7fcf\",\n    \"health_insurance\": \"occaecat tempor culpa\",\n    \"_links\": {\n      \"exercitation_0\": {\n        \"href\": \"ad nulla\",\n        \"hreflang\": \"do esse consequat aute\",\n        \"title\": \"cupidatat laboris est occaecat\",\n        \"type\": \"Ut in veniam reprehenderit qui\",\n        \"deprecation\": \"consequat Excepteur est\",\n        \"profile\": \"ullamco ea\",\n        \"name\": \"in\",\n        \"templated\": false\n      },\n      \"aliqua_d\": {\n        \"href\": \"tempor et laborum non\",\n        \"hreflang\": \"pariatur do aliqua ex\",\n        \"title\": \"dolor\",\n        \"type\": \"proident sint amet do\",\n        \"deprecation\": \"consequat\",\n        \"profile\": \"et adipisicing in cupidatat\",\n        \"name\": \"commodo officia velit Excepte\",\n        \"templated\": false\n      },\n      \"Lorem_0e4\": {\n        \"href\": \"tempor in quis amet esse\",\n        \"hreflang\": \"nulla aliquip\",\n        \"title\": \"dolor ullamco eu\",\n        \"type\": \"ut id\",\n        \"deprecation\": \"consequat reprehenderit in qui\",\n        \"profile\": \"fugiat Lorem dolore\",\n        \"name\": \"velit sit amet anim\",\n        \"templated\": false\n      },\n      \"aliqua70\": {\n        \"href\": \"dolore sed non\",\n        \"hreflang\": \"\",\n        \"title\": \"nostrud consectetur dolor Ut\",\n        \"type\": \"do exercitation fugiat Duis\",\n        \"deprecation\": \"aute eu ut\",\n        \"profile\": \"anim Duis\",\n        \"name\": \"m\",\n        \"templated\": false\n      }\n    }\n  },\n  \"id\": \"urn:uuid:a664fe18-ef49-edc6-df54-07e7a9422a86\",\n  \"_links\": {\n    \"officia6\": {\n      \"href\": \"quis occaecat\",\n      \"hreflang\": \"magna nisi \",\n      \"title\": \"ut ad laborum velit tempor\",\n      \"type\": \"occaecat sed qui\",\n      \"deprecation\": \"sed do laborum\",\n      \"profile\": \"sed laborum aliquip \",\n      \"name\": \"fugiat dolor ullamco irure\",\n      \"templated\": true\n    }\n  }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/attendance",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"attendance"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"dateTime\": \"in\",\n  \"paciente\": {\n    \"cpf\": \"est ex non r\",\n    \"full_name\": \"incid\",\n    \"id\": \"urn:uuid:ee0382b1-ff68-2387-ced6-a35ce77b7fcf\",\n    \"health_insurance\": \"occaecat tempor culpa\",\n    \"_links\": {\n      \"exercitation_0\": {\n        \"href\": \"ad nulla\",\n        \"hreflang\": \"do esse consequat aute\",\n        \"title\": \"cupidatat laboris est occaecat\",\n        \"type\": \"Ut in veniam reprehenderit qui\",\n        \"deprecation\": \"consequat Excepteur est\",\n        \"profile\": \"ullamco ea\",\n        \"name\": \"in\",\n        \"templated\": false\n      },\n      \"aliqua_d\": {\n        \"href\": \"tempor et laborum non\",\n        \"hreflang\": \"pariatur do aliqua ex\",\n        \"title\": \"dolor\",\n        \"type\": \"proident sint amet do\",\n        \"deprecation\": \"consequat\",\n        \"profile\": \"et adipisicing in cupidatat\",\n        \"name\": \"commodo officia velit Excepte\",\n        \"templated\": false\n      },\n      \"Lorem_0e4\": {\n        \"href\": \"tempor in quis amet esse\",\n        \"hreflang\": \"nulla aliquip\",\n        \"title\": \"dolor ullamco eu\",\n        \"type\": \"ut id\",\n        \"deprecation\": \"consequat reprehenderit in qui\",\n        \"profile\": \"fugiat Lorem dolore\",\n        \"name\": \"velit sit amet anim\",\n        \"templated\": false\n      },\n      \"aliqua70\": {\n        \"href\": \"dolore sed non\",\n        \"hreflang\": \"\",\n        \"title\": \"nostrud consectetur dolor Ut\",\n        \"type\": \"do exercitation fugiat Duis\",\n        \"deprecation\": \"aute eu ut\",\n        \"profile\": \"anim Duis\",\n        \"name\": \"m\",\n        \"templated\": false\n      }\n    }\n  },\n  \"id\": \"urn:uuid:a664fe18-ef49-edc6-df54-07e7a9422a86\",\n  \"_links\": {\n    \"officia6\": {\n      \"href\": \"quis occaecat\",\n      \"hreflang\": \"magna nisi \",\n      \"title\": \"ut ad laborum velit tempor\",\n      \"type\": \"occaecat sed qui\",\n      \"deprecation\": \"sed do laborum\",\n      \"profile\": \"sed laborum aliquip \",\n      \"name\": \"fugiat dolor ullamco irure\",\n      \"templated\": true\n    }\n  }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/attendance",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"attendance"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Internal Error",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"dateTime\": \"in\",\n  \"paciente\": {\n    \"cpf\": \"est ex non r\",\n    \"full_name\": \"incid\",\n    \"id\": \"urn:uuid:ee0382b1-ff68-2387-ced6-a35ce77b7fcf\",\n    \"health_insurance\": \"occaecat tempor culpa\",\n    \"_links\": {\n      \"exercitation_0\": {\n        \"href\": \"ad nulla\",\n        \"hreflang\": \"do esse consequat aute\",\n        \"title\": \"cupidatat laboris est occaecat\",\n        \"type\": \"Ut in veniam reprehenderit qui\",\n        \"deprecation\": \"consequat Excepteur est\",\n        \"profile\": \"ullamco ea\",\n        \"name\": \"in\",\n        \"templated\": false\n      },\n      \"aliqua_d\": {\n        \"href\": \"tempor et laborum non\",\n        \"hreflang\": \"pariatur do aliqua ex\",\n        \"title\": \"dolor\",\n        \"type\": \"proident sint amet do\",\n        \"deprecation\": \"consequat\",\n        \"profile\": \"et adipisicing in cupidatat\",\n        \"name\": \"commodo officia velit Excepte\",\n        \"templated\": false\n      },\n      \"Lorem_0e4\": {\n        \"href\": \"tempor in quis amet esse\",\n        \"hreflang\": \"nulla aliquip\",\n        \"title\": \"dolor ullamco eu\",\n        \"type\": \"ut id\",\n        \"deprecation\": \"consequat reprehenderit in qui\",\n        \"profile\": \"fugiat Lorem dolore\",\n        \"name\": \"velit sit amet anim\",\n        \"templated\": false\n      },\n      \"aliqua70\": {\n        \"href\": \"dolore sed non\",\n        \"hreflang\": \"\",\n        \"title\": \"nostrud consectetur dolor Ut\",\n        \"type\": \"do exercitation fugiat Duis\",\n        \"deprecation\": \"aute eu ut\",\n        \"profile\": \"anim Duis\",\n        \"name\": \"m\",\n        \"templated\": false\n      }\n    }\n  },\n  \"id\": \"urn:uuid:a664fe18-ef49-edc6-df54-07e7a9422a86\",\n  \"_links\": {\n    \"officia6\": {\n      \"href\": \"quis occaecat\",\n      \"hreflang\": \"magna nisi \",\n      \"title\": \"ut ad laborum velit tempor\",\n      \"type\": \"occaecat sed qui\",\n      \"deprecation\": \"sed do laborum\",\n      \"profile\": \"sed laborum aliquip \",\n      \"name\": \"fugiat dolor ullamco irure\",\n      \"templated\": true\n    }\n  }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/attendance",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"attendance"
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Update User Password",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"passwordConfirmed\": true,\n  \"password\": \"qui Duis in\",\n  \"new_password\": \"sunt laborum ex\",\n  \"confirm_new_password\": \"officia consectetur ad qui\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/user/:email/password",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								":email",
+								"password"
+							],
+							"variable": [
+								{
+									"key": "email",
+									"value": "ex sit eiusmod sunt Duis",
+									"description": "(Required) "
+								}
+							]
+						},
+						"description": "Update the password of an existing user by providing the user ID and the new password"
+					},
+					"response": [
+						{
+							"name": "No Content",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"passwordConfirmed\": true,\n  \"password\": \"qui Duis in\",\n  \"new_password\": \"sunt laborum ex\",\n  \"confirm_new_password\": \"officia consectetur ad qui\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/user/:email/password",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										":email",
+										"password"
+									],
+									"variable": [
+										{
+											"key": "email",
+											"value": "ex sit eiusmod sunt Duis",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Bad Request",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"passwordConfirmed\": true,\n  \"password\": \"qui Duis in\",\n  \"new_password\": \"sunt laborum ex\",\n  \"confirm_new_password\": \"officia consectetur ad qui\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/user/:email/password",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										":email",
+										"password"
+									],
+									"variable": [
+										{
+											"key": "email",
+											"value": "ex sit eiusmod sunt Duis",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Unathorized",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"passwordConfirmed\": true,\n  \"password\": \"qui Duis in\",\n  \"new_password\": \"sunt laborum ex\",\n  \"confirm_new_password\": \"officia consectetur ad qui\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/user/:email/password",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										":email",
+										"password"
+									],
+									"variable": [
+										{
+											"key": "email",
+											"value": "ex sit eiusmod sunt Duis",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"passwordConfirmed\": true,\n  \"password\": \"qui Duis in\",\n  \"new_password\": \"sunt laborum ex\",\n  \"confirm_new_password\": \"officia consectetur ad qui\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/user/:email/password",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										":email",
+										"password"
+									],
+									"variable": [
+										{
+											"key": "email",
+											"value": "ex sit eiusmod sunt Duis",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Internal Error",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"passwordConfirmed\": true,\n  \"password\": \"qui Duis in\",\n  \"new_password\": \"sunt laborum ex\",\n  \"confirm_new_password\": \"officia consectetur ad qui\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/user/:email/password",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										":email",
+										"password"
+									],
+									"variable": [
+										{
+											"key": "email",
+											"value": "ex sit eiusmod sunt Duis",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080",
+			"type": "string"
+		}
+	]
+}
