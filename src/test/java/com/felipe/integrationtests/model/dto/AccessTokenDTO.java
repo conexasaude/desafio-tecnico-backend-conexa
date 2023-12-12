@@ -3,38 +3,38 @@ package com.felipe.integrationtests.model.dto;
 import java.io.Serializable;
 import java.util.Objects;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.felipe.util.MessageUtils;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
-import jakarta.validation.constraints.NotBlank;
+import jakarta.xml.bind.annotation.XmlRootElement;
 
+@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
+@XmlRootElement
 public class AccessTokenDTO implements Serializable {
 
 
 	private static final long serialVersionUID = 1L;
 
-	@JsonProperty("token")
-	@NotBlank(message = MessageUtils.CANNOT_BLANK)
-	private String acessToken;
+	private String token;
 	
 	public AccessTokenDTO() {
 	}
-	
-	public AccessTokenDTO(String acessToken) {
-		this.acessToken = acessToken;
+
+	public AccessTokenDTO(String token) {
+		this.token = token;
 	}
 
-	public String getAcessToken() {
-		return acessToken;
+	public String getToken() {
+		return token;
 	}
 
-	public void setAcessToken(String acessToken) {
-		this.acessToken = acessToken;
+	public void setToken(String token) {
+		this.token = token;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(acessToken);
+		return Objects.hash(token);
 	}
 
 	@Override
@@ -46,13 +46,15 @@ public class AccessTokenDTO implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		AccessTokenDTO other = (AccessTokenDTO) obj;
-		return Objects.equals(acessToken, other.acessToken);
+		return Objects.equals(token, other.token);
 	}
 
 	@Override
 	public String toString() {
-		return "TokenDTO [acessToken=" + acessToken + "]";
+		return "AccessTokenDTO [token=" + token + "]";
 	}
+
+
 
 
 }

@@ -26,7 +26,10 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
   flyway:
-    url: jdbc:mysql://db:3308/
+    # Descomentar se for rodar localmente sem ser por docker
+    url: jdbc:mysql://localhost:3308/
+    # Deixar Comentado se for rodar localmente sem ser por docker
+#    url: jdbc:mysql://db:3306/
     schemas: rest-conexa-challenger 
     user: docker
     password: admin123

@@ -15,26 +15,26 @@ public class AccessTokenDTO implements Serializable {
 
 	@JsonProperty("token")
 	@NotBlank(message = MessageUtils.CANNOT_BLANK)
-	private String acessToken;
+	private String accessToken;
 	
 	public AccessTokenDTO() {
 	}
 	
-	public AccessTokenDTO(String acessToken) {
-		this.acessToken = acessToken;
+	public AccessTokenDTO(String accessToken) {
+		this.accessToken = accessToken;
 	}
 
-	public String getAcessToken() {
-		return acessToken;
+	public String getAccessToken() {
+		return accessToken;
 	}
 
-	public void setAcessToken(String acessToken) {
-		this.acessToken = acessToken;
+	public void setAccessToken(String accessToken) {
+		this.accessToken = accessToken;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(acessToken);
+		return Objects.hash(accessToken);
 	}
 
 	@Override
@@ -46,12 +46,12 @@ public class AccessTokenDTO implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		AccessTokenDTO other = (AccessTokenDTO) obj;
-		return Objects.equals(acessToken, other.acessToken);
+		return Objects.equals(accessToken, other.accessToken);
 	}
 
 	@Override
 	public String toString() {
-		return "TokenDTO [acessToken=" + acessToken + "]";
+		return "TokenDTO [accessToken=" + accessToken + "]";
 	}
 
 

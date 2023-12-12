@@ -87,7 +87,7 @@ public class AuthService {
 
 		var tokenResponse = new TokenDTO();
 		if (user != null) {
-			tokenResponse = jwtTokenProvider.refreshToken(refreshToken, dto.getAcessToken());
+			tokenResponse = jwtTokenProvider.refreshToken(refreshToken, dto.getAccessToken());
 		} else {
 			throw new UsernameNotFoundException("Email " + username + " not found!");
 		}

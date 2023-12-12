@@ -7,18 +7,29 @@ import java.util.UUID;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
+import jakarta.xml.bind.annotation.XmlRootElement;
+
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
+@XmlRootElement(name = "User")
 public class CreateUserDoctorDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private UUID id;
+
 	private String email;
+
 	private String fullName;
+
 	private String password;
+
 	private String confirmPassword;
+
 	private String specialty;
+
 	private String cpf;
+
 	private String birthDate;
+
 	private String phone;
 
 	public CreateUserDoctorDTO() {
