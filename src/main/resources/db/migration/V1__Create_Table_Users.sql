@@ -6,6 +6,7 @@ CREATE TABLE IF NOT EXISTS `user_tb` (
   `account_non_locked` bit(1) NOT NULL,
   `credentials_non_expired` bit(1) NOT NULL,
   `enabled` bit(1) NOT NULL,
+  `confirmed_email` bit(1) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UK_itqt87x5xy360a5shmi6hwdob` (`user_name`)
 );

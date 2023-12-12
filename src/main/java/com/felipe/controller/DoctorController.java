@@ -57,7 +57,6 @@ public class DoctorController {
 					@ApiResponse(description = "Internal Error", responseCode = "500", content = @Content) })
 	public ResponseEntity<DoctorDTO> findById(@PathVariable(value = "id") String id) throws Exception {
 		return new ResponseEntity<>(service.findById(id), HttpStatus.OK);
-
 	}
 
 	@PutMapping

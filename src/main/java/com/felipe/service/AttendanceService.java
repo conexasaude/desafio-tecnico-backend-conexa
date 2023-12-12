@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import com.felipe.controller.AttendanceController;
 import com.felipe.exceptions.ResourceNotFoundException;
 import com.felipe.mapper.AttendanceMapper;
-import com.felipe.mapper.PatientMapper;
 import com.felipe.model.Attendance;
 import com.felipe.model.Patient;
 import com.felipe.model.dto.v1.AttendanceDTO;
@@ -38,12 +37,6 @@ public class AttendanceService {
 
 	@Autowired
 	private AttendanceMapper mapper;
-
-	@Autowired
-	private PatientMapper patientMapper;
-
-	@Autowired
-	private PatientService patientService;
 
 	@Transactional
 	public AttendanceDTO createAttendanceWithPatient(AttendanceDTO attendanceDTO) {

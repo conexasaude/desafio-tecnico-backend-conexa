@@ -50,6 +50,9 @@ public class User implements UserDetails, Serializable {
 	@Column(name = "enabled", nullable = false)
 	private Boolean enabled;
 	
+	@Column(name = "confirmed_email", nullable = false)
+	private Boolean confirmedEmail;
+	
     @OneToOne(mappedBy = "user")
     private Doctor doctor;
 
@@ -114,7 +117,7 @@ public class User implements UserDetails, Serializable {
 	public boolean isEnabled() {
 		return this.enabled;
 	}
-
+	
 	public UUID getId() {
 		return this.id;
 	}
@@ -175,6 +178,14 @@ public class User implements UserDetails, Serializable {
 		this.password = password;
 	}
 
+	public Boolean getConfirmedEmail() {
+		return confirmedEmail;
+	}
+
+	public void setConfirmedEmail(Boolean confirmedEmail) {
+		this.confirmedEmail = confirmedEmail;
+	}
+
 	public Doctor getDoctor() {
 		return doctor;
 	}
@@ -185,8 +196,8 @@ public class User implements UserDetails, Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(accountNonExpired, accountNonLocked, credentialsNonExpired, doctor, enabled, id, password,
-				permissions, userName);
+		return Objects.hash(accountNonExpired, accountNonLocked, confirmedEmail, credentialsNonExpired, doctor, enabled,
+				id, password, permissions, userName);
 	}
 
 	@Override
@@ -200,6 +211,7 @@ public class User implements UserDetails, Serializable {
 		User other = (User) obj;
 		return Objects.equals(accountNonExpired, other.accountNonExpired)
 				&& Objects.equals(accountNonLocked, other.accountNonLocked)
+				&& Objects.equals(confirmedEmail, other.confirmedEmail)
 				&& Objects.equals(credentialsNonExpired, other.credentialsNonExpired)
 				&& Objects.equals(doctor, other.doctor) && Objects.equals(enabled, other.enabled)
 				&& Objects.equals(id, other.id) && Objects.equals(password, other.password)
@@ -210,9 +222,8 @@ public class User implements UserDetails, Serializable {
 	public String toString() {
 		return "User [id=" + id + ", userName=" + userName + ", password=" + password + ", accountNonExpired="
 				+ accountNonExpired + ", accountNonLocked=" + accountNonLocked + ", credentialsNonExpired="
-				+ credentialsNonExpired + ", enabled=" + enabled + ", doctor=" + doctor + ", permissions=" + permissions
-				+ "]";
+				+ credentialsNonExpired + ", enabled=" + enabled + ", confirmedEmail=" + confirmedEmail + ", doctor="
+				+ doctor + ", permissions=" + permissions + "]";
 	}
-	
 	
 }

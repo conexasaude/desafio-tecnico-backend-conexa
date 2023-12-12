@@ -10,7 +10,7 @@ spring:
     name: rest-conexa-challenger
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    # Descomentar se for rodar localmente sem ser por docker
+    # Descomentar se for rodar localmente, sem ser por docker
     url: jdbc:mysql://localhost:3308/rest-conexa-challenger?useTimezone=true&serverTimezone=UTC&useSSL=false
 
     # Deixar Comentado se for rodar localmente sem ser por docker
@@ -26,8 +26,9 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
   flyway:
-    # Descomentar se for rodar localmente sem ser por docker
-    url: jdbc:mysql://localhost:3308/
+#     Descomentar se for rodar localmente sem ser por docker
+    url: jdbc:mysql://localhost:3308
+
     # Deixar Comentado se for rodar localmente sem ser por docker
 #    url: jdbc:mysql://db:3306/
     schemas: rest-conexa-challenger 
