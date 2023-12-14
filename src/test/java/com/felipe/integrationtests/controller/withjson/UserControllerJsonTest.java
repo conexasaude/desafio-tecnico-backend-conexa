@@ -38,7 +38,6 @@ public class UserControllerJsonTest extends AbstractIntegrationTest {
 	private static RequestSpecification specification;
 	private static ObjectMapper objectMapper;
 
-	private static DoctorDTO doctorDTO;
 	private static PasswordUpdateDTO passwordUpdateDTO;
 
 	private static CreateUserDoctorDTO createDto;
@@ -51,7 +50,6 @@ public class UserControllerJsonTest extends AbstractIntegrationTest {
 		objectMapper = new ObjectMapper();
 		objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
 
-		doctorDTO = new DoctorDTO();
 		passwordUpdateDTO = new PasswordUpdateDTO();
 		createDto = new CreateUserDoctorDTO();
 	}
@@ -74,7 +72,6 @@ public class UserControllerJsonTest extends AbstractIntegrationTest {
 
 		logger.info("Persisted:  => " + content.toString());
 		DoctorDTO persisted = objectMapper.readValue(contentString, DoctorDTO.class);
-		doctorDTO = persisted;
 
 		assertNotNull(persisted);
 		logger.info("Persisted:  => " + persisted.toString());

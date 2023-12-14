@@ -20,6 +20,8 @@ import com.felipe.model.dto.v1.UserDTO;
 import com.felipe.repositories.UserRepository;
 import com.felipe.util.MessageUtils;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class UserService implements UserDetailsService {
 	private Logger logger = Logger.getLogger(UserService.class.getName());
@@ -59,6 +61,17 @@ public class UserService implements UserDetailsService {
 
 	public UserDTO findById(String id) throws Exception {
 		logger.info("Finding one User");
+		
+		UserDTO dto = repository.findById(UUID.fromString(id)).map(mapper::toDto)
+				.orElseThrow(() -> new ResourceNotFoundException(MessageUtils.NO_RECORDS_FOUND));
+		return addSelfRel(dto);
+	}
+	
+	@Transactional
+	public UserDTO disableUser(String id) throws Exception {
+		logger.info("Disabling one User");
+		
+		repository.disableUser(UUID.fromString(id));
 
 		UserDTO dto = repository.findById(UUID.fromString(id)).map(mapper::toDto)
 				.orElseThrow(() -> new ResourceNotFoundException(MessageUtils.NO_RECORDS_FOUND));

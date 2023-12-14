@@ -4,6 +4,8 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
@@ -13,4 +15,10 @@ import com.felipe.model.User;
 public interface UserRepository extends JpaRepository<User, UUID> {
 
 	Optional<User> findByUserName(@Param("userName") String userName);
+	
+	@Modifying
+	@Query("UPDATE User u SET u.enabled = false WHERE u.id =:id")
+	void disableUser(@Param("id") UUID id);
+	
+//	Optional<User> confirmEmail(@Param("id") String userName);
 }

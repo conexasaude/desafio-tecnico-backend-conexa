@@ -41,7 +41,6 @@ public class PatientControllerJsonTest extends AbstractIntegrationTest {
 	private static RequestSpecification specification;
 	private static ObjectMapper objectMapper;
 
-	private static DoctorDTO doctorDTO;
 	private static PatientDTO dto;
 
 	private static CreateUserDoctorDTO createDto;
@@ -54,7 +53,6 @@ public class PatientControllerJsonTest extends AbstractIntegrationTest {
 		objectMapper = new ObjectMapper();
 		objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
 
-		doctorDTO = new DoctorDTO();
 		dto = new PatientDTO();
 		createDto = new CreateUserDoctorDTO();
 	}
@@ -77,7 +75,6 @@ public class PatientControllerJsonTest extends AbstractIntegrationTest {
 
 		logger.info("Persisted:  => " + content.toString());
 		DoctorDTO persisted = objectMapper.readValue(contentString, DoctorDTO.class);
-		doctorDTO = persisted;
 
 		assertNotNull(persisted);
 		logger.info("Persisted:  => " + persisted.toString());

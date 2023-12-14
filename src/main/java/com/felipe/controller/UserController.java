@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.felipe.model.dto.v1.DoctorDTO;
 import com.felipe.model.dto.v1.PasswordUpdateDTO;
 import com.felipe.model.dto.v1.UserDTO;
 import com.felipe.service.AuthService;
@@ -50,11 +49,11 @@ public class UserController {
 	}
 
 	@GetMapping("/{id}")
-	@Operation(summary = "Find Doctor by ID", tags = {
-			"Doctor" }, description = "Retrieve doctor details by providing a valid doctor ID",
+	@Operation(summary = "Find User by ID", tags = {
+			"User" }, description = "Retrieve user details by providing a valid user ID",
 
 			responses = { @ApiResponse(description = "Success", responseCode = "200", content = {
-					@Content(mediaType = "application/json", schema = @Schema(implementation = DoctorDTO.class)) }),
+					@Content(mediaType = "application/json", schema = @Schema(implementation = UserDTO.class)) }),
 					@ApiResponse(description = "No Content", responseCode = "204", content = @Content),
 					@ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
 					@ApiResponse(description = "Unathorized", responseCode = "401", content = @Content),
@@ -62,6 +61,21 @@ public class UserController {
 					@ApiResponse(description = "Internal Error", responseCode = "500", content = @Content) })
 	public ResponseEntity<UserDTO> findById(@PathVariable(value = "id") String id) throws Exception {
 		return ResponseEntity.ok(userService.findById(id));
+	}
+	
+	@PatchMapping("/{id}/disable")
+	@Operation(summary = "Disable User by ID", tags = {
+			"User" }, description = "Retrieve user details by providing a valid user ID",
+
+			responses = { @ApiResponse(description = "Success", responseCode = "200", content = {
+					@Content(mediaType = "application/json", schema = @Schema(implementation = UserDTO.class)) }),
+					@ApiResponse(description = "No Content", responseCode = "204", content = @Content),
+					@ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
+					@ApiResponse(description = "Unathorized", responseCode = "401", content = @Content),
+					@ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
+					@ApiResponse(description = "Internal Error", responseCode = "500", content = @Content) })
+	public ResponseEntity<UserDTO> disableUser(@PathVariable(value = "id") String id) throws Exception {
+		return ResponseEntity.ok(userService.disableUser(id));
 	}
 
 	@PatchMapping("/{email}/password")
