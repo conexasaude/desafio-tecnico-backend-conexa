@@ -64,7 +64,7 @@ public class AuthService {
 
 			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
 
-			var user = userRepository.findByUserName(username).orElseThrow(() -> new ResourceNotFoundException(
+			var user = userRepository.findByUsername(username).orElseThrow(() -> new ResourceNotFoundException(
 					MessageUtils.NO_RECORDS_FOUND + ": Email " + username + " not found!"));
 
 			var tokenResponse = jwtTokenProvider.createAccessToken(username, user.getRoles());
@@ -83,7 +83,7 @@ public class AuthService {
 	public ResponseEntity<AccessTokenDTO> refreshToken(String username, String refreshToken, AccessTokenDTO dto) {
 		checkParamsIsNotNull(username, refreshToken);
 
-		var user = userRepository.findByUserName(username);
+		var user = userRepository.findByUsername(username);
 
 		var tokenResponse = new TokenDTO();
 		if (user != null) {
@@ -129,7 +129,7 @@ public class AuthService {
 	public void changePassword(String email, PasswordUpdateDTO passwordUpdateDTO) {
 		logger.info("Changing password");
 		try {
-			User entity = userRepository.findByUserName(email)
+			User entity = userRepository.findByUsername(email)
 					.orElseThrow(() -> new ResourceNotFoundException(MessageUtils.NO_RECORDS_FOUND));
 
 			if (passwordService.matches(passwordUpdateDTO.getOldPassword(), entity.getPassword())) {

@@ -40,7 +40,7 @@ public class UserService implements UserDetailsService {
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		logger.info("Finding one user by name " + username + "!");
 
-		return repository.findByUserName(username)
+		return repository.findByUsername(username)
 				.orElseThrow(() -> new ResourceNotFoundException(MessageUtils.NO_RECORDS_FOUND + ": Email " + username + " not found!"));
 	}
 

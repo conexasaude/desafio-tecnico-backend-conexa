@@ -25,7 +25,7 @@ public class UserDTO extends RepresentationModel<UserDTO> implements Serializabl
 	@NotBlank(message = MessageUtils.CANNOT_BLANK)
 	@Email(message = "invalid E-mail")
 	@JsonProperty("email")
-	private String userName;
+	private String username;
 
 	@JsonProperty("account_non_expired")
 	private Boolean accountNonExpired;
@@ -53,12 +53,12 @@ public class UserDTO extends RepresentationModel<UserDTO> implements Serializabl
 		this.key = key;
 	}
 
-	public String getUserName() {
-		return userName;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public Boolean getAccountNonExpired() {
@@ -106,7 +106,7 @@ public class UserDTO extends RepresentationModel<UserDTO> implements Serializabl
 		final int prime = 31;
 		int result = super.hashCode();
 		result = prime * result + Objects.hash(accountNonExpired, accountNonLocked, confirmedEmail,
-				credentialsNonExpired, enabled, key, userName);
+				credentialsNonExpired, enabled, key, username);
 		return result;
 	}
 
@@ -122,12 +122,12 @@ public class UserDTO extends RepresentationModel<UserDTO> implements Serializabl
 				&& Objects.equals(confirmedEmail, other.confirmedEmail)
 				&& Objects.equals(credentialsNonExpired, other.credentialsNonExpired)
 				&& Objects.equals(enabled, other.enabled) && Objects.equals(key, other.key)
-				&& Objects.equals(userName, other.userName);
+				&& Objects.equals(username, other.username);
 	}
 
 	@Override
 	public String toString() {
-		return "UserDTO [key=" + key + ", userName=" + userName + ", accountNonExpired=" + accountNonExpired
+		return "UserDTO [key=" + key + ", username=" + username + ", accountNonExpired=" + accountNonExpired
 				+ ", accountNonLocked=" + accountNonLocked + ", credentialsNonExpired=" + credentialsNonExpired
 				+ ", enabled=" + enabled + ", confirmedEmail=" + confirmedEmail + "]";
 	}

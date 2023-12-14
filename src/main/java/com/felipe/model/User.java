@@ -33,7 +33,7 @@ public class User implements UserDetails, Serializable {
 	private UUID id;
 
 	@Column(name = "user_name", unique = true, nullable = false)
-	private String userName;
+	private String username;
 
 	@Column(name = "password", nullable = false)
 	private String password;
@@ -64,9 +64,9 @@ public class User implements UserDetails, Serializable {
 	public User() {
 	}
 
-	public User(String userName, String password, Boolean accountNonExpired, Boolean accountNonLocked,
+	public User(String username, String password, Boolean accountNonExpired, Boolean accountNonLocked,
 			Boolean credentialsNonExpired, Boolean enabled, Doctor doctor) {
-		this.userName = userName;
+		this.username = username;
 		this.password = password;
 		this.accountNonExpired = accountNonExpired;
 		this.accountNonLocked = accountNonLocked;
@@ -95,7 +95,7 @@ public class User implements UserDetails, Serializable {
 
 	@Override
 	public String getUsername() {
-		return this.userName;
+		return this.username;
 	}
 
 	@Override
@@ -126,12 +126,8 @@ public class User implements UserDetails, Serializable {
 		this.id = id;
 	}
 
-	public String getUserName() {
-		return this.userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setUsername(String userName) {
+		this.username = userName;
 	}
 
 	public Boolean getAccountNonExpired() {
@@ -197,7 +193,7 @@ public class User implements UserDetails, Serializable {
 	@Override
 	public int hashCode() {
 		return Objects.hash(accountNonExpired, accountNonLocked, confirmedEmail, credentialsNonExpired, doctor, enabled,
-				id, password, permissions, userName);
+				id, password, permissions, username);
 	}
 
 	@Override
@@ -213,12 +209,12 @@ public class User implements UserDetails, Serializable {
 				&& Objects.equals(credentialsNonExpired, other.credentialsNonExpired)
 				&& Objects.equals(doctor, other.doctor) && Objects.equals(enabled, other.enabled)
 				&& Objects.equals(id, other.id) && Objects.equals(password, other.password)
-				&& Objects.equals(permissions, other.permissions) && Objects.equals(userName, other.userName);
+				&& Objects.equals(permissions, other.permissions) && Objects.equals(username, other.username);
 	}
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", userName=" + userName + ", password=" + password + ", accountNonExpired="
+		return "User [id=" + id + ", userName=" + username + ", password=" + password + ", accountNonExpired="
 				+ accountNonExpired + ", accountNonLocked=" + accountNonLocked + ", credentialsNonExpired="
 				+ credentialsNonExpired + ", enabled=" + enabled + ", confirmedEmail=" + confirmedEmail + ", doctor="
 				+ doctor + ", permissions=" + permissions + "]";

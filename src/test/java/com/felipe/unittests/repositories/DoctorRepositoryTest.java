@@ -19,14 +19,13 @@ import com.felipe.mapper.DoctorMapper;
 import com.felipe.model.Doctor;
 import com.felipe.model.dto.v1.DoctorDTO;
 import com.felipe.repositories.DoctorRepository;
-import com.felipe.service.DoctorService;
 import com.felipe.unittests.mapper.mocks.MockDoctor;
 
 @SpringBootTest
 //@DataJdbcTest
 class DoctorRepositoryTest {
 
-	private Logger logger = Logger.getLogger(DoctorService.class.getName());
+	private Logger logger = Logger.getLogger(DoctorRepositoryTest.class.getName());
 
 	@Autowired
 	private DoctorRepository repository;

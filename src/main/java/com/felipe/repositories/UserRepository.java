@@ -14,7 +14,7 @@ import com.felipe.model.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, UUID> {
 
-	Optional<User> findByUserName(@Param("userName") String userName);
+	Optional<User> findByUsername(@Param("username") String username);
 	
 	@Modifying
 	@Query("UPDATE User u SET u.enabled = false WHERE u.id =:id")

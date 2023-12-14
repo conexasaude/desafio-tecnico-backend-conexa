@@ -15,7 +15,7 @@ public class UserMapper {
 	public User toEntity(UserDTO dto) {
 		User entity = new User();
 		entity.setId(dto.getKey());
-		entity.setUserName(dto.getUserName());
+		entity.setUsername(dto.getUsername());
 		entity.setAccountNonExpired(dto.getAccountNonExpired());
 		entity.setAccountNonLocked(dto.getAccountNonLocked());
 		entity.setCredentialsNonExpired(dto.getCredentialsNonExpired());
@@ -27,7 +27,7 @@ public class UserMapper {
 	public UserDTO toDto(User entity) {
 		UserDTO dto = new UserDTO();
 		dto.setKey(entity.getId());
-		dto.setUserName(entity.getUserName());
+		dto.setUsername(entity.getUsername());
 		dto.setAccountNonExpired(entity.getAccountNonExpired());
 		dto.setAccountNonLocked(entity.getAccountNonLocked());
 		dto.setCredentialsNonExpired(entity.getCredentialsNonExpired());
