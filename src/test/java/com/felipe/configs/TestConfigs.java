@@ -9,7 +9,7 @@ public class TestConfigs {
 
 	public static final String CONTENT_TYPE_JSON = "application/json";
 	public static final String CONTENT_TYPE_XML = "application/xml";
-	
+
 	public static final String ORIGIN_FRONT = "http://localhost:3000";
 	public static final String ORIGIN_FELIPE = "https://felipe.com.br";
 }

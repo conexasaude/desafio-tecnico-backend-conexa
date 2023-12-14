@@ -13,9 +13,9 @@ public class WebConfig implements WebMvcConfigurer {
 
 	@Value("${cors.originPatterns:default}")
 	private String corsOriginPatters = "";
-	
-	
-	
+
+
+
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {
 		var allowedOrigins = corsOriginPatters.split(",");
@@ -37,7 +37,7 @@ public class WebConfig implements WebMvcConfigurer {
 //			.defaultContentType(MediaType.APPLICATION_JSON)
 //				.mediaType("json", MediaType.APPLICATION_JSON)
 //				.mediaType("xml", MediaType.APPLICATION_XML);
-//		
+//
 		// Header Param. http://localhost:8080/api/v1/user?mediaType=xml
 		configurer.favorParameter(false)
 			.parameterName("mediaType").ignoreAcceptHeader(false)
@@ -46,6 +46,6 @@ public class WebConfig implements WebMvcConfigurer {
 				.mediaType("json", MediaType.APPLICATION_JSON)
 				.mediaType("xml", MediaType.APPLICATION_XML);
 	}
-	
-	
+
+
 }

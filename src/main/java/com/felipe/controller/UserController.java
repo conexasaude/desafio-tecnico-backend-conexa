@@ -32,7 +32,7 @@ public class UserController {
 
 	@Autowired
 	AuthService service;
-	
+
 	@Autowired
 	UserService userService;
 

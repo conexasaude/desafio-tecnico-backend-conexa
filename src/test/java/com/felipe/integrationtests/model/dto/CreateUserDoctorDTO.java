@@ -116,9 +116,7 @@ public class CreateUserDoctorDTO implements Serializable {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
+		if ((obj == null) || (getClass() != obj.getClass()))
 			return false;
 		CreateUserDoctorDTO other = (CreateUserDoctorDTO) obj;
 		return Objects.equals(birthDate, other.birthDate) && Objects.equals(confirmPassword, other.confirmPassword)

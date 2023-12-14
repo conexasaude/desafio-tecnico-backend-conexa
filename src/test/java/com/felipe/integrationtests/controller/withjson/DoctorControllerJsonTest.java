@@ -39,23 +39,23 @@ public class DoctorControllerJsonTest extends AbstractIntegrationTest {
 
 	private static RequestSpecification specification;
 	private static ObjectMapper objectMapper;
-	
+
 	private static DoctorDTO dto;
-	
+
 	private static CreateUserDoctorDTO createDto;
 
 	private static String accessToken;
 	private static String refreshToken;
-	
+
 	@BeforeAll
 	public static void setup() {
 		objectMapper = new ObjectMapper();
 		objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
-		
+
 		dto = new DoctorDTO();
 		createDto = new CreateUserDoctorDTO();
 	}
-	
+
 	@Test
 	@Order(0)
 	public void testSignup() throws JsonMappingException, JsonProcessingException {
@@ -65,13 +65,13 @@ public class DoctorControllerJsonTest extends AbstractIntegrationTest {
 				.addFilter(new RequestLoggingFilter(LogDetail.ALL)).addFilter(new ResponseLoggingFilter(LogDetail.ALL))
 				.build();
 		var content = given().spec(specification).contentType(TestConfigs.CONTENT_TYPE_JSON).body(createDto).when().post();
-		
+
 
 		logger.info("Status code: " + content.statusCode());
 		logger.info("Response body: " + content.getBody().asString());
-		
+
 		var contentString = content.then().statusCode(201).extract().body().asString();
-		
+
 		logger.info("Persisted:  => " + content.toString());
 		DoctorDTO persisted = objectMapper.readValue(contentString, DoctorDTO.class);
 		dto = persisted;
@@ -83,7 +83,7 @@ public class DoctorControllerJsonTest extends AbstractIntegrationTest {
 
 		assertTrue(!persisted.getId().toString().isBlank());
 	}
-	
+
 	@Test
 	@Order(1)
 	public void testLogin() throws JsonMappingException, JsonProcessingException {
@@ -107,13 +107,13 @@ public class DoctorControllerJsonTest extends AbstractIntegrationTest {
 		assertNotNull(accessToken);
 		assertNotNull(refreshToken);
 	}
-	
-	
+
+
 	@Test
 	@Order(2)
 	public void testFindAllDoctor() throws JsonMappingException, JsonProcessingException {
 		logger.info("testFindAll => " + "   /api/v1/doctor");
-		
+
 		specification = new RequestSpecBuilder()
 				.addHeader(TestConfigs.HEADER_PARAM_AUTHORIZATION, "Bearer " + accessToken)
 				.setBasePath("/api/v1/doctor")
@@ -131,20 +131,20 @@ public class DoctorControllerJsonTest extends AbstractIntegrationTest {
 				.extract()
 					.body()
 						.asString();
-		
+
 		logger.info("testFindAll => " + content.toString());
-		
+
 
 	    List<DoctorDTO> persisted = objectMapper.readValue(content, new TypeReference<List<DoctorDTO>>() {});
 		logger.info("testFindAll => " + persisted.toString());
-		
+
 		assertNotNull(persisted);
 		assertTrue(persisted.size() > 0);
 		assertNotNull(persisted.get(0).getId());
 		assertTrue(!persisted.get(0).getId().toString().isBlank());
 
 	}
-	
+
 	@Test
 	@Order(3)
 	public void testUpdateDoctor() throws JsonMappingException, JsonProcessingException {
@@ -163,12 +163,12 @@ public class DoctorControllerJsonTest extends AbstractIntegrationTest {
 				.extract()
 					.body()
 						.asString();
-		
+
 		DoctorDTO persisted = objectMapper.readValue(content, DoctorDTO.class);
 		dto = persisted;
-		
+
 		assertNotNull(persisted);
-		
+
 		assertNotNull(persisted.getId());
 		assertNotNull(persisted.getFullName());
 		assertNotNull(persisted.getEmail());
@@ -176,9 +176,9 @@ public class DoctorControllerJsonTest extends AbstractIntegrationTest {
 		assertNotNull(persisted.getPhone());
 		assertNotNull(persisted.getSpecialty());
 		assertNotNull(persisted.getBirthDate());
-		
+
 		assertTrue(!persisted.getId().toString().isBlank());
-		
+
 		assertEquals("Ana Paula Aragão Da Silva", persisted.getFullName());
 		assertEquals("Dermatologista", persisted.getSpecialty());
 
@@ -188,13 +188,13 @@ public class DoctorControllerJsonTest extends AbstractIntegrationTest {
 		assertEquals("10/03/1980", persisted.getBirthDate());
 	}
 
-	
+
 	@Test
 	@Order(4)
 	public void testFindByIdDoctor() throws JsonMappingException, JsonProcessingException {
 		mockDoctor();
-		
-	
+
+
 		var content = given().spec(specification)
 				.contentType(TestConfigs.CONTENT_TYPE_JSON)
 				.header(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_FRONT)
@@ -206,12 +206,12 @@ public class DoctorControllerJsonTest extends AbstractIntegrationTest {
 				.extract()
 					.body()
 						.asString();
-		
+
 		DoctorDTO persisted = objectMapper.readValue(content, DoctorDTO.class);
 		dto = persisted;
-		
+
 		assertNotNull(persisted);
-		
+
 		assertNotNull(persisted.getId());
 		assertNotNull(persisted.getFullName());
 		assertNotNull(persisted.getEmail());
@@ -219,9 +219,9 @@ public class DoctorControllerJsonTest extends AbstractIntegrationTest {
 		assertNotNull(persisted.getPhone());
 		assertNotNull(persisted.getSpecialty());
 		assertNotNull(persisted.getBirthDate());
-		
+
 		assertTrue(!persisted.getId().toString().isBlank());
-		
+
 		assertEquals("Ana Paula Aragão Da Silva", persisted.getFullName());
 		assertEquals("Dermatologista", persisted.getSpecialty());
 		assertEquals("ana.paula@gmail.com", persisted.getEmail());
@@ -229,11 +229,11 @@ public class DoctorControllerJsonTest extends AbstractIntegrationTest {
 		assertEquals("(21) 83232-6565", persisted.getPhone());
 		assertEquals("10/03/1980", persisted.getBirthDate());
 	}
-	
+
 	@Test
 	@Order(5)
 	public void testFindByIdWithWrongOrigin() throws JsonMappingException, JsonProcessingException {
-		
+
 		var content = given().spec(specification)
 				.contentType(TestConfigs.CONTENT_TYPE_JSON)
 				.header(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_FELIPE)
@@ -245,15 +245,15 @@ public class DoctorControllerJsonTest extends AbstractIntegrationTest {
 				.extract()
 					.body()
 						.asString();
-		
+
 		assertNotNull(content);
 		assertEquals("Invalid CORS request", content);
 	}
-	
+
 	@Test
 	@Order(6)
 	public void testDeleteByIdDoctor() throws JsonMappingException, JsonProcessingException {
-	
+
 		var content = given().spec(specification)
 				.contentType(TestConfigs.CONTENT_TYPE_JSON)
 				.header(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_FRONT)
@@ -267,17 +267,17 @@ public class DoctorControllerJsonTest extends AbstractIntegrationTest {
 						.asString();
 		logger.info("testDeleteByIdDoctor => " + content);
 	}
-	
+
 	@Test
 	@Order(7)
 	public void testFindByIdDoctorWithNotFound() throws JsonMappingException, JsonProcessingException {
-		
+
 		var content = given().spec(specification)
 				.contentType(TestConfigs.CONTENT_TYPE_JSON)
 				.header(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_FRONT)
 					.pathParam("id", dto.getId())
 					.when()
-					.get("{id}")		
+					.get("{id}")
 				.then()
 					.statusCode(404)
 				.extract()
@@ -288,9 +288,9 @@ public class DoctorControllerJsonTest extends AbstractIntegrationTest {
 		assertNotNull(content);
 		assertEquals("No records found", message);
 	}
-	
-	
-	
+
+
+
 
 	private void mockDoctor() {
 		dto.setFullName("Ana Paula Aragão");
@@ -301,7 +301,7 @@ public class DoctorControllerJsonTest extends AbstractIntegrationTest {
 		dto.setBirthDate("10/03/1980");
 		dto.setPassword("senhaNova");
 	}
-	
+
 	private void mockCreateDoctor() {
 		createDto.setFullName("Ana Paula Aragão");
 		createDto.setEmail("ana.paula@gmail.com");

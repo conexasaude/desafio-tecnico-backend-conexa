@@ -26,7 +26,7 @@ public class MockDoctor {
 	}
 
 	public List<Doctor> mockEntityList() {
-		List<Doctor> listEntity = new ArrayList<Doctor>();
+		List<Doctor> listEntity = new ArrayList<>();
 		for (int i = 0; i < 8; i++) {
 			listEntity.add(mockEntity(i));
 		}
@@ -42,15 +42,15 @@ public class MockDoctor {
 	}
 
 	public List<Doctor> mockRandomEntityList(int quantity, boolean withId) {
-		List<Doctor> listEntity = new ArrayList<Doctor>();
+		List<Doctor> listEntity = new ArrayList<>();
 		for (int i = 0; i < quantity; i++) {
 			listEntity.add(mockRandomEntity(withId));
 		}
 		return listEntity;
 	}
-	
+
 	public List<DoctorDTO> mockRandomDTOList(int quantity, boolean withId) {
-		List<DoctorDTO> listDto = new ArrayList<DoctorDTO>();
+		List<DoctorDTO> listDto = new ArrayList<>();
 		for (int i = 0; i < quantity; i++) {
 			listDto.add(mockRandomDTO(withId));
 		}
@@ -90,7 +90,7 @@ public class MockDoctor {
 		return new Doctor(id, email, fullname, cpf, DateUtil.convertStringToLocalDate("21/05/1981"), phone,
 				"Pediatra");
 	}
-	
+
 	public DoctorDTO mockRandomDTO(boolean withId) {
 		UUID id = withId ? UUID.randomUUID() : null;
 		String fullname = faker.name().fullName();

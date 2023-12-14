@@ -19,10 +19,10 @@ import jakarta.validation.constraints.NotBlank;
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class PatientDTO extends RepresentationModel<PatientDTO> implements Serializable  {
 	private static final long serialVersionUID = 1L;
-	
+
 	@JsonProperty("id")
 	private UUID id;
-	
+
 	@NotBlank(message = MessageUtils.CANNOT_BLANK)
 	@JsonProperty("full_name")
 	private String fullName;
@@ -103,9 +103,7 @@ public class PatientDTO extends RepresentationModel<PatientDTO> implements Seria
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (!super.equals(obj))
-			return false;
-		if (getClass() != obj.getClass())
+		if (!super.equals(obj) || (getClass() != obj.getClass()))
 			return false;
 		PatientDTO other = (PatientDTO) obj;
 		return Objects.equals(attendances, other.attendances) && Objects.equals(cpf, other.cpf)

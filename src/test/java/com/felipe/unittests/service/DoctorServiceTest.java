@@ -58,7 +58,7 @@ class DoctorServiceTest {
 
 	private Doctor doctor;
 
-	MockDoctor inputObject = new MockDoctor();;
+	MockDoctor inputObject = new MockDoctor();
 
 	@BeforeEach
 	public void setUp() {
@@ -70,7 +70,7 @@ class DoctorServiceTest {
 	@Test
 	void testGivenDoctorObject_whenSaveDoctor_thenReturnDoctorObject() throws Exception {
 		logger.info("JUnit test for Given Doctors Object when Save Doctor then Return Doctor Object");
-		
+
 		given(repository.findByEmail(anyString())).willReturn(Optional.empty());
 		given(repository.save(any(Doctor.class))).willReturn(doctor);
 
@@ -106,7 +106,7 @@ class DoctorServiceTest {
 		assertEquals("Email " + MessageUtils.RECORDS_ALREADY_EXIST + ": " + doctorDto.getEmail(), exception.getMessage());
 		verify(repository, never()).save(any(Doctor.class));
 	}
-	
+
 	@DisplayName("JUnit test for Given Existing CPF when Save Patient then Throws Exception")
 	@Test
 	void testGivenExistingCPF_whenSavePatient_thenThrowsException() throws Exception {
@@ -126,7 +126,7 @@ class DoctorServiceTest {
 		assertEquals("CPF " + MessageUtils.RECORDS_ALREADY_EXIST + ": " + doctorDto.getCpf(), exception.getMessage());
 		verify(repository, never()).save(any(Doctor.class));
 	}
-	
+
 	@DisplayName("JUnit test for Given Doctors List when Find All Doctors Then Return Doctors List")
 	@Test
 	void testGivenDoctorsList_whenFindAllDoctors_thenReturnDoctorsList()  {
@@ -141,7 +141,7 @@ class DoctorServiceTest {
 		assertNotNull(doctorsDtoList);
 		assertEquals(3, doctorsDtoList.size());
 	}
-	
+
 	@DisplayName("JUnit test for Given Empty Doctors List when Find All Doctors Then Return Empty Doctors List")
 	@Test
 	void testGivenEmptyDoctorsList_whenFindAllDoctors_thenReturnEmptyDoctorsList() throws Exception {
@@ -164,7 +164,7 @@ class DoctorServiceTest {
 
 	    //UUID valid for mocks
 	    String doctorIdString = UUID.randomUUID().toString();
-		
+
 		given(repository.findById(any(UUID.class))).willReturn(Optional.of(doctor));
 
 
@@ -176,7 +176,7 @@ class DoctorServiceTest {
 		assertTrue(!doctorFound.getKey().toString().isEmpty());
 		assertEquals(doctor.getFullName(), doctorFound.getFullName());
 	}
-	
+
 	@DisplayName("JUnit test for Given Doctor Object when Update Doctor Then Return Update Doctor Object")
 	@Test
 	void testGivenDoctorObject_whenUpdateDoctor_thenReturnUpdateDoctorObject() throws Exception {
@@ -200,7 +200,7 @@ class DoctorServiceTest {
 		assertEquals(newName, doctorUpdated.getFullName());
 		assertEquals(newEmail, doctorUpdated.getEmail());
 	}
-	
+
 	@DisplayName("JUnit test for Given DoctorID when Delete Doctor then do Nothing")
 	@Test
 	void testGivenDoctorID_whenDeleteDoctor_thenDoNothing() throws Exception {
@@ -210,7 +210,7 @@ class DoctorServiceTest {
 		willDoNothing().given(repository).delete(doctor);
 
 		service.delete(doctor.getId().toString());
-		
+
 		verify(repository, times(1)).delete(doctor);
 	}
 

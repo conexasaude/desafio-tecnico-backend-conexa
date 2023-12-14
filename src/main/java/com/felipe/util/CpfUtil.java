@@ -7,7 +7,7 @@ public class CpfUtil {
         }
 
         cpf = StringUtil.removeNonNumeric(cpf);
-        
+
         if (cpf.length() != 11) {
             // O CPF deve ter exatamente 11 dígitos numéricos
             return null;

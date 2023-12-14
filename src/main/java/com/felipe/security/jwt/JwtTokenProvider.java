@@ -131,7 +131,7 @@ public class JwtTokenProvider {
 		String key = "allowedRefreshTokens:" + subject;
 		redisTemplate.delete(key);
 	}
-	
+
 
 	private DecodedJWT decodedToken(String token) {
 		Algorithm alg = Algorithm.HMAC256(secretKey.getBytes());

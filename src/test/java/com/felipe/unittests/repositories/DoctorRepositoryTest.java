@@ -33,7 +33,7 @@ class DoctorRepositoryTest {
 
 	@Autowired
 	private DoctorMapper mapper;
-	
+
 	private Doctor doctor;
 	private MockDoctor inputObject = new MockDoctor();
 
@@ -100,7 +100,7 @@ class DoctorRepositoryTest {
 		assertNotNull(doctorFound);
 		assertEquals(doctor.getId(), doctorFound.getId());
 	}
-	
+
 	@DisplayName("Given Doctor Object when findByCpf then Return Doctor Object")
 	@Test
 	void testGivenDoctorObject_whenFindByCpf_thenReturnDoctorObject() {
@@ -155,7 +155,7 @@ class DoctorRepositoryTest {
 
 		assertTrue(doctorOptional.isEmpty());
 	}
-	
+
 	@DisplayName("Given FullName And Specialt when findByFullNameAndSpecialty then Return Doctor Object")
 	@Test
 	void testGivenFullNameAndSpecialt_whenFindByFullNameAndSpecialty_thenReturnDoctorObject() {

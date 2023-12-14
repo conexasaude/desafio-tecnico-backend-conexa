@@ -27,7 +27,7 @@ import com.felipe.exceptions.UnauthorizedException;
 public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 //	private Logger logger = Logger.getLogger(CustomizedResponseEntityExceptionHandler.class.getName());
 
-	
+
 
 	@Override
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
@@ -80,7 +80,7 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 				request.getDescription(false));
 		return new ResponseEntity<>(exceptionResponse, HttpStatus.FORBIDDEN);
 	}
-	
+
 	@ExceptionHandler(UnauthorizedException.class)
 	public final ResponseEntity<ExceptionResponse> handleUnauthorizedExceptions(Exception ex, WebRequest request) {
 		ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getMessage(),

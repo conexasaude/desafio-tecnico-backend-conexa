@@ -16,10 +16,10 @@ public class AccessTokenDTO implements Serializable {
 	@JsonProperty("token")
 	@NotBlank(message = MessageUtils.CANNOT_BLANK)
 	private String accessToken;
-	
+
 	public AccessTokenDTO() {
 	}
-	
+
 	public AccessTokenDTO(String accessToken) {
 		this.accessToken = accessToken;
 	}
@@ -41,9 +41,7 @@ public class AccessTokenDTO implements Serializable {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
+		if ((obj == null) || (getClass() != obj.getClass()))
 			return false;
 		AccessTokenDTO other = (AccessTokenDTO) obj;
 		return Objects.equals(accessToken, other.accessToken);

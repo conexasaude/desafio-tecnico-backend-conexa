@@ -9,16 +9,16 @@ import com.felipe.util.MessageUtils;
 import jakarta.validation.constraints.AssertTrue;
 
 public class PasswordUpdateDTO {
-	
+
 	@JsonProperty("password")
 	private String oldPassword;
-	
+
 	@JsonProperty("new_password")
 	private String newPassword;
-	
+
 	@JsonProperty("confirm_new_password")
 	private String confirmNewPassword;
-	
+
 	public PasswordUpdateDTO() {
 		super();
 	}
@@ -52,7 +52,7 @@ public class PasswordUpdateDTO {
 	public void setConfirmNewPassword(String confirmNewPassword) {
 		this.confirmNewPassword = confirmNewPassword;
 	}
-	
+
 	@AssertTrue(message = MessageUtils.PASSWORD_MISMATCH)
 	@JsonIgnore
 	public boolean isPasswordConfirmed() {
@@ -68,14 +68,12 @@ public class PasswordUpdateDTO {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
+		if ((obj == null) || (getClass() != obj.getClass()))
 			return false;
 		PasswordUpdateDTO other = (PasswordUpdateDTO) obj;
 		return Objects.equals(confirmNewPassword, other.confirmNewPassword)
 				&& Objects.equals(newPassword, other.newPassword) && Objects.equals(oldPassword, other.oldPassword);
 	}
 
-	
+
 }

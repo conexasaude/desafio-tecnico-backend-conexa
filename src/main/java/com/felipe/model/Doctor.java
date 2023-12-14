@@ -28,28 +28,28 @@ public class Doctor implements Serializable  {
 	@Id
 	@GeneratedValue(strategy = GenerationType.UUID)
 	private UUID id;
-	
+
 	@Column(name = "email", nullable = false, unique = true)
 	private String email;
-	
+
 	@Column(name = "full_name", nullable = false, length = 160)
 	private String fullName;
-	
+
 	@Column(name = "cpf", nullable = false, length = 14, unique = true)
 	private String cpf;
-	
+
 	@Column(name = "birth_date")
 	private LocalDate birthDate;
-	
+
 	@Column(name = "phone", length = 45)
 	private String phone;
-	
+
 	@Column(name = "specialty")
 	private String specialty;
 
     @OneToOne
     private User user;
-	
+
 //	@CreatedDate
 //	private LocalDateTime createdAt;
 
@@ -137,7 +137,7 @@ public class Doctor implements Serializable  {
 		this.specialty = specialty;
 	}
 
-	
+
 	public User getUser() {
 		return user;
 	}
@@ -155,9 +155,7 @@ public class Doctor implements Serializable  {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
+		if ((obj == null) || (getClass() != obj.getClass()))
 			return false;
 		Doctor other = (Doctor) obj;
 		return Objects.equals(birthDate, other.birthDate) && Objects.equals(cpf, other.cpf)

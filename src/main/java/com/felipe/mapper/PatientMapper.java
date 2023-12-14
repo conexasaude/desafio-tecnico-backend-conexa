@@ -12,7 +12,7 @@ import com.felipe.util.CpfUtil;
 
 @Component
 public class PatientMapper {
-	
+
 	public Patient toEntity(PatientDTO dto) {
 		Patient entity = new Patient();
 		entity.setId(dto.getKey());
@@ -23,7 +23,7 @@ public class PatientMapper {
 //        entity.setUpdatedAt(dto.getUpdatedAt());
 		return entity;
 	}
-	
+
 	public PatientDTO toDto(Patient entity) {
 		PatientDTO dto = new PatientDTO();
 		dto.setKey(entity.getId());
@@ -34,13 +34,13 @@ public class PatientMapper {
 //        dto.setUpdatedAt(entity.getUpdatedAt());
 		return dto;
 	}
-	
+
 	public List<PatientDTO> toDto(List<Patient> listEntity) {
 		return listEntity.stream()
 				.map(this::toDto)
 				.collect(Collectors.toList());
 	}
-	
+
 	public List<Patient> toEntity(List<PatientDTO> listDto) {
 		return listDto.stream()
 				.map(this::toEntity)

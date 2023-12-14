@@ -45,7 +45,7 @@ public class DoctorDTO implements Serializable {
 		this.phone = phone;
 		this.specialty = specialty;
 	}
-	
+
 	public UUID getId() {
 		return id;
 	}
@@ -120,9 +120,7 @@ public class DoctorDTO implements Serializable {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
+		if ((obj == null) || (getClass() != obj.getClass()))
 			return false;
 		DoctorDTO other = (DoctorDTO) obj;
 		return Objects.equals(birthDate, other.birthDate) && Objects.equals(cpf, other.cpf)
@@ -138,6 +136,6 @@ public class DoctorDTO implements Serializable {
 				+ ", cpf=" + cpf + ", birthDate=" + birthDate + ", phone=" + phone + ", specialty=" + specialty + "]";
 	}
 
-	
+
 
 }

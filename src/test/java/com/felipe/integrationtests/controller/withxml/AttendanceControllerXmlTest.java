@@ -59,7 +59,7 @@ public class AttendanceControllerXmlTest extends AbstractIntegrationTest {
 
 		xmlMapper = new XmlMapper();
 		xmlMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
-		
+
 		dto = new AttendanceDTO();
 		patientDTO = new PatientDTO();
 		createDto = new CreateUserDoctorDTO();
@@ -125,10 +125,10 @@ public class AttendanceControllerXmlTest extends AbstractIntegrationTest {
 	public void testCreateAttendance() throws JsonMappingException, JsonProcessingException {
 		mockPatient();
 		mockAttendance();
-		
+
 		String xmlDto = xmlMapper.writeValueAsString(dto);
 
-		
+
 		specification = new RequestSpecBuilder()
 				.addHeader(TestConfigs.HEADER_PARAM_AUTHORIZATION, "Bearer " + accessToken)
 				.setBasePath("/api/v1/attendance").setPort(TestConfigs.SERVER_PORT)
@@ -163,9 +163,9 @@ public class AttendanceControllerXmlTest extends AbstractIntegrationTest {
 	public void testCreateAttendancePassedDate() throws JsonMappingException, JsonProcessingException {
 		mockPatient();
 		mockAttendance();
-		
+
 		dto.setDateTime("2014-08-03 09:00:00");
-		
+
 		String xmlDto = xmlMapper.writeValueAsString(dto);
 
 		var content = given().spec(specification).contentType(TestConfigs.CONTENT_TYPE_XML)
@@ -298,8 +298,8 @@ public class AttendanceControllerXmlTest extends AbstractIntegrationTest {
 
 	private void mockCreateDoctor() {
 		createDto.setFullName("Castro Alves");
-		createDto.setEmail("castro.alves@gmail.com");
-		createDto.setCpf("728.431.380-35");
+		createDto.setEmail("castro.alves.l@gmail.com");
+		createDto.setCpf("241.741.110-57");
 		createDto.setPhone("(21) 83232-6565");
 		createDto.setSpecialty("Cardiologista");
 		createDto.setBirthDate("10/03/1980");

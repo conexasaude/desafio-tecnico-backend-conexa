@@ -17,20 +17,20 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "attendance_tb")
 public class Attendance implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.UUID)
 	private UUID id;
-		
+
 	@Column(name = "date_time")
 	private LocalDateTime dateTime;
-	
+
 	@ManyToOne
     @JoinColumn(name = "patient_id")
 	private Patient patient;
-    
+
 	public Attendance() {
 	}
 
@@ -78,9 +78,7 @@ public class Attendance implements Serializable {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
+		if ((obj == null) || (getClass() != obj.getClass()))
 			return false;
 		Attendance other = (Attendance) obj;
 		return Objects.equals(dateTime, other.dateTime) && Objects.equals(id, other.id)

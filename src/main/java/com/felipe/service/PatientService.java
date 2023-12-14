@@ -121,14 +121,14 @@ public class PatientService {
 				.orElseThrow(() -> new ResourceNotFoundException(MessageUtils.NO_RECORDS_FOUND));
 		repository.delete(entity);
 	}
-	
+
     /**
-     *     		
+     *
      * @param user: The Patient object containing user information
-     * @return The PatientDTO with self-rel link 
+     * @return The PatientDTO with self-rel link
      * @throws Exception
      */
 	private PatientDTO addPatientSelfRel(PatientDTO user) throws Exception {
-	    return (PatientDTO) user.add(linkTo(methodOn(PatientController.class).findById(user.getKey().toString())).withSelfRel());
+	    return user.add(linkTo(methodOn(PatientController.class).findById(user.getKey().toString())).withSelfRel());
 	}
 }

@@ -18,15 +18,15 @@ public class UserDTO extends RepresentationModel<UserDTO> implements Serializabl
 	private static final long serialVersionUID = 1L;
 
 
-	
+
 	@JsonProperty("id")
 	private UUID key;
-	
+
 	@NotBlank(message = MessageUtils.CANNOT_BLANK)
 	@Email(message = "invalid E-mail")
 	@JsonProperty("email")
 	private String userName;
-	
+
 	@JsonProperty("account_non_expired")
 	private Boolean accountNonExpired;
 
@@ -38,10 +38,10 @@ public class UserDTO extends RepresentationModel<UserDTO> implements Serializabl
 
 	@JsonProperty("enabled")
 	private Boolean enabled;
-	
+
 	@JsonProperty("confirmed_email")
 	private Boolean confirmedEmail;
-    
+
 	public UserDTO() {
 	}
 
@@ -114,9 +114,7 @@ public class UserDTO extends RepresentationModel<UserDTO> implements Serializabl
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (!super.equals(obj))
-			return false;
-		if (getClass() != obj.getClass())
+		if (!super.equals(obj) || (getClass() != obj.getClass()))
 			return false;
 		UserDTO other = (UserDTO) obj;
 		return Objects.equals(accountNonExpired, other.accountNonExpired)

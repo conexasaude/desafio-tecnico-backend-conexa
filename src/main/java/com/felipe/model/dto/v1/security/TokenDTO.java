@@ -20,7 +20,7 @@ public class TokenDTO implements Serializable {
 
 	@JsonProperty("refresh_token")
 	private String refreshToken;
-	
+
 	public TokenDTO() {
 	}
 
@@ -33,7 +33,7 @@ public class TokenDTO implements Serializable {
 		this.acessToken = acessToken;
 		this.refreshToken = refreshToken;
 	}
-	
+
 
 	public String getEmail() {
 		return email;
@@ -92,9 +92,7 @@ public class TokenDTO implements Serializable {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
+		if ((obj == null) || (getClass() != obj.getClass()))
 			return false;
 		TokenDTO other = (TokenDTO) obj;
 		return Objects.equals(acessToken, other.acessToken) && Objects.equals(authenticated, other.authenticated)

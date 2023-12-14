@@ -7,7 +7,6 @@ import java.util.UUID;
 import org.springframework.hateoas.RepresentationModel;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.felipe.model.validation.FutureDateTime;
@@ -18,7 +17,7 @@ import jakarta.validation.constraints.NotBlank;
 
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class AttendanceDTO extends RepresentationModel<AttendanceDTO> implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
 
 	@JsonProperty("id")
@@ -51,7 +50,7 @@ public class AttendanceDTO extends RepresentationModel<AttendanceDTO> implements
 		this.dateTime = dateTime;
 	}
 
-	
+
 	public PatientDTO getPatient() {
 		return patient;
 	}
@@ -72,9 +71,7 @@ public class AttendanceDTO extends RepresentationModel<AttendanceDTO> implements
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (!super.equals(obj))
-			return false;
-		if (getClass() != obj.getClass())
+		if (!super.equals(obj) || (getClass() != obj.getClass()))
 			return false;
 		AttendanceDTO other = (AttendanceDTO) obj;
 		return Objects.equals(dateTime, other.dateTime) && Objects.equals(id, other.id)

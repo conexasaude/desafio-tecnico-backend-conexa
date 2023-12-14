@@ -17,7 +17,7 @@ public class PhoneNumberUtil {
             return phoneNumber;
         }
     }
-    
+
     public static String formatPhoneNumber(String phoneNumber) {
         // Remove caracteres não numéricos
         String cleanedNumber = phoneNumber.replaceAll("[^0-9]", "");

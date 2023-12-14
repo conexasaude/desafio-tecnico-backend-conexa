@@ -49,7 +49,7 @@ public class AuthService {
 
 	@Autowired
 	private DoctorService doctorService;
-	
+
 	@Autowired
 	private DoctorMapper doctorMapper;
 

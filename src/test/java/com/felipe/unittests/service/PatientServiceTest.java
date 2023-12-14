@@ -58,7 +58,7 @@ class PatientServiceTest {
 
 	private Patient patient;
 
-	MockPatient inputObject = new MockPatient();;
+	MockPatient inputObject = new MockPatient();
 
 	@BeforeEach
 	public void setUp() {
@@ -70,7 +70,7 @@ class PatientServiceTest {
 	@Test
 	void testGivenPatientObject_whenSavePatient_thenReturnPatientObject() throws Exception {
 		logger.info("JUnit test for Given Patients Object when Save Patient then Return Patient Object");
-		
+
 		given(repository.findByCpf(anyString())).willReturn(Optional.empty());
 		given(repository.save(patient)).willReturn(patient);
 
@@ -101,13 +101,13 @@ class PatientServiceTest {
 			service.create(patientDto);
 			logger.info("After service.create");
 		});
-		
-		
+
+
 
 		assertEquals("CPF " + MessageUtils.RECORDS_ALREADY_EXIST + ": " + patientDto.getCpf() + " or " + StringUtil.removeNonNumeric(patientDto.getCpf()), exception.getMessage());
 		verify(repository, never()).save(any(Patient.class));
 	}
-	
+
 	@DisplayName("JUnit test for Given Patients List when Find All Patients Then Return Patients List")
 	@Test
 	void testGivenPatientsList_whenFindAllPatients_thenReturnPatientsList()  {
@@ -122,7 +122,7 @@ class PatientServiceTest {
 		assertNotNull(patientsDtoList);
 		assertEquals(3, patientsDtoList.size());
 	}
-	
+
 	@DisplayName("JUnit test for Given Empty Patients List when Find All Patients Then Return Empty Patients List")
 	@Test
 	void testGivenEmptyPatientsList_whenFindAllPatients_thenReturnEmptyPatientsList() throws Exception {
@@ -145,7 +145,7 @@ class PatientServiceTest {
 
 	    //UUID valid for mocks
 	    String patientIdString = UUID.randomUUID().toString();
-		
+
 		given(repository.findById(any(UUID.class))).willReturn(Optional.of(patient));
 
 
@@ -157,7 +157,7 @@ class PatientServiceTest {
 		assertTrue(!patientFound.getKey().toString().isEmpty());
 		assertEquals(patient.getFullName(), patientFound.getFullName());
 	}
-	
+
 	@DisplayName("JUnit test for Given Patient Object when Update Patient Then Return Update Patient Object")
 	@Test
 	void testGivenPatientObject_whenUpdatePatient_thenReturnUpdatePatientObject() throws Exception {
@@ -181,7 +181,7 @@ class PatientServiceTest {
 		assertEquals(newName, patientUpdated.getFullName());
 		assertEquals(newEmail, patientUpdated.getHealthInsurance());
 	}
-	
+
 	@DisplayName("JUnit test for Given PatientID when Delete Patient then do Nothing")
 	@Test
 	void testGivenPatientID_whenDeletePatient_thenDoNothing() throws Exception {
@@ -192,7 +192,7 @@ class PatientServiceTest {
 		logger.info("After Delete => " + patient.toString());
 
 		service.delete(patient.getId().toString());
-		
+
 		verify(repository, times(1)).delete(patient);
 	}
 

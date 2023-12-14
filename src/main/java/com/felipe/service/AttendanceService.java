@@ -105,7 +105,7 @@ public class AttendanceService {
 	}
 
 	private AttendanceDTO addAttendanceSelfRel(AttendanceDTO dto) throws Exception {
-		return (AttendanceDTO) dto
+		return dto
 				.add(linkTo(methodOn(AttendanceController.class).findById(dto.getKey().toString())).withSelfRel());
 	}
 

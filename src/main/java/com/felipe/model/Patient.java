@@ -35,7 +35,7 @@ public class Patient implements Serializable {
 
     @OneToMany(mappedBy = "patient", fetch = FetchType.EAGER)
     private List<Attendance> attendances;
-	
+
 	public Patient() {
 	}
 
@@ -103,9 +103,7 @@ public class Patient implements Serializable {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
+		if ((obj == null) || (getClass() != obj.getClass()))
 			return false;
 		Patient other = (Patient) obj;
 		return Objects.equals(attendances, other.attendances) && Objects.equals(cpf, other.cpf)
@@ -119,6 +117,6 @@ public class Patient implements Serializable {
 				+ ", attendances=" + attendances + "]";
 	}
 
-	
+
 
 }

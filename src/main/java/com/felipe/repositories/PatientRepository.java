@@ -12,6 +12,6 @@ import com.felipe.model.Patient;
 public interface PatientRepository extends JpaRepository<Patient, UUID> {
 
 	Optional<Patient> findByFullName(String fullName);
-	
+
 	Optional<Patient> findByCpf(String cpf);
 }

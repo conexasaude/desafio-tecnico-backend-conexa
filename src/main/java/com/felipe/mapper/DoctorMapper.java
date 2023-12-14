@@ -14,7 +14,7 @@ import com.felipe.util.PhoneNumberUtil;
 
 @Component
 public class DoctorMapper {
-	
+
 	public Doctor toEntity(DoctorDTO dto) {
 		Doctor entity = new Doctor();
 		entity.setId(dto.getKey());
@@ -28,7 +28,7 @@ public class DoctorMapper {
 //        entity.setUpdatedAt(dto.getUpdatedAt());
 		return entity;
 	}
-	
+
 	public DoctorDTO toDto(Doctor entity) {
 		DoctorDTO dto = new DoctorDTO();
 		dto.setKey(entity.getId());
@@ -42,13 +42,13 @@ public class DoctorMapper {
 //        dto.setUpdatedAt(entity.getUpdatedAt());
 		return dto;
 	}
-	
+
 	public List<DoctorDTO> toDto(List<Doctor> listEntity) {
 		return listEntity.stream()
 				.map(this::toDto)
 				.collect(Collectors.toList());
 	}
-	
+
 	public List<Doctor> toEntity(List<DoctorDTO> listDto) {
 		return listDto.stream()
 				.map(this::toEntity)

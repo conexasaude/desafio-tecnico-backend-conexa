@@ -12,17 +12,17 @@ public class DateUtil {
     	DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_PATTERN_BR);
     	return LocalDate.parse(dateString, formatter);
     }
-    
+
     public static String convertLocalDateToString(LocalDate localDate) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_PATTERN_BR);
         return localDate.format(formatter);
     }
-    
+
     public static LocalDateTime convertStringToLocalDateTime(String dateTimeString) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_TIME_PATTERN);
         return LocalDateTime.parse(dateTimeString, formatter);
     }
-    
+
     public static String convertLocalDateTimeToString(LocalDateTime localDateTime) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_TIME_PATTERN);
         return localDateTime.format(formatter);

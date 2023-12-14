@@ -20,18 +20,18 @@ import jakarta.validation.constraints.Pattern;
 @JsonPropertyOrder({ "id", "email", "full_name", "specialty", "cpf", "birth_date", "phone" })
 public class DoctorDTO extends RepresentationModel<DoctorDTO> implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@JsonProperty("id")
 	private UUID key;
-	
+
 	@NotBlank(message = MessageUtils.CANNOT_BLANK)
 	@Email(message = "invalid E-mail")
 	private String email;
-	
+
 	@NotBlank(message = MessageUtils.CANNOT_BLANK)
 	@JsonProperty("full_name")
 	private String fullName;
-	
+
 	@NotBlank(message = MessageUtils.CANNOT_BLANK)
 	@CPF(message = "CPF invalid")
 	private String cpf;
@@ -39,10 +39,10 @@ public class DoctorDTO extends RepresentationModel<DoctorDTO> implements Seriali
 	@NotBlank(message = MessageUtils.CANNOT_BLANK)
 	@JsonProperty("birth_date")
 	private String birthDate;
-	
+
 	@Pattern(regexp = "^\\(\\d{2}\\)\\s?\\d{4,5}-\\d{4}$|^\\d{11}$", message = "Invalid phone number format")
 	private String phone;
-	
+
 	@NotBlank(message = MessageUtils.CANNOT_BLANK)
 	private String specialty;
 
@@ -53,7 +53,7 @@ public class DoctorDTO extends RepresentationModel<DoctorDTO> implements Seriali
 //	@JsonProperty("updated_at")
 	@JsonIgnore
     private LocalDateTime updatedAt;
-    
+
 	public DoctorDTO() {
 	}
 
@@ -85,7 +85,7 @@ public class DoctorDTO extends RepresentationModel<DoctorDTO> implements Seriali
 	public void setKey(UUID key) {
 		this.key = key;
 	}
-	
+
 	public String getFullName() {
 		return fullName;
 	}
@@ -163,9 +163,7 @@ public class DoctorDTO extends RepresentationModel<DoctorDTO> implements Seriali
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (!super.equals(obj))
-			return false;
-		if (getClass() != obj.getClass())
+		if (!super.equals(obj) || (getClass() != obj.getClass()))
 			return false;
 		DoctorDTO other = (DoctorDTO) obj;
 		return Objects.equals(birthDate, other.birthDate) && Objects.equals(cpf, other.cpf)
@@ -181,7 +179,7 @@ public class DoctorDTO extends RepresentationModel<DoctorDTO> implements Seriali
 				+ ", cpf=" + cpf + ", birthDate=" + birthDate + ", phone=" + phone + ", specialty=" + specialty
 				+ "]";
 	}
-	
 
-	
+
+
 }

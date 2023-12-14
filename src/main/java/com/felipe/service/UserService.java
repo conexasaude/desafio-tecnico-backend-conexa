@@ -26,18 +26,18 @@ public class UserService implements UserDetailsService {
 
 	@Autowired
 	private UserRepository repository;
-	
+
 	@Autowired
 	private UserMapper mapper;
 
 	public UserService(UserRepository repository) {
 		this.repository = repository;
 	}
-	
+
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		logger.info("Finding one user by name " + username + "!");
-		
+
 		return repository.findByUserName(username)
 				.orElseThrow(() -> new ResourceNotFoundException(MessageUtils.NO_RECORDS_FOUND + ": Email " + username + " not found!"));
 	}
@@ -56,7 +56,7 @@ public class UserService implements UserDetailsService {
 
 		return listPersisted;
 	}
-	
+
 	public UserDTO findById(String id) throws Exception {
 		logger.info("Finding one User");
 

@@ -14,11 +14,11 @@ import com.felipe.model.Doctor;
 public interface DoctorRepository extends JpaRepository<Doctor, UUID> {
 
 	Optional<Doctor> findByEmail(String email);
-	
+
 	Optional<Doctor> findByCpf(String cpf);
-	
+
 	@Query("SELECT doctor " +
-			"FROM Doctor doctor " + 
+			"FROM Doctor doctor " +
 			"WHERE doctor.fullName =:fullName AND p.specialty =:specialty")
 	Doctor findByFullNameAndSpecialty(
 			@Param("fullName") String fullName,

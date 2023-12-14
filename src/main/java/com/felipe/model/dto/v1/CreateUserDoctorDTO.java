@@ -35,7 +35,7 @@ public class CreateUserDoctorDTO implements Serializable {
 
 	@NotBlank(message = MessageUtils.CANNOT_BLANK)
 	private String specialty;
-	
+
 	@NotBlank(message = MessageUtils.CANNOT_BLANK)
 	@CPF(message = "CPF invalid")
 	private String cpf;
@@ -135,7 +135,7 @@ public class CreateUserDoctorDTO implements Serializable {
 	public boolean isPasswordConfirmed() {
 	    return password.equals(confirmPassword);
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(birthDate, confirmPassword, cpf, email, fullName, password, phone, specialty);
@@ -145,9 +145,7 @@ public class CreateUserDoctorDTO implements Serializable {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
+		if ((obj == null) || (getClass() != obj.getClass()))
 			return false;
 		CreateUserDoctorDTO other = (CreateUserDoctorDTO) obj;
 		return Objects.equals(birthDate, other.birthDate) && Objects.equals(confirmPassword, other.confirmPassword)

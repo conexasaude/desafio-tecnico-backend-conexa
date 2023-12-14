@@ -130,7 +130,7 @@ public class UserControllerJsonTest extends AbstractIntegrationTest {
 					.body()
 					.asString();
 	}
-	
+
 	@Test
 	@Order(3)
 	public void testLoginFalidPassword() throws JsonMappingException, JsonProcessingException {
@@ -149,7 +149,7 @@ public class UserControllerJsonTest extends AbstractIntegrationTest {
 		content.then().statusCode(401);
 
 	}
-	
+
 	@Test
 	@Order(3)
 	public void testLoginWithNewPassword() throws JsonMappingException, JsonProcessingException {

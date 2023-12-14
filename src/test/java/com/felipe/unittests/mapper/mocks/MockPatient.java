@@ -24,7 +24,7 @@ public class MockPatient {
 	}
 
 	public List<Patient> mockEntityList() {
-		List<Patient> patients = new ArrayList<Patient>();
+		List<Patient> patients = new ArrayList<>();
 		for (int i = 0; i < 8; i++) {
 			patients.add(mockEntity(i));
 		}
@@ -40,7 +40,7 @@ public class MockPatient {
 	}
 
 	public List<Patient> mockRandomEntityList(int quantityPatients, boolean withId) {
-		List<Patient> patients = new ArrayList<Patient>();
+		List<Patient> patients = new ArrayList<>();
 		for (int i = 0; i < quantityPatients; i++) {
 			patients.add(mockRandomEntity(withId));
 		}

@@ -13,7 +13,7 @@ public class AccountCredentialsDTO implements Serializable {
 
 	@NotBlank(message = MessageUtils.CANNOT_BLANK)
 	private String email;
-	
+
 	@NotBlank(message = MessageUtils.CANNOT_BLANK)
 	private String password;
 
@@ -50,13 +50,11 @@ public class AccountCredentialsDTO implements Serializable {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
+		if ((obj == null) || (getClass() != obj.getClass()))
 			return false;
 		AccountCredentialsDTO other = (AccountCredentialsDTO) obj;
 		return Objects.equals(password, other.password) && Objects.equals(email, other.email);
 	}
 
-	
+
 }

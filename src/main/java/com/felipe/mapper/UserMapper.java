@@ -11,7 +11,7 @@ import com.felipe.model.dto.v1.UserDTO;
 
 @Component
 public class UserMapper {
-	
+
 	public User toEntity(UserDTO dto) {
 		User entity = new User();
 		entity.setId(dto.getKey());
@@ -23,7 +23,7 @@ public class UserMapper {
 		entity.setConfirmedEmail(dto.getConfirmedEmail());
 		return entity;
 	}
-	
+
 	public UserDTO toDto(User entity) {
 		UserDTO dto = new UserDTO();
 		dto.setKey(entity.getId());
@@ -35,13 +35,13 @@ public class UserMapper {
 		dto.setConfirmedEmail(entity.getConfirmedEmail());
 		return dto;
 	}
-	
+
 	public List<UserDTO> toDto(List<User> listEntity) {
 		return listEntity.stream()
 				.map(this::toDto)
 				.collect(Collectors.toList());
 	}
-	
+
 	public List<User> toEntity(List<UserDTO> listDto) {
 		return listDto.stream()
 				.map(this::toEntity)

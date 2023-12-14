@@ -49,7 +49,7 @@ public class AuthControllerXmlTest extends AbstractIntegrationTest {
 	public static void setup() {
 		objectMapper = new ObjectMapper();
 		objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
-		
+
 		xmlMapper = new XmlMapper();
 		xmlMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
 
@@ -87,8 +87,8 @@ public class AuthControllerXmlTest extends AbstractIntegrationTest {
 		assertTrue(!persisted.getId().toString().isBlank());
 
 		assertEquals("Marcia Oliveira", persisted.getFullName());
-		assertEquals("marcia_oliveira@gmail.com", persisted.getEmail());
-		assertEquals("483.127.330-94", persisted.getCpf());
+		assertEquals("marcia_oliveira.l@gmail.com", persisted.getEmail());
+		assertEquals("997.890.470-02", persisted.getCpf());
 		assertEquals("(21) 83232-6565", persisted.getPhone());
 		assertEquals("Cardiologista", persisted.getSpecialty());
 		assertEquals("10/03/1980", persisted.getBirthDate());
@@ -198,13 +198,13 @@ public class AuthControllerXmlTest extends AbstractIntegrationTest {
 
 	private void mockDoctor() {
 		dto.setFullName("Marcia Oliveira");
-		dto.setEmail("marcia_oliveira@gmail.com");
-		dto.setCpf("483.127.330-94");
+		dto.setEmail("marcia_oliveira.l@gmail.com");
+		dto.setCpf("997.890.470-02");
 		dto.setPhone("(21) 83232-6565");
 		dto.setSpecialty("Cardiologista");
 		dto.setBirthDate("10/03/1980");
 		dto.setPassword("senhaNova");
 		dto.setConfirmPassword("senhaNova");
 	}
-	
+
 }

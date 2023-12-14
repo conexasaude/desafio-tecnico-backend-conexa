@@ -16,7 +16,7 @@ import jakarta.validation.constraints.NotBlank;
 
 @JsonPropertyOrder({ "id", "date_time", "patient" })
 public class AttendanceDTO extends RepresentationModel<AttendanceDTO> implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
 
 	@JsonProperty("id")
@@ -50,7 +50,7 @@ public class AttendanceDTO extends RepresentationModel<AttendanceDTO> implements
 		this.dateTime = dateTime;
 	}
 
-	
+
 	public PatientDTO getPatient() {
 		return patient;
 	}
@@ -71,9 +71,7 @@ public class AttendanceDTO extends RepresentationModel<AttendanceDTO> implements
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (!super.equals(obj))
-			return false;
-		if (getClass() != obj.getClass())
+		if (!super.equals(obj) || (getClass() != obj.getClass()))
 			return false;
 		AttendanceDTO other = (AttendanceDTO) obj;
 		return Objects.equals(dateTime, other.dateTime) && Objects.equals(key, other.key)

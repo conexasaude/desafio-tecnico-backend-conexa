@@ -49,10 +49,10 @@ public class User implements UserDetails, Serializable {
 
 	@Column(name = "enabled", nullable = false)
 	private Boolean enabled;
-	
-	@Column(name = "confirmed_email", nullable = false)
+
+	@Column(name = "confirmed_email", columnDefinition = "boolean default false")
 	private Boolean confirmedEmail;
-	
+
     @OneToOne(mappedBy = "user")
     private Doctor doctor;
 
@@ -63,7 +63,7 @@ public class User implements UserDetails, Serializable {
 
 	public User() {
 	}
-	
+
 	public User(String userName, String password, Boolean accountNonExpired, Boolean accountNonLocked,
 			Boolean credentialsNonExpired, Boolean enabled, Doctor doctor) {
 		this.userName = userName;
@@ -117,7 +117,7 @@ public class User implements UserDetails, Serializable {
 	public boolean isEnabled() {
 		return this.enabled;
 	}
-	
+
 	public UUID getId() {
 		return this.id;
 	}
@@ -204,9 +204,7 @@ public class User implements UserDetails, Serializable {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
+		if ((obj == null) || (getClass() != obj.getClass()))
 			return false;
 		User other = (User) obj;
 		return Objects.equals(accountNonExpired, other.accountNonExpired)
@@ -225,5 +223,5 @@ public class User implements UserDetails, Serializable {
 				+ credentialsNonExpired + ", enabled=" + enabled + ", confirmedEmail=" + confirmedEmail + ", doctor="
 				+ doctor + ", permissions=" + permissions + "]";
 	}
-	
+
 }

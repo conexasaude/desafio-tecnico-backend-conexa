@@ -33,8 +33,8 @@ import io.restassured.specification.RequestSpecification;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @TestMethodOrder(OrderAnnotation.class)
-public class UserControllerJsonTest extends AbstractIntegrationTest {
-	private Logger logger = Logger.getLogger(UserControllerJsonTest.class.getName());
+public class UserControllerXmlTest extends AbstractIntegrationTest {
+	private Logger logger = Logger.getLogger(UserControllerXmlTest.class.getName());
 
 	private static RequestSpecification specification;
 	private static ObjectMapper objectMapper;
@@ -54,7 +54,7 @@ public class UserControllerJsonTest extends AbstractIntegrationTest {
 
 		xmlMapper = new XmlMapper();
 		xmlMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
-		
+
 		passwordUpdateDTO = new PasswordUpdateDTO();
 		createDto = new CreateUserDoctorDTO();
 	}
@@ -63,10 +63,10 @@ public class UserControllerJsonTest extends AbstractIntegrationTest {
 	@Order(0)
 	public void testSignup() throws JsonMappingException, JsonProcessingException {
 		mockCreateDoctor();
-		
+
 		String xmlDto = xmlMapper.writeValueAsString(createDto);
 
-		
+
 		specification = new RequestSpecBuilder().addHeader(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_FRONT)
 				.setBasePath("/api/v1/signup").setPort(TestConfigs.SERVER_PORT)
 				.addFilter(new RequestLoggingFilter(LogDetail.ALL)).addFilter(new ResponseLoggingFilter(LogDetail.ALL))
@@ -137,7 +137,7 @@ public class UserControllerJsonTest extends AbstractIntegrationTest {
 					.body()
 					.asString();
 	}
-	
+
 	@Test
 	@Order(3)
 	public void testLoginFalidPassword() throws JsonMappingException, JsonProcessingException {
@@ -156,13 +156,13 @@ public class UserControllerJsonTest extends AbstractIntegrationTest {
 		content.then().statusCode(401);
 
 	}
-	
+
 	@Test
 	@Order(3)
 	public void testLoginWithNewPassword() throws JsonMappingException, JsonProcessingException {
 		String xmlDto = xmlMapper.writeValueAsString(new AccountCredentialsDTO(createDto.getEmail(), passwordUpdateDTO.getNewPassword()));
 		logger.info("userLogin:  => " + xmlDto.toString());
-		
+
 		var content = given().basePath("/api/v1/login").port(TestConfigs.SERVER_PORT)
 				.contentType(TestConfigs.CONTENT_TYPE_XML).body(xmlDto).when().post();
 		int statusCode = content.statusCode();
@@ -183,8 +183,8 @@ public class UserControllerJsonTest extends AbstractIntegrationTest {
 
 	private void mockCreateDoctor() {
 		createDto.setFullName("João Paulo Souza");
-		createDto.setEmail("jp.souza@gmail.com");
-		createDto.setCpf("696.456.830-17");
+		createDto.setEmail("jp.souza.santos@gmail.com");
+		createDto.setCpf("666.264.830-21");
 		createDto.setPhone("(21) 83232-6565");
 		createDto.setSpecialty("Cardiologista");
 		createDto.setBirthDate("10/03/1980");

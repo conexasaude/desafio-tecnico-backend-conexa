@@ -57,7 +57,7 @@ public class PatientControllerXmlTest extends AbstractIntegrationTest {
 
 		xmlMapper = new XmlMapper();
 		xmlMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
-		
+
 		dto = new PatientDTO();
 		createDto = new CreateUserDoctorDTO();
 	}
@@ -67,8 +67,8 @@ public class PatientControllerXmlTest extends AbstractIntegrationTest {
 	public void testSignup() throws JsonMappingException, JsonProcessingException {
 		mockCreateDoctor();
 		String xmlDto = xmlMapper.writeValueAsString(createDto);
-		
-		
+
+
 		specification = new RequestSpecBuilder().addHeader(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_FRONT)
 				.setBasePath("/api/v1/signup").setPort(TestConfigs.SERVER_PORT)
 				.addFilter(new RequestLoggingFilter(LogDetail.ALL)).addFilter(new ResponseLoggingFilter(LogDetail.ALL))
@@ -116,15 +116,15 @@ public class PatientControllerXmlTest extends AbstractIntegrationTest {
 		assertNotNull(accessToken);
 		assertNotNull(refreshToken);
 	}
-	
-	
+
+
 	@Test
 	@Order(2)
 	public void testCreatePatient() throws JsonMappingException, JsonProcessingException {
 		mockPatient();
-		
+
 		String xmlDto = xmlMapper.writeValueAsString(dto);
-		
+
 		specification = new RequestSpecBuilder()
 				.addHeader(TestConfigs.HEADER_PARAM_AUTHORIZATION, "Bearer " + accessToken)
 				.setBasePath("/api/v1/patient").setPort(TestConfigs.SERVER_PORT)
@@ -150,17 +150,17 @@ public class PatientControllerXmlTest extends AbstractIntegrationTest {
 		assertNotNull(persisted.getId());
 
 		assertTrue(!persisted.getId().toString().isBlank());
-		
+
 		assertEquals("Lucas Silva Mello", persisted.getFullName());
 		assertEquals("909.662.660-56", persisted.getCpf());
 		assertEquals("SulAmerica", persisted.getHealthInsurance());
 	}
-	
+
 	@Test
 	@Order(3)
 	public void testFindAllPatient() throws JsonMappingException, JsonProcessingException {
 		logger.info("testFindAll => " + "   /api/v1/patient");
-		
+
 		specification = new RequestSpecBuilder()
 				.addHeader(TestConfigs.HEADER_PARAM_AUTHORIZATION, "Bearer " + accessToken)
 				.setBasePath("/api/v1/patient")
@@ -178,26 +178,26 @@ public class PatientControllerXmlTest extends AbstractIntegrationTest {
 				.extract()
 					.body()
 						.asString();
-		
+
 		logger.info("testFindAll => " + content.toString());
-		
+
 
 	    List<PatientDTO> persisted = objectMapper.readValue(content, new TypeReference<List<PatientDTO>>() {});
 		logger.info("testFindAll => " + persisted.toString());
-		
+
 		assertNotNull(persisted);
 		assertTrue(persisted.size() > 0);
 		assertNotNull(persisted.get(0).getId());
 		assertTrue(!persisted.get(0).getId().toString().isBlank());
 
-	}	
-	
+	}
+
 	@Test
 	@Order(4)
 	public void testFindByIdPatient() throws JsonMappingException, JsonProcessingException {
 		mockPatient();
-		
-	
+
+
 		var content = given().spec(specification)
 				.contentType(TestConfigs.CONTENT_TYPE_XML)
 				.header(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_FRONT)
@@ -209,19 +209,19 @@ public class PatientControllerXmlTest extends AbstractIntegrationTest {
 				.extract()
 					.body()
 						.asString();
-		
+
 		PatientDTO persisted = objectMapper.readValue(content, PatientDTO.class);
 		dto = persisted;
-		
+
 		assertNotNull(persisted);
-		
+
 		assertNotNull(persisted.getId());
 		assertNotNull(persisted.getFullName());
 		assertNotNull(persisted.getCpf());
 		assertNotNull(persisted.getHealthInsurance());
-		
+
 		assertTrue(!persisted.getId().toString().isBlank());
-		
+
 		assertEquals("Lucas Silva Mello", persisted.getFullName());
 		assertEquals("909.662.660-56", persisted.getCpf());
 		assertEquals("SulAmerica", persisted.getHealthInsurance());
@@ -230,7 +230,7 @@ public class PatientControllerXmlTest extends AbstractIntegrationTest {
 	@Test
 	@Order(5)
 	public void testFindByIdWithWrongOrigin() throws JsonMappingException, JsonProcessingException {
-		
+
 		var content = given().spec(specification)
 				.contentType(TestConfigs.CONTENT_TYPE_XML)
 				.header(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_FELIPE)
@@ -242,18 +242,18 @@ public class PatientControllerXmlTest extends AbstractIntegrationTest {
 				.extract()
 					.body()
 						.asString();
-		
+
 		assertNotNull(content);
 		assertEquals("Invalid CORS request", content);
 	}
-	
+
 	@Test
 	@Order(6)
 	public void testUpdateDoctor() throws JsonMappingException, JsonProcessingException {
 		mockPatient();
-		
+
 		String newName = "Lucas Silva Mello dos Anjos";
-		
+
 		dto.setFullName(newName);
 		String xmlDto = xmlMapper.writeValueAsString(dto);
 
@@ -268,19 +268,19 @@ public class PatientControllerXmlTest extends AbstractIntegrationTest {
 				.extract()
 					.body()
 						.asString();
-		
+
 		PatientDTO persisted = objectMapper.readValue(content, PatientDTO.class);
 		dto = persisted;
-		
+
 		assertNotNull(persisted);
-		
+
 		assertNotNull(persisted.getId());
 		assertNotNull(persisted.getFullName());
 		assertNotNull(persisted.getCpf());
 		assertNotNull(persisted.getHealthInsurance());
-		
+
 		assertTrue(!persisted.getId().toString().isBlank());
-		
+
 		assertEquals(newName, persisted.getFullName());
 		assertEquals("909.662.660-56", persisted.getCpf());
 		assertEquals("SulAmerica", persisted.getHealthInsurance());
@@ -289,7 +289,7 @@ public class PatientControllerXmlTest extends AbstractIntegrationTest {
 	@Test
 	@Order(7)
 	public void testDeleteByIdDoctor() throws JsonMappingException, JsonProcessingException {
-	
+
 		var content = given().spec(specification)
 				.contentType(TestConfigs.CONTENT_TYPE_XML)
 				.header(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_FRONT)
@@ -303,17 +303,17 @@ public class PatientControllerXmlTest extends AbstractIntegrationTest {
 						.asString();
 		logger.info("testDeleteByIdDoctor => " + content);
 	}
-	
+
 	@Test
 	@Order(7)
 	public void testFindByIdDoctorWithNotFound() throws JsonMappingException, JsonProcessingException {
-		
+
 		var content = given().spec(specification)
 				.contentType(TestConfigs.CONTENT_TYPE_XML)
 				.header(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_FRONT)
 					.pathParam("id", dto.getId())
 					.when()
-					.get("{id}")		
+					.get("{id}")
 				.then()
 					.statusCode(404)
 				.extract()
@@ -328,8 +328,8 @@ public class PatientControllerXmlTest extends AbstractIntegrationTest {
 
 	private void mockCreateDoctor() {
 		createDto.setFullName("Marcondes Carvalho");
-		createDto.setEmail("marcondes.carvalho@gmail.com");
-		createDto.setCpf("947.586.030-49");
+		createDto.setEmail("marcondes.carvalho.s@gmail.com");
+		createDto.setCpf("538.127.550-17");
 		createDto.setPhone("(21) 83232-6565");
 		createDto.setSpecialty("Cardiologista");
 		createDto.setBirthDate("10/03/1980");

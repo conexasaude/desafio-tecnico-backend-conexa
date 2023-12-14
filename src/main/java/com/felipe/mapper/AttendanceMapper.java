@@ -13,10 +13,10 @@ import com.felipe.util.DateUtil;
 
 @Component
 public class AttendanceMapper {
-	
+
 	@Autowired
 	PatientMapper patientMapper;
-	
+
 	 public Attendance toEntity(AttendanceDTO dto) {
 	        Attendance entity = new Attendance();
 	        entity.setId(dto.getKey());
@@ -29,7 +29,7 @@ public class AttendanceMapper {
 	        AttendanceDTO dto = new AttendanceDTO();
 	        dto.setKey(entity.getId());
 	        dto.setDateTime(DateUtil.convertLocalDateTimeToString(entity.getDateTime()));
-	        dto.setPatient(patientMapper.toDto(entity.getPatient())); 
+	        dto.setPatient(patientMapper.toDto(entity.getPatient()));
 	        return dto;
 	    }
 

@@ -22,5 +22,5 @@ public class JwtConfigurer extends SecurityConfigurerAdapter<DefaultSecurityFilt
 		super.configure(http);
 	}
 
-	
+
 }

@@ -80,14 +80,14 @@ public class DoctorService {
 		repository.findByEmail(dto.getEmail()).ifPresent(existingDoctor -> {
 			throw new BadRequestException("Email " + MessageUtils.RECORDS_ALREADY_EXIST + ": " + dto.getEmail());
 		});
-		
+
 		repository.findByCpf(dto.getCpf()).ifPresent(existingPatient -> {
 			throw new BadRequestException("CPF " + MessageUtils.RECORDS_ALREADY_EXIST + ": " + dto.getCpf());
 		});
 		Doctor entity = mapper.toEntity(dto);
 		return mapper.toDto(repository.save(entity));
 	}
-	
+
     /**
      * Updates an existing doctor.
      *
@@ -110,7 +110,7 @@ public class DoctorService {
 		DoctorDTO doctor = mapper.toDto(repository.save(entity));
 		return addDoctorSelfRel(doctor);
 	}
-	
+
     /**
      * Deletes a doctor by their ID.
      *
@@ -123,14 +123,14 @@ public class DoctorService {
 				.orElseThrow(() -> new ResourceNotFoundException(MessageUtils.NO_RECORDS_FOUND));
 		repository.delete(entity);
 	}
-	
+
     /**
-     *     		
+     *
      * @param doctor: The Doctor object containing doctor information
-     * @return The DoctorDTO with self-rel link 
+     * @return The DoctorDTO with self-rel link
      * @throws Exception
      */
 	private DoctorDTO addDoctorSelfRel(DoctorDTO doctor) throws Exception {
-	    return (DoctorDTO) doctor.add(linkTo(methodOn(DoctorController.class).findById(doctor.getKey().toString())).withSelfRel());
+	    return doctor.add(linkTo(methodOn(DoctorController.class).findById(doctor.getKey().toString())).withSelfRel());
 	}
 }

@@ -22,13 +22,13 @@ public class Permission implements GrantedAuthority, Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.UUID)
 	private UUID id;
-	
+
 	@Column
 	private String description;
 
 	public Permission() {
 	}
-	
+
 	@Override
 	public String getAuthority() {
 		return this.description;
@@ -59,9 +59,7 @@ public class Permission implements GrantedAuthority, Serializable {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
+		if ((obj == null) || (getClass() != obj.getClass()))
 			return false;
 		Permission other = (Permission) obj;
 		return Objects.equals(description, other.description) && Objects.equals(id, other.id);

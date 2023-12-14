@@ -16,7 +16,7 @@ public class AbstractIntegrationTest {
 
 	static public class Initializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
 		static MySQLContainer<?> mysql = new MySQLContainer<>("mysql:8.0");
-		
+
 		private static void startContainers() {
 			Startables.deepStart(Stream.of(mysql)).join();
 		}
@@ -28,7 +28,7 @@ public class AbstractIntegrationTest {
 						"spring.datasource.password", mysql.getPassword()
 					);
 		}
-		
+
 		@SuppressWarnings({"rawtypes", "unchecked"})
 		@Override
 		public void initialize(ConfigurableApplicationContext applicationContext) {
@@ -40,7 +40,7 @@ public class AbstractIntegrationTest {
 			environment.getPropertySources().addFirst(testcontainers);
 		}
 
-		
+
 	}
 
 }
