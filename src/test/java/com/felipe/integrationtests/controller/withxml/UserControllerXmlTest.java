@@ -269,8 +269,29 @@ public class UserControllerXmlTest extends AbstractIntegrationTest {
 					.body()
 					.asString();
 		
+		logger.info("content => " + content.toString());
+		assertNotNull(content);
+		assertEquals("User has been disabled", content);
+	}
+	
+	@Test
+	@Order(7)
+	public void testFindByIdUserEnabled() throws JsonMappingException, JsonProcessingException {
+
+		var content = given().spec(specification)
+				.contentType(TestConfigs.CONTENT_TYPE_XML)
+				.header(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_FRONT)
+					.pathParam("id", dto.getId())
+					.when()
+					.get("{id}")
+				.then()
+					.statusCode(200)
+				.extract()
+					.body()
+						.asString();
+
 		UserDTO persisted = objectMapper.readValue(content, UserDTO.class);
-	    logger.info("dto => " + persisted.toString());
+	    logger.info("persisted => " + persisted.toString());
 
 		assertNotNull(persisted);
 
@@ -284,8 +305,30 @@ public class UserControllerXmlTest extends AbstractIntegrationTest {
 	}
 	
 	@Test
-	@Order(7)
-	public void testFindByIdUserEnabled() throws JsonMappingException, JsonProcessingException {
+	@Order(8)
+	public void testUpdateConfirmEmail() throws JsonMappingException, JsonProcessingException {
+		logger.info("testUpdateConfirmEmail => " + "   /api/v1/user/{id}/confirm-email");
+
+
+		var content = given().spec(specification).contentType(TestConfigs.CONTENT_TYPE_XML)
+				.header(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_FRONT)
+				.pathParam("id", dto.getId())
+				.when().patch("{id}/confirm-email")
+					.then()
+					.statusCode(200)
+					.extract()
+					.body()
+					.asString();
+		
+		logger.info("content => " + content.toString());
+		assertNotNull(content);
+		assertEquals("The user had their email confirmed", content);
+	}
+	
+	@Test
+	@Order(9)
+	public void testFindByIdUserConfirmed() throws JsonMappingException, JsonProcessingException {
+		logger.info("testFindByIdUserConfirmed => " + "   /api/v1/user/{id}");
 
 		var content = given().spec(specification)
 				.contentType(TestConfigs.CONTENT_TYPE_XML)
@@ -310,7 +353,7 @@ public class UserControllerXmlTest extends AbstractIntegrationTest {
 		assertTrue(!persisted.getId().toString().isBlank());
 
 		assertEquals("jp.souza.santos@gmail.com", persisted.getEmail());
-		assertEquals(false, persisted.getEnabled());
+		assertEquals(true, persisted.getConfirmedEmail());
 	}
 	
 	private void mockCreateDoctor() {
