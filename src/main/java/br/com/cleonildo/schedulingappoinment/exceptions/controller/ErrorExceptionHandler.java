@@ -2,6 +2,7 @@ package br.com.cleonildo.schedulingappoinment.exceptions.controller;
 
 
 import br.com.cleonildo.schedulingappoinment.exceptions.NotFoundException;
+import br.com.cleonildo.schedulingappoinment.exceptions.PasswordDoesNotMatch;
 import br.com.cleonildo.schedulingappoinment.exceptions.response.ErrorResponse;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
@@ -71,5 +72,20 @@ public class ErrorExceptionHandler {
                 .stream()
                 .map(DefaultMessageSourceResolvable::getDefaultMessage)
                 .collect(Collectors.joining(", "));
+    }
+
+
+    @ExceptionHandler(PasswordDoesNotMatch.class)
+    public ResponseEntity<ErrorResponse> constraintErrosMessages(PasswordDoesNotMatch notMatch) {
+
+        var err = ErrorResponse
+                .builder()
+                .status(BAD_REQUEST.value())
+                .statusErrorMessage(BAD_REQUEST.getReasonPhrase())
+                .message(notMatch.getMessage())
+                .timestamp(LocalDateTime.now())
+                .build();
+
+        return ResponseEntity.status(BAD_REQUEST).body(err);
     }
 }
