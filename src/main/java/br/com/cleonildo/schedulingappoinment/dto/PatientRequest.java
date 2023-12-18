@@ -9,15 +9,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.br.CPF;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter @Setter
-public class PatientRequest {
-    @NotEmpty(message = "Nome não pode estar vazio")
-    @NotBlank(message = "Nome não pode estar em branco")
-    @JsonProperty("nome")
-    private String name;
-    @CPF(message = "CPF não está no padrão valido")
-    private String cpf;
-
-}
+public record PatientRequest(
+        @NotEmpty(message = "Nome não pode estar vazio")
+        @NotBlank(message = "Nome não pode estar em branco")
+        @JsonProperty("nome")
+        String name,
+        @CPF(message = "CPF não está no padrão valido")
+        String cpf
+) { }

@@ -114,7 +114,7 @@ class PatientServiceTest {
 
     @Test
     @DisplayName("Should Update patient successfully when Id exist")
-    void shouldUpdatePatient_SuccessfullyWhenCallingUpdateProduct_WhenIdExist() {
+    void shouldUpdatePatient_SuccessfullyWhenCallingUpdatePatient_WhenIdExist() {
         var updateName = "Cleonildo Junior";
         var updateCPF = "093.947.630-40";
         var updatePatient = new Patient(ID, updateName, updateCPF);
@@ -142,7 +142,7 @@ class PatientServiceTest {
         // Given
         given(repository.findById(anyLong())).willReturn(Optional.empty());
         var expectedMessage = "Patient not found!";
-        var request = new PatientRequest();
+        var request = new PatientRequest(NAME, CPF);
 
         // Then
         assertThatThrownBy(() -> service.updatePatient(1L, request))

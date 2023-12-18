@@ -57,7 +57,7 @@ public class PatientService {
     }
 
     public PatientResponse savePatient(PatientRequest request) {
-        var patient = new Patient(request.getName(), request.getCpf());
+        var patient = new Patient(request.name(), request.cpf());
         var response = this.mapper.map(repository.save(patient), PatientResponse.class);
 
         LOG.info(PATIENT_SAVED_SUCCESSFULLY);
@@ -72,8 +72,8 @@ public class PatientService {
             throw new NotFoundException(PATIENT_ID_NOT_FOUND);
         }
 
-        patientOptional.get().setName(request.getName());
-        patientOptional.get().setCpf(request.getCpf());
+        patientOptional.get().setName(request.name());
+        patientOptional.get().setCpf(request.cpf());
 
         var response = this.mapper.map(repository.save(patientOptional.get()), PatientResponse.class);
         LOG.info(PATIENT_UPDATE_SUCCESSFULLY);
