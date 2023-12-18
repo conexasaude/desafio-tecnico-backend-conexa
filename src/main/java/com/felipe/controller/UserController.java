@@ -74,10 +74,25 @@ public class UserController {
 					@ApiResponse(description = "Unathorized", responseCode = "401", content = @Content),
 					@ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
 					@ApiResponse(description = "Internal Error", responseCode = "500", content = @Content) })
-	public ResponseEntity<UserDTO> disableUser(@PathVariable(value = "id") String id) throws Exception {
+	public ResponseEntity<String> disableUser(@PathVariable(value = "id") String id) throws Exception {
 		return ResponseEntity.ok(userService.disableUser(id));
 	}
 
+	@PatchMapping("/{id}/confirm-email")
+	@Operation(summary = "Confirm Email of User by ID", tags = {
+			"User" }, description = "Retrieve user details by providing a valid user ID",
+
+			responses = { @ApiResponse(description = "Success", responseCode = "200", content = {
+					@Content(mediaType = "application/json", schema = @Schema(implementation = UserDTO.class)) }),
+					@ApiResponse(description = "No Content", responseCode = "204", content = @Content),
+					@ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
+					@ApiResponse(description = "Unathorized", responseCode = "401", content = @Content),
+					@ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
+					@ApiResponse(description = "Internal Error", responseCode = "500", content = @Content) })
+	public ResponseEntity<String> confirmEmail(@PathVariable(value = "id") String id) throws Exception {
+		return ResponseEntity.ok(userService.confirmEmail(id));
+	}
+	
 	@PatchMapping("/{email}/password")
 	@Operation(summary = "Update User Password", tags = {
 			"User" }, description = "Update the password of an existing user by providing the user ID and the new password",
@@ -92,5 +107,4 @@ public class UserController {
 		service.changePassword(email, passwordUpdateDTO);
 		return ResponseEntity.noContent().build();
 	}
-
 }

@@ -125,13 +125,8 @@ public class UserControllerJsonTest extends AbstractIntegrationTest {
 
 		given().spec(specification).contentType(TestConfigs.CONTENT_TYPE_JSON)
 				.header(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_FRONT)
-				.pathParam("email", createDto.getEmail())
-				.body(passwordUpdateDTO).when().patch()
-					.then()
-					.statusCode(204)
-					.extract()
-					.body()
-					.asString();
+				.pathParam("email", createDto.getEmail()).body(passwordUpdateDTO).when().patch().then().statusCode(204)
+				.extract().body().asString();
 	}
 
 	@Test
@@ -156,7 +151,8 @@ public class UserControllerJsonTest extends AbstractIntegrationTest {
 	@Test
 	@Order(3)
 	public void testLoginWithNewPassword() throws JsonMappingException, JsonProcessingException {
-		AccountCredentialsDTO userLogin = new AccountCredentialsDTO(createDto.getEmail(), passwordUpdateDTO.getNewPassword());
+		AccountCredentialsDTO userLogin = new AccountCredentialsDTO(createDto.getEmail(),
+				passwordUpdateDTO.getNewPassword());
 		logger.info("userLogin:  => " + userLogin.toString());
 
 		var content = given().basePath("/api/v1/login").port(TestConfigs.SERVER_PORT)
@@ -175,8 +171,7 @@ public class UserControllerJsonTest extends AbstractIntegrationTest {
 		assertNotNull(accessToken);
 		assertNotNull(refreshToken);
 	}
-	
-	
+
 	@Test
 	@Order(4)
 	public void testFindAllUser() throws JsonMappingException, JsonProcessingException {
@@ -184,28 +179,20 @@ public class UserControllerJsonTest extends AbstractIntegrationTest {
 		mockUser();
 
 		specification = new RequestSpecBuilder()
-				.addHeader(TestConfigs.HEADER_PARAM_AUTHORIZATION, "Bearer " + accessToken)
-				.setBasePath("/api/v1/user").setPort(TestConfigs.SERVER_PORT)
-				.addFilter(new RequestLoggingFilter(LogDetail.ALL)).addFilter(new ResponseLoggingFilter(LogDetail.ALL))
-				.build();
+				.addHeader(TestConfigs.HEADER_PARAM_AUTHORIZATION, "Bearer " + accessToken).setBasePath("/api/v1/user")
+				.setPort(TestConfigs.SERVER_PORT).addFilter(new RequestLoggingFilter(LogDetail.ALL))
+				.addFilter(new ResponseLoggingFilter(LogDetail.ALL)).build();
 
-		var content = given().spec(specification)
-				.contentType(TestConfigs.CONTENT_TYPE_JSON)
-				.header(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_FRONT)
-					.when()
-					.get()
-				.then()
-					.statusCode(200)
-				.extract()
-					.body()
-						.asString();
+		var content = given().spec(specification).contentType(TestConfigs.CONTENT_TYPE_JSON)
+				.header(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_FRONT).when().get().then().statusCode(200)
+				.extract().body().asString();
 		logger.info("testFindAll => " + content.toString());
 
-
-	    List<UserDTO> persisted = objectMapper.readValue(content, new TypeReference<List<UserDTO>>() {});
-	    logger.info("testFindAll => " + persisted.toString());
-	    dto = persisted.stream().filter(userDTO -> dto.getEmail().equals(userDTO.getEmail())).findFirst().orElse(dto);
-	    logger.info("dto => " + dto.toString());
+		List<UserDTO> persisted = objectMapper.readValue(content, new TypeReference<List<UserDTO>>() {
+		});
+		logger.info("testFindAll => " + persisted.toString());
+		dto = persisted.stream().filter(userDTO -> dto.getEmail().equals(userDTO.getEmail())).findFirst().orElse(dto);
+		logger.info("dto => " + dto.toString());
 
 		assertNotNull(persisted);
 		assertTrue(persisted.size() > 0);
@@ -217,20 +204,12 @@ public class UserControllerJsonTest extends AbstractIntegrationTest {
 	@Order(5)
 	public void testFindByIdUser() throws JsonMappingException, JsonProcessingException {
 
-		var content = given().spec(specification)
-				.contentType(TestConfigs.CONTENT_TYPE_JSON)
-				.header(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_FRONT)
-					.pathParam("id", dto.getId())
-					.when()
-					.get("{id}")
-				.then()
-					.statusCode(200)
-				.extract()
-					.body()
-						.asString();
+		var content = given().spec(specification).contentType(TestConfigs.CONTENT_TYPE_JSON)
+				.header(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_FRONT).pathParam("id", dto.getId()).when()
+				.get("{id}").then().statusCode(200).extract().body().asString();
 
 		UserDTO persisted = objectMapper.readValue(content, UserDTO.class);
-	    logger.info("dto => " + persisted.toString());
+		logger.info("dto => " + persisted.toString());
 
 		assertNotNull(persisted);
 
@@ -241,40 +220,68 @@ public class UserControllerJsonTest extends AbstractIntegrationTest {
 
 		assertEquals("jp.souza@gmail.com", persisted.getEmail());
 	}
-	
+
 	@Test
 	@Order(6)
 	public void testUpdateDisable() throws JsonMappingException, JsonProcessingException {
-		logger.info("testUpdatePasswordChange => " + "   /api/v1/user/{id}/disable");
+		logger.info("testUpdateDisable => " + "   /api/v1/user/{id}/disable");
+
+		var content = given().spec(specification).contentType(TestConfigs.CONTENT_TYPE_JSON)
+				.header(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_FRONT).pathParam("id", dto.getId()).when()
+				.patch("{id}/disable").then().statusCode(200).extract().body().asString();
+
+		logger.info("dto => " + content.toString());
+		assertNotNull(content);
+		assertEquals("User has been disabled", content);
+	}
+
+	@Test
+	@Order(7)
+	public void testFindByIdUserEnabled() throws JsonMappingException, JsonProcessingException {
+
+		var content = given().spec(specification).contentType(TestConfigs.CONTENT_TYPE_JSON)
+				.header(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_FRONT).pathParam("id", dto.getId()).when()
+				.get("{id}").then().statusCode(200).extract().body().asString();
+
+		UserDTO persisted = objectMapper.readValue(content, UserDTO.class);
+		logger.info("dto => " + persisted.toString());
+
+		assertNotNull(persisted);
+
+		assertNotNull(persisted.getId());
+		assertNotNull(persisted.getEmail());
+
+		assertTrue(!persisted.getId().toString().isBlank());
+
+		assertEquals("jp.souza@gmail.com", persisted.getEmail());
+		assertEquals(false, persisted.getEnabled());
+	}
+	
+	@Test
+	@Order(8)
+	public void testUpdateConfirmEmail() throws JsonMappingException, JsonProcessingException {
+		logger.info("testUpdateConfirmEmail => " + "   /api/v1/user/{id}/confirm-email");
 
 
 		var content = given().spec(specification).contentType(TestConfigs.CONTENT_TYPE_JSON)
 				.header(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_FRONT)
 				.pathParam("id", dto.getId())
-				.when().patch("{id}/disable")
+				.when().patch("{id}/confirm-email")
 					.then()
 					.statusCode(200)
 					.extract()
 					.body()
 					.asString();
 		
-		UserDTO persisted = objectMapper.readValue(content, UserDTO.class);
-	    logger.info("dto => " + persisted.toString());
-
-		assertNotNull(persisted);
-
-		assertNotNull(persisted.getId());
-		assertNotNull(persisted.getEmail());
-
-		assertTrue(!persisted.getId().toString().isBlank());
-
-		assertEquals("jp.souza@gmail.com", persisted.getEmail());
-		assertEquals(false, persisted.getEnabled());
+		logger.info("content => " + content.toString());
+		assertNotNull(content);
+		assertEquals("The user had their email confirmed", content);
 	}
 	
 	@Test
-	@Order(7)
-	public void testFindByIdUserEnabled() throws JsonMappingException, JsonProcessingException {
+	@Order(9)
+	public void testFindByIdUserConfirmed() throws JsonMappingException, JsonProcessingException {
+		logger.info("testFindByIdUserConfirmed => " + "   /api/v1/user/{id}");
 
 		var content = given().spec(specification)
 				.contentType(TestConfigs.CONTENT_TYPE_JSON)
@@ -299,7 +306,7 @@ public class UserControllerJsonTest extends AbstractIntegrationTest {
 		assertTrue(!persisted.getId().toString().isBlank());
 
 		assertEquals("jp.souza@gmail.com", persisted.getEmail());
-		assertEquals(false, persisted.getEnabled());
+		assertEquals(true, persisted.getConfirmedEmail());
 	}
 
 	private void mockCreateDoctor() {
@@ -312,7 +319,7 @@ public class UserControllerJsonTest extends AbstractIntegrationTest {
 		createDto.setPassword("senhaNova");
 		createDto.setConfirmPassword("senhaNova");
 	}
-	
+
 	private void mockUser() {
 		dto.setEmail("jp.souza@gmail.com");
 		dto.setPassword("senhaNova");

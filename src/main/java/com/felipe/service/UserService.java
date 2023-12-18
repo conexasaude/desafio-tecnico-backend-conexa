@@ -40,8 +40,8 @@ public class UserService implements UserDetailsService {
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		logger.info("Finding one user by name " + username + "!");
 
-		return repository.findByUsername(username)
-				.orElseThrow(() -> new ResourceNotFoundException(MessageUtils.NO_RECORDS_FOUND + ": Email " + username + " not found!"));
+		return repository.findByUsername(username).orElseThrow(() -> new ResourceNotFoundException(
+				MessageUtils.NO_RECORDS_FOUND + ": Email " + username + " not found!"));
 	}
 
 	public List<UserDTO> findAll() {
@@ -61,26 +61,32 @@ public class UserService implements UserDetailsService {
 
 	public UserDTO findById(String id) throws Exception {
 		logger.info("Finding one User");
-		
-		UserDTO dto = repository.findById(UUID.fromString(id)).map(mapper::toDto)
-				.orElseThrow(() -> new ResourceNotFoundException(MessageUtils.NO_RECORDS_FOUND));
-		return addSelfRel(dto);
-	}
-	
-	@Transactional
-	public UserDTO disableUser(String id) throws Exception {
-		logger.info("Disabling one User");
-		
-		repository.disableUser(UUID.fromString(id));
 
 		UserDTO dto = repository.findById(UUID.fromString(id)).map(mapper::toDto)
 				.orElseThrow(() -> new ResourceNotFoundException(MessageUtils.NO_RECORDS_FOUND));
 		return addSelfRel(dto);
+	}
+
+	@Transactional
+	public String disableUser(String id) throws Exception {
+		logger.info("Disabling one User");
+
+		repository.disableUser(UUID.fromString(id));
+
+		return "User has been disabled";
+	}
+
+	@Transactional
+	public String confirmEmail(String id) throws Exception {
+		logger.info("Confirm email of User");
+
+		repository.confirmEmail(UUID.fromString(id));
+
+		return "The user had their email confirmed";
 	}
 
 	private UserDTO addSelfRel(UserDTO doctor) throws Exception {
-	    return doctor.add(linkTo(methodOn(UserController.class).findById(doctor.getKey().toString())).withSelfRel());
+		return doctor.add(linkTo(methodOn(UserController.class).findById(doctor.getKey().toString())).withSelfRel());
 	}
-
 
 }
