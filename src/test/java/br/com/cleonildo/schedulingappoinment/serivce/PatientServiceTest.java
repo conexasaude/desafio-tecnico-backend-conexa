@@ -4,6 +4,7 @@ import br.com.cleonildo.schedulingappoinment.dto.PatientRequest;
 import br.com.cleonildo.schedulingappoinment.dto.PatientResponse;
 import br.com.cleonildo.schedulingappoinment.entities.Patient;
 import br.com.cleonildo.schedulingappoinment.exceptions.NotFoundException;
+import br.com.cleonildo.schedulingappoinment.mapper.PatientMapper;
 import br.com.cleonildo.schedulingappoinment.repository.PatientRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -11,7 +12,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.modelmapper.ModelMapper;
 
 import java.util.Optional;
 
@@ -33,7 +33,7 @@ class PatientServiceTest {
 
     @Mock
     private PatientRepository repository;
-    private final ModelMapper mapper = new ModelMapper();
+    private final PatientMapper mapper = new PatientMapper();
     private PatientService service;
     private static final Long ID = 1L;
     private static final String NAME = "Fernanda Margolo";
