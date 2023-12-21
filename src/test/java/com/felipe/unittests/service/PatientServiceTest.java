@@ -27,6 +27,14 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.PagedModel;
 
 import com.felipe.exceptions.BadRequestException;
 import com.felipe.mapper.PatientMapper;
@@ -59,9 +67,12 @@ class PatientServiceTest {
 	private Patient patient;
 
 	MockPatient inputObject = new MockPatient();
+	Pageable pageable;
 
 	@BeforeEach
 	public void setUp() {
+		pageable = PageRequest.of(0, 12, Sort.by(Direction.ASC, "fullName"));
+
 		patient = inputObject.mockRandomEntity(true);
 		patientDto = mapper.toDto(patient);
 	}
@@ -110,17 +121,21 @@ class PatientServiceTest {
 
 	@DisplayName("JUnit test for Given Patients List when Find All Patients Then Return Patients List")
 	@Test
-	void testGivenPatientsList_whenFindAllPatients_thenReturnPatientsList()  {
+	void testGivenPatientsList_whenFindAllPatients_thenReturnPatientsList() throws Exception  {
 		logger.info("JUnit test for Given Patients List when Find All Patients Then Return Patients List");
 
-		// Mock the behavior of the repository
-		given(repository.findAll()).willReturn(inputObject.mockRandomEntityList(3, true));
+		
 
-		List<PatientDTO> patientsDtoList = service.findAll();
-		logger.info("SIZE => " + patientsDtoList.size());
+	    List<Patient> entityList = inputObject.mockRandomEntityList(3, true);
+	    Page<Patient> page = new PageImpl<>(entityList, pageable, entityList.size());
+	    
+	    given(repository.findAll(pageable)).willReturn(page);
+
+	    PagedModel<EntityModel<PatientDTO>> patientsDtoList = service.findAll(pageable);
+		logger.info("SIZE => " + patientsDtoList.getMetadata().getTotalElements());
 
 		assertNotNull(patientsDtoList);
-		assertEquals(3, patientsDtoList.size());
+		assertEquals(3, patientsDtoList.getMetadata().getTotalElements());
 	}
 
 	@DisplayName("JUnit test for Given Empty Patients List when Find All Patients Then Return Empty Patients List")
@@ -129,13 +144,13 @@ class PatientServiceTest {
 		logger.info("JUnit test for Given Empty Patients List when Find All Patients Then Return Empty Patients List");
 
 		// Mock the behavior of the repository
-		given(repository.findAll()).willReturn(Collections.emptyList());
+	    given(repository.findAll(pageable)).willReturn(new PageImpl<>(Collections.emptyList(), pageable, 0));
 
-		List<PatientDTO> patientsDtoList = service.findAll();
-		logger.info("SIZE => " + patientsDtoList.size());
+	    PagedModel<EntityModel<PatientDTO>> patientsDtoList = service.findAll(pageable);
+		logger.info("SIZE => " + patientsDtoList.getMetadata().getTotalElements());
 
-		assertTrue(patientsDtoList.isEmpty());
-		assertEquals(0, patientsDtoList.size());
+		assertTrue(patientsDtoList.getContent().isEmpty());
+		assertEquals(0, patientsDtoList.getMetadata().getTotalElements());
 	}
 
 	@DisplayName("JUnit test for Given PatientId when Find By Id Then Return Patient Object")

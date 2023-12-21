@@ -3,12 +3,17 @@ package com.felipe.service;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
-import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.stereotype.Service;
 
 import com.felipe.controller.PatientController;
@@ -32,28 +37,58 @@ public class PatientService {
 	private PatientRepository repository;
 
 	@Autowired
+	private PagedResourcesAssembler<PatientDTO> assembler;
+	
+	@Autowired
 	private PatientMapper mapper;
 
     /**
      * Retrieves a list of all users.
+     * @param pageable 
      *
      * @return A list of PatientDTO objects.
+     * @throws Exception 
      */
-	public List<PatientDTO> findAll() {
+	public PagedModel<EntityModel<PatientDTO>> findAll(Pageable pageable) throws Exception {
 		logger.info("Finding All Patient");
 
-		List<PatientDTO> listPatients = mapper.toDto(repository.findAll());
-		listPatients.stream().forEach(user -> {
+		Page<Patient> entityPage = repository.findAll(pageable);
+		Page<PatientDTO> dtoPage = entityPage.map(d -> mapper.toDto(d));
+		dtoPage.map(dto -> {
 			try {
-				addPatientSelfRel(user);
+				return addSelfRel(dto);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+			return dto;
 		});
-
-		return listPatients;
+		Link link = linkTo(
+			methodOn(PatientController.class)
+			.findAll(pageable.getPageNumber(), pageable.getPageSize(), "asc"))
+				.withSelfRel();
+		return assembler.toModel(dtoPage, link);
 	}
 
+	public PagedModel<EntityModel<PatientDTO>> findAllByFullName(String fullName, Pageable pageable) throws Exception {
+		logger.info("Finding All Patient");
+
+		Page<Patient> entityPage = repository.findByPartialName(fullName, pageable);
+		Page<PatientDTO> dtoPage = entityPage.map(d -> mapper.toDto(d));
+		dtoPage.map(dto -> {
+			try {
+				return addSelfRel(dto);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return dto;
+		});
+		Link link = linkTo(
+			methodOn(PatientController.class)
+			.findAll(pageable.getPageNumber(), pageable.getPageSize(), "asc"))
+				.withSelfRel();
+		return assembler.toModel(dtoPage, link);
+	}
+	
     /**
      * Retrieves a user by their ID.
      *
@@ -66,7 +101,7 @@ public class PatientService {
 
 		PatientDTO user = repository.findById(UUID.fromString(id)).map(mapper::toDto)
 				.orElseThrow(() -> new ResourceNotFoundException(MessageUtils.NO_RECORDS_FOUND));
-		return addPatientSelfRel(user);
+		return addSelfRel(user);
 	}
 
     /**
@@ -86,7 +121,7 @@ public class PatientService {
 		Patient entity = mapper.toEntity(dto);
 		PatientDTO user = mapper.toDto(repository.save(entity));
 
-		return addPatientSelfRel(user);
+		return addSelfRel(user);
 
 	}
     /**
@@ -106,7 +141,7 @@ public class PatientService {
 		entity.setHealthInsurance(Objects.requireNonNullElse(dto.getHealthInsurance(), entity.getHealthInsurance()));
 
 		PatientDTO user = mapper.toDto(repository.save(entity));
-		return addPatientSelfRel(user);
+		return addSelfRel(user);
 	}
 
     /**
@@ -128,7 +163,7 @@ public class PatientService {
      * @return The PatientDTO with self-rel link
      * @throws Exception
      */
-	private PatientDTO addPatientSelfRel(PatientDTO user) throws Exception {
+	private PatientDTO addSelfRel(PatientDTO user) throws Exception {
 	    return user.add(linkTo(methodOn(PatientController.class).findById(user.getKey().toString())).withSelfRel());
 	}
 }

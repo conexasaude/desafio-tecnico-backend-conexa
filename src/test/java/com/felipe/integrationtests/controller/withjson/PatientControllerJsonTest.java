@@ -16,7 +16,6 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -25,6 +24,7 @@ import com.felipe.integrationtests.model.dto.AccountCredentialsDTO;
 import com.felipe.integrationtests.model.dto.CreateUserDoctorDTO;
 import com.felipe.integrationtests.model.dto.DoctorDTO;
 import com.felipe.integrationtests.model.dto.PatientDTO;
+import com.felipe.integrationtests.model.dto.wrapper.WrapperPatientDTO;
 import com.felipe.integrationtests.testcontainers.AbstractIntegrationTest;
 
 import io.restassured.builder.RequestSpecBuilder;
@@ -169,9 +169,9 @@ public class PatientControllerJsonTest extends AbstractIntegrationTest {
 
 		logger.info("testFindAll => " + content.toString());
 
-
-	    List<PatientDTO> persisted = objectMapper.readValue(content, new TypeReference<List<PatientDTO>>() {});
-		logger.info("testFindAll => " + persisted.toString());
+	    WrapperPatientDTO wrapper = objectMapper.readValue(content, WrapperPatientDTO.class);
+	    logger.info("wrapper => " + wrapper.toString());
+	    List<PatientDTO> persisted = wrapper.getEmbeddedDTO().getDtos();
 
 		assertNotNull(persisted);
 		assertTrue(persisted.size() > 0);

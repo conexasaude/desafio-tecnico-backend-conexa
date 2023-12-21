@@ -44,7 +44,7 @@ public class UserController {
 					@ApiResponse(description = "Unathorized", responseCode = "401", content = @Content),
 					@ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
 					@ApiResponse(description = "Internal Error", responseCode = "500", content = @Content) })
-	public ResponseEntity<List<UserDTO>> findAllId() throws Exception {
+	public ResponseEntity<List<UserDTO>> findAll() throws Exception {
 		return ResponseEntity.ok(userService.findAll());
 	}
 

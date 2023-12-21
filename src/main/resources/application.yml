@@ -19,7 +19,7 @@ spring:
     password: admin123
   jpa:
     open-in-view: false
-    show-sql: false
+    show-sql: true
     hibernate:
       ddl-auto: update
     properties:

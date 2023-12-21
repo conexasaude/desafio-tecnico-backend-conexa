@@ -100,6 +100,7 @@ public class AuthService {
 
 	@Transactional
 	public ResponseEntity<DoctorDTO> signup(CreateUserDoctorDTO dto) throws Exception {
+		
 		DoctorDTO doctor = new DoctorDTO(dto.getEmail(), dto.getFullName(), dto.getCpf(), dto.getBirthDate(),
 				dto.getPhone(), dto.getSpecialty());
 

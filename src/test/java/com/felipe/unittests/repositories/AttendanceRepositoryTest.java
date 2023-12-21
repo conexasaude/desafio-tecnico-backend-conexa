@@ -103,38 +103,6 @@ class AttendanceRepositoryTest {
 		assertEquals(attendance.getId(), attendanceFound.getId());
 	}
 
-//	@DisplayName("Given Attendance Object when findByEmail then Return Attendance Object")
-//	@Test
-//	void testGivenAttendanceObject_whenFindByEmail_thenReturnAttendanceObject() {
-//		logger.info("Given Attendance Object when findByEmail then Return Attendance Object");
-//
-//		logger.info(attendance.toString());
-//
-//		Attendance createdAttendance = repository.save(attendance);
-//		logger.info(createdAttendance.toString());
-//
-//		Attendance attendanceFound = repository.findByEmail(attendance.getEmail()).get();
-//
-//		assertNotNull(attendanceFound);
-//		assertEquals(attendance.getId(), attendanceFound.getId());
-//	}
-//
-//	@DisplayName("Given Attendance Object when findByCpf then Return Attendance Object")
-//	@Test
-//	void testGivenAttendanceObject_whenFindByCpf_thenReturnAttendanceObject() {
-//		logger.info("Given Attendance Object when findByCpf then Return Attendance Object");
-//
-//		logger.info(attendance.toString());
-//
-//		Attendance createdAttendance = repository.save(attendance);
-//		logger.info(createdAttendance.toString());
-//
-//		Attendance attendanceFound = repository.findByCpf(attendance.getCpf()).get();
-//
-//		assertNotNull(attendanceFound);
-//		assertEquals(attendance.getId(), attendanceFound.getId());
-//	}
-
 	@DisplayName("Given Attendance Object when Update Attendance then Return Update Attendance Object")
 	@Test
 	void testGivenAttendanceObject_whenUpdateAttendanceReturnUpdateAttendanceObject() {
@@ -176,20 +144,4 @@ class AttendanceRepositoryTest {
 		assertTrue(attendanceOptional.isEmpty());
 	}
 
-//	@DisplayName("Given FullName And Specialt when findByFullNameAndSpecialty then Return Attendance Object")
-//	@Test
-//	void testGivenFullNameAndSpecialt_whenFindByFullNameAndSpecialty_thenReturnAttendanceObject() {
-//		logger.info("Given FullName And Specialt when findByFullNameAndSpecialty then Return Attendance Object");
-//
-//		logger.info(attendance.toString());
-//
-//		Attendance createdAttendance = repository.save(attendance);
-//		logger.info(createdAttendance.toString());
-//
-//		Attendance attendanceFound = repository.findByFullNameAndSpecialty(attendance.getFullName(), attendance.getSpecialty());
-//
-//		assertNotNull(attendanceFound);
-//		assertEquals(attendance.getFullName(), attendanceFound.getFullName());
-//		assertEquals(attendance.getSpecialty(), attendanceFound.getSpecialty());
-//	}
 }

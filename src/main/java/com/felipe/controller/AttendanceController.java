@@ -55,7 +55,7 @@ public class AttendanceController {
 					@ApiResponse(description = "Unathorized", responseCode = "401", content = @Content),
 					@ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
 					@ApiResponse(description = "Internal Error", responseCode = "500", content = @Content) })
-	public ResponseEntity<List<AttendanceDTO>> findAllId() throws Exception {
+	public ResponseEntity<List<AttendanceDTO>> findAll() throws Exception {
 		return ResponseEntity.ok(service.findAll());
 
 	}

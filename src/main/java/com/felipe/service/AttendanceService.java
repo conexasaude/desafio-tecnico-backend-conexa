@@ -67,7 +67,7 @@ public class AttendanceService {
 		List<AttendanceDTO> listPersisted = mapper.toDto(attendanceRepository.findAll());
 		listPersisted.stream().forEach(doctor -> {
 			try {
-				addAttendanceSelfRel(doctor);
+				addSelfRel(doctor);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -81,7 +81,7 @@ public class AttendanceService {
 
 		AttendanceDTO dto = attendanceRepository.findById(UUID.fromString(id)).map(mapper::toDto)
 				.orElseThrow(() -> new ResourceNotFoundException(MessageUtils.NO_RECORDS_FOUND));
-		return addAttendanceSelfRel(dto);
+		return addSelfRel(dto);
 	}
 
 	public AttendanceDTO update(AttendanceDTO dto) throws Exception {
@@ -94,7 +94,7 @@ public class AttendanceService {
 				entity.getDateTime()));
 
 		AttendanceDTO dtoUpdated = mapper.toDto(attendanceRepository.save(entity));
-		return addAttendanceSelfRel(dtoUpdated);
+		return addSelfRel(dtoUpdated);
 	}
 
 	public void delete(String id) {
@@ -104,7 +104,7 @@ public class AttendanceService {
 		attendanceRepository.delete(entity);
 	}
 
-	private AttendanceDTO addAttendanceSelfRel(AttendanceDTO dto) throws Exception {
+	private AttendanceDTO addSelfRel(AttendanceDTO dto) throws Exception {
 		return dto
 				.add(linkTo(methodOn(AttendanceController.class).findById(dto.getKey().toString())).withSelfRel());
 	}
