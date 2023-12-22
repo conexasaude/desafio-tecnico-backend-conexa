@@ -25,6 +25,4 @@ public interface DoctorRepository extends JpaRepository<Doctor, UUID> {
 
     @Query("SELECT d FROM Doctor d WHERE LOWER(d.fullName) LIKE LOWER(CONCAT('%', :partialName, '%'))")
     Page<Doctor> findByPartialName(@Param("partialName") String partialName, Pageable pageable);
-
-
 }

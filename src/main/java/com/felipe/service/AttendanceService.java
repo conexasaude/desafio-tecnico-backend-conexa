@@ -3,13 +3,19 @@ package com.felipe.service;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
-import java.util.List;
+import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.stereotype.Service;
 
 import com.felipe.controller.AttendanceController;
@@ -34,6 +40,9 @@ public class AttendanceService {
 
 	@Autowired
 	private AttendanceRepository attendanceRepository;
+	
+	@Autowired
+	private PagedResourcesAssembler<AttendanceDTO> assembler;
 
 	@Autowired
 	private AttendanceMapper mapper;
@@ -61,19 +70,44 @@ public class AttendanceService {
 		return mapper.toDto(attendanceRepository.save(newAttendance));
 	}
 
-	public List<AttendanceDTO> findAll() {
-		logger.info("Finding All Attendance");
+	public PagedModel<EntityModel<AttendanceDTO>> findAll(Pageable pageable) throws Exception {
+		logger.info("Finding All Doctor");
 
-		List<AttendanceDTO> listPersisted = mapper.toDto(attendanceRepository.findAll());
-		listPersisted.stream().forEach(doctor -> {
+		Page<Attendance> entityPage = attendanceRepository.findAll(pageable);
+		Page<AttendanceDTO> dtoPage = entityPage.map(entity -> mapper.toDto(entity));
+		dtoPage .map(dto -> {
 			try {
-				addSelfRel(doctor);
+				return addSelfRel(dto);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+			return dto;
 		});
+		Link link = linkTo(
+			methodOn(AttendanceController.class)
+			.findAll(pageable.getPageNumber(), pageable.getPageSize(), "asc"))
+				.withSelfRel();
+		return assembler.toModel(dtoPage, link);
+	}
+	
+	public PagedModel<EntityModel<AttendanceDTO>> findByDateTimeBetween(LocalDateTime initialDate, LocalDateTime endDate, Pageable pageable) throws Exception {
+		logger.info("Finding All Doctor ByName");
 
-		return listPersisted;
+		Page<Attendance> entityPage = attendanceRepository.findByDateTimeBetween(initialDate, endDate, pageable);
+		Page<AttendanceDTO> dtoPage = entityPage.map(entity -> mapper.toDto(entity));
+		dtoPage.map(dto -> {
+			try {
+				return addSelfRel(dto);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return dto;
+		});
+		Link link = linkTo(
+			methodOn(AttendanceController.class)
+			.findAll(pageable.getPageNumber(), pageable.getPageSize(), "asc"))
+				.withSelfRel();
+		return assembler.toModel(dtoPage, link);
 	}
 
 	public AttendanceDTO findById(String id) throws Exception {
@@ -108,5 +142,4 @@ public class AttendanceService {
 		return dto
 				.add(linkTo(methodOn(AttendanceController.class).findById(dto.getKey().toString())).withSelfRel());
 	}
-
 }
