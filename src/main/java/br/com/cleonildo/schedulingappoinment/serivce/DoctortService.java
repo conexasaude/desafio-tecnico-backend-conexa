@@ -12,6 +12,7 @@ import br.com.cleonildo.schedulingappoinment.repository.DoctorRepository;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,6 +33,7 @@ import static br.com.cleonildo.schedulingappoinment.logs.constants.DoctorLogCons
 public class DoctortService {
     private static final Logger LOG = LoggerFactory.getLogger(DoctortService.class);
     private final DoctorRepository repository;
+    private final PasswordEncoder passwordEncoder;
     private final DoctorMapper mapper;
 
     @Transactional(readOnly = true)
@@ -75,9 +77,10 @@ public class DoctortService {
     }
 
     private Doctor buildDoctorFromRequest(DoctorRequest request) {
+        var password = this.passwordEncoder.encode(request.password());
         return new Doctor(
                 request.email(),
-                request.password(),
+                password,
                 request.specialty(),
                 request.cpf(),
                 request.birthdate(),
