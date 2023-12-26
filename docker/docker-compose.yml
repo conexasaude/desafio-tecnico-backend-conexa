@@ -2,7 +2,7 @@ version: '3'
 
 services:
   mysql-db:
-    image: mysql:latest
+    image: mysql:8.0.35
     container_name: container-schedulingappoinment
     environment:
       MYSQL_ROOT_PASSWORD: root
