@@ -7,6 +7,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,10 +17,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @RequiredArgsConstructor
+@EnableWebSecurity
 public class WebSecurityConfig {
 
+    public static final String SAVE_DOCTOR = "/api/v1/doctors";
     public static final String LOGIN = "/api/v1/login";
-    public static final String LOGOUT = "/api/v1/logoff";
     public final SecurityFilter securityFilter;
 
     @Bean
@@ -38,7 +40,7 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests( authorize ->
                         authorize
                                 .requestMatchers(HttpMethod.POST, LOGIN).permitAll()
-                                .requestMatchers(HttpMethod.POST, "/api/v1/doctors").permitAll()
+                                .requestMatchers(HttpMethod.POST, SAVE_DOCTOR).permitAll()
                                 .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)

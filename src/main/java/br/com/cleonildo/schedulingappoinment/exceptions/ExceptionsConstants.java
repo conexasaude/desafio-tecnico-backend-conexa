@@ -7,5 +7,6 @@ import lombok.NoArgsConstructor;
 public class ExceptionsConstants {
     public static final String PATIENT_ID_NOT_FOUND = "Patient not found!";
     public static final String DOCTOR_ID_NOT_FOUND = "Doctor not found!";
+    public static final String ATTENDANCE_ID_NOT_FOUND = "Attendance not found!";
 
 }
