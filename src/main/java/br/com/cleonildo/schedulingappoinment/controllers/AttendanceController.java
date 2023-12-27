@@ -45,7 +45,7 @@ public class AttendanceController {
 
     @PostMapping
     public ResponseEntity<AttendanceResponse> saveAttendance(@RequestBody @Valid AttendanceRequest request) {
-        var response = this.service.saveAttendance(request);
-        return ResponseEntity.ok().body(response);
+        this.service.saveAttendance(request);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }
