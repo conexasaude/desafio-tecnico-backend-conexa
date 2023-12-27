@@ -153,7 +153,7 @@ class DoctorControllerTest {
         this.mockMvc
                 .perform(put(URL_ID, ID)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(mapper.writeValueAsBytes(request)))
+                        .content(mapper.writeValueAsBytes(requestNoPassword)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(response.id()))
                 .andExpect(jsonPath("$.email").value(response.email()))

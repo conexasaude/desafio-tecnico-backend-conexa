@@ -15,6 +15,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
 import java.util.Optional;
@@ -38,6 +40,7 @@ class DoctortServiceTest {
     @Mock
     private DoctorRepository repository;
     private final DoctorMapper mapper = new DoctorMapper();
+    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
     private DoctortService service;
     private static final Long ID = 1L;
     private static final String EMAIL = "doutorwulices@hotmail.com";
@@ -52,7 +55,7 @@ class DoctortServiceTest {
 
     @BeforeEach
     void setup() {
-        this.service = new DoctortService(repository, mapper);
+        this.service = new DoctortService(repository, passwordEncoder, mapper);
     }
 
     @Test
