@@ -1,0 +1,12 @@
+version: '3.9'
+
+services:
+  db:
+    build: .
+    ports:
+      - 3306:3306
+    volumes:
+      - ./docker/mysql/data:/var/lib/mysql:rw
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=ipdj
