@@ -16,7 +16,6 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -26,6 +25,7 @@ import com.felipe.integrationtests.model.dto.AttendanceDTO;
 import com.felipe.integrationtests.model.dto.CreateUserDoctorDTO;
 import com.felipe.integrationtests.model.dto.DoctorDTO;
 import com.felipe.integrationtests.model.dto.PatientDTO;
+import com.felipe.integrationtests.model.dto.wrapper.WrapperAttendanceDTO;
 import com.felipe.integrationtests.testcontainers.AbstractIntegrationTest;
 
 import io.restassured.builder.RequestSpecBuilder;
@@ -174,23 +174,22 @@ public class AttendanceControllerJsonTest extends AbstractIntegrationTest {
 	@Test
 	@Order(4)
 	public void testFindAllAttendance() throws JsonMappingException, JsonProcessingException {
-		logger.info("testFindAll => " + "   /api/v1/attendance");
+		logger.info("testFindAllAttendance => " + "   /api/v1/attendance");
 
 		var content = given().spec(specification).contentType(TestConfigs.CONTENT_TYPE_JSON)
 				.header(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_FRONT).when().get().then().statusCode(200)
 				.extract().body().asString();
 
-		logger.info("testFindAll => " + content.toString());
-
-		List<AttendanceDTO> persisted = objectMapper.readValue(content, new TypeReference<List<AttendanceDTO>>() {
-		});
-		logger.info("testFindAll => " + persisted.toString());
+		logger.info("testFindAllAttendance => " + content.toString());
+		
+		WrapperAttendanceDTO wrapper = objectMapper.readValue(content, WrapperAttendanceDTO.class);
+	    logger.info("wrapper => " + wrapper.toString());
+	    List<AttendanceDTO> persisted = wrapper.getEmbeddedDTO().getDtos();
 
 		assertNotNull(persisted);
 		assertTrue(persisted.size() > 0);
 		assertNotNull(persisted.get(0).getId());
 		assertTrue(!persisted.get(0).getId().toString().isBlank());
-
 	}
 
 	@Test
