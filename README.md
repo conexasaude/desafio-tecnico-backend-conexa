@@ -1,4 +1,72 @@
-# Desafio Técnico backend Conexa - rrva
+# Readme Project Ravel Araújo
+
+Instalação do projeto
+
+Condições:
+Java 17, Docker;
+apos descompactar o projeto, navegue pelo terminal para
+
+```
+<pasta>/src/main/resources/dockerConexaMySql
+```
+Siga as seguintes instruções para a instalação do mysql:
+
+```
+docker build -t docker . #Primeira build
+
+docker run --name docker -p 3306:3306 docker #Primeira execução
+
+docker start docker #Start container
+
+docker stop docker #stop container
+```
+Abra o pom e atualize o projeto
+em maven goals execute
+```
+mvn clean install -U
+```
+
+Execute o ConexaApplication.java para subir o projeto localmente.
+- Todas as configuração de script foram feitas com Flyway;
+
+Todos os endpoints disponiveis originalmente, atenção as validações de campos.
+
+- http://localhost:8080/api/v1/signup
+ ```
+ {
+  "email": "medico@email.com",
+  "senha": "ConexaS@ude123",
+  "confirmacaoSenha": "ConexaS@ude123",
+  "especialidade": "Cardiologista",
+  "cpf": "752.318.330-10",
+  "dataNascimento": "10/03/1980",
+  "telefone": "(21) 3232-6565"
+  }
+```
+- http://localhost:8080/api/v1/login
+```
+{
+"email": "medico@email.com",
+"senha": "ConexaS@ude123"
+}
+```
+- http://localhost:8080/api/v1/logoff
+
+- http://localhost:8080/api/v1/attendance
+```
+{
+  "dataHora": "2024-08-03 09:00:00",
+  "paciente": {
+  "nome": "João Castro",
+  "cpf": "752.318.330-10"
+  }
+}
+```
+-Configuração para o token
+![img.png](img.png)
+
+
+# Desafio Técnico backend Conexa
 
 Construir uma API REST para que nossos médicos de plantão consigam se logar na plataforma e agendar atendimentos para pacientes.
 

@@ -1,0 +1,10 @@
+docker build -t docker . #first time build
+
+docker run --name docker -p 3306:3306 docker #first time run
+
+docker start docker #subsequent runs
+
+docker stop docker #stop container
+
+
+

@@ -1,0 +1,6 @@
+CREATE TABLE attendance (
+    id VARCHAR(255) PRIMARY KEY UNIQUE NOT NULL,
+    data_hora DATETIME NOT NULL,
+    cpf VARCHAR(14),
+    nome VARCHAR(255)
+);
