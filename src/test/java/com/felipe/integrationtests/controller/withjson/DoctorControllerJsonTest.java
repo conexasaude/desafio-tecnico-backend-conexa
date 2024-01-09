@@ -209,6 +209,8 @@ public class DoctorControllerJsonTest extends AbstractIntegrationTest {
 
 		DoctorDTO persisted = objectMapper.readValue(content, DoctorDTO.class);
 		dto = persisted;
+		logger.info("testFindByIdDoctor => " + content);
+		logger.info("testFindByIdDoctor => " + persisted);
 
 		assertNotNull(persisted);
 
@@ -249,9 +251,56 @@ public class DoctorControllerJsonTest extends AbstractIntegrationTest {
 		assertNotNull(content);
 		assertEquals("Invalid CORS request", content);
 	}
-
+	
+	
 	@Test
 	@Order(6)
+	public void testFindByFullNameDoctor() throws JsonMappingException, JsonProcessingException {
+		mockDoctor();
+
+
+		var content = given().spec(specification)
+				.contentType(TestConfigs.CONTENT_TYPE_JSON)
+				.header(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_FRONT)
+					.pathParam("fullName", dto.getFullName())
+					.when()
+					.get("/findAllByFullName/{fullName}")
+				.then()
+					.statusCode(200)
+				.extract()
+					.body()
+						.asString();
+		
+		logger.info("testFindByFullNameDoctor => " + content);
+		WrapperDoctorDTO wrapper = objectMapper.readValue(content, WrapperDoctorDTO.class);
+	    logger.info("wrapper => " + wrapper.toString());
+	    List<DoctorDTO> persistedList = wrapper.getEmbeddedDTO().getDtos();	
+
+	    DoctorDTO persisted = persistedList.getFirst();
+		logger.info("testFindByFullNameDoctor => " + persisted);
+
+		assertNotNull(persisted);
+
+		assertNotNull(persisted.getId());
+		assertNotNull(persisted.getFullName());
+		assertNotNull(persisted.getEmail());
+		assertNotNull(persisted.getCpf());
+		assertNotNull(persisted.getPhone());
+		assertNotNull(persisted.getSpecialty());
+		assertNotNull(persisted.getBirthDate());
+
+		assertTrue(!persisted.getId().toString().isBlank());
+
+		assertEquals("Ana Paula Aragão Da Silva", persisted.getFullName());
+		assertEquals("Dermatologista", persisted.getSpecialty());
+		assertEquals("ana.paula@gmail.com", persisted.getEmail());
+		assertEquals("706.495.040-54", persisted.getCpf());
+		assertEquals("(21) 83232-6565", persisted.getPhone());
+		assertEquals("10/03/1980", persisted.getBirthDate());
+	}
+
+	@Test
+	@Order(7)
 	public void testDeleteByIdDoctor() throws JsonMappingException, JsonProcessingException {
 
 		var content = given().spec(specification)
@@ -269,7 +318,7 @@ public class DoctorControllerJsonTest extends AbstractIntegrationTest {
 	}
 
 	@Test
-	@Order(7)
+	@Order(8)
 	public void testFindByIdDoctorWithNotFound() throws JsonMappingException, JsonProcessingException {
 
 		var content = given().spec(specification)
@@ -288,8 +337,6 @@ public class DoctorControllerJsonTest extends AbstractIntegrationTest {
 		assertNotNull(content);
 		assertEquals("No records found", message);
 	}
-
-
 
 
 	private void mockDoctor() {

@@ -3,11 +3,16 @@ package com.felipe.service;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
-import java.util.List;
 import java.util.UUID;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -16,6 +21,7 @@ import org.springframework.stereotype.Service;
 import com.felipe.controller.UserController;
 import com.felipe.exceptions.ResourceNotFoundException;
 import com.felipe.mapper.UserMapper;
+import com.felipe.model.User;
 import com.felipe.model.dto.v1.UserDTO;
 import com.felipe.repositories.UserRepository;
 import com.felipe.util.MessageUtils;
@@ -32,6 +38,9 @@ public class UserService implements UserDetailsService {
 	@Autowired
 	private UserMapper mapper;
 
+	@Autowired
+	private PagedResourcesAssembler<UserDTO> assembler;
+
 	public UserService(UserRepository repository) {
 		this.repository = repository;
 	}
@@ -44,19 +53,34 @@ public class UserService implements UserDetailsService {
 				MessageUtils.NO_RECORDS_FOUND + ": Email " + username + " not found!"));
 	}
 
-	public List<UserDTO> findAll() {
+	public UserDTO findByEmail(String username) throws Exception {
+
+		logger.info("Finding one user by name " + username + "!");
+
+		UserDTO dto = repository.findByUsername(username).map(mapper::toDto)
+				.orElseThrow(() -> new ResourceNotFoundException(MessageUtils.NO_RECORDS_FOUND));
+
+		return addSelfRel(dto);
+	}
+
+	public PagedModel<EntityModel<UserDTO>> findAll(Pageable pageable) throws Exception {
+
 		logger.info("Finding All User");
-		var users = repository.findAll();
-		List<UserDTO> listPersisted = mapper.toDto(users);
-		listPersisted.stream().forEach(doctor -> {
+
+		Page<User> entityPage = repository.findAll(pageable);
+		Page<UserDTO> dtoPage = entityPage.map(d -> mapper.toDto(d));
+		dtoPage.map(user -> {
 			try {
-				addSelfRel(doctor);
+				return addSelfRel(user);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+			return user;
 		});
-
-		return listPersisted;
+		Link link = linkTo(
+				methodOn(UserController.class).findAll(pageable.getPageNumber(), pageable.getPageSize(), "asc"))
+				.withSelfRel();
+		return assembler.toModel(dtoPage, link);
 	}
 
 	public UserDTO findById(String id) throws Exception {
@@ -85,8 +109,8 @@ public class UserService implements UserDetailsService {
 		return "The user had their email confirmed";
 	}
 
-	private UserDTO addSelfRel(UserDTO doctor) throws Exception {
-		return doctor.add(linkTo(methodOn(UserController.class).findById(doctor.getKey().toString())).withSelfRel());
+	private UserDTO addSelfRel(UserDTO dto) throws Exception {
+		return dto.add(linkTo(methodOn(UserController.class).findById(dto.getKey().toString())).withSelfRel());
 	}
 
 }

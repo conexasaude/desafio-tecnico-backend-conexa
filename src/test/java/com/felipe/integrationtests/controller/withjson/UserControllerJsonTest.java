@@ -16,7 +16,6 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -26,6 +25,7 @@ import com.felipe.integrationtests.model.dto.CreateUserDoctorDTO;
 import com.felipe.integrationtests.model.dto.DoctorDTO;
 import com.felipe.integrationtests.model.dto.PasswordUpdateDTO;
 import com.felipe.integrationtests.model.dto.UserDTO;
+import com.felipe.integrationtests.model.dto.wrapper.WrapperUserDTO;
 import com.felipe.integrationtests.testcontainers.AbstractIntegrationTest;
 
 import io.restassured.builder.RequestSpecBuilder;
@@ -186,10 +186,13 @@ public class UserControllerJsonTest extends AbstractIntegrationTest {
 		var content = given().spec(specification).contentType(TestConfigs.CONTENT_TYPE_JSON)
 				.header(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_FRONT).when().get().then().statusCode(200)
 				.extract().body().asString();
+
 		logger.info("testFindAll => " + content.toString());
 
-		List<UserDTO> persisted = objectMapper.readValue(content, new TypeReference<List<UserDTO>>() {
-		});
+		WrapperUserDTO wrapper = objectMapper.readValue(content, WrapperUserDTO.class);
+		logger.info("wrapper => " + wrapper.toString());
+		List<UserDTO> persisted = wrapper.getEmbeddedDTO().getDtos();
+
 		logger.info("testFindAll => " + persisted.toString());
 		dto = persisted.stream().filter(userDTO -> dto.getEmail().equals(userDTO.getEmail())).findFirst().orElse(dto);
 		logger.info("dto => " + dto.toString());
@@ -256,47 +259,57 @@ public class UserControllerJsonTest extends AbstractIntegrationTest {
 		assertEquals("jp.souza@gmail.com", persisted.getEmail());
 		assertEquals(false, persisted.getEnabled());
 	}
-	
+
 	@Test
 	@Order(8)
 	public void testUpdateConfirmEmail() throws JsonMappingException, JsonProcessingException {
 		logger.info("testUpdateConfirmEmail => " + "   /api/v1/user/{id}/confirm-email");
 
-
 		var content = given().spec(specification).contentType(TestConfigs.CONTENT_TYPE_JSON)
-				.header(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_FRONT)
-				.pathParam("id", dto.getId())
-				.when().patch("{id}/confirm-email")
-					.then()
-					.statusCode(200)
-					.extract()
-					.body()
-					.asString();
-		
+				.header(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_FRONT).pathParam("id", dto.getId()).when()
+				.patch("{id}/confirm-email").then().statusCode(200).extract().body().asString();
+
 		logger.info("content => " + content.toString());
 		assertNotNull(content);
 		assertEquals("The user had their email confirmed", content);
 	}
-	
+
 	@Test
 	@Order(9)
 	public void testFindByIdUserConfirmed() throws JsonMappingException, JsonProcessingException {
 		logger.info("testFindByIdUserConfirmed => " + "   /api/v1/user/{id}");
 
-		var content = given().spec(specification)
-				.contentType(TestConfigs.CONTENT_TYPE_JSON)
-				.header(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_FRONT)
-					.pathParam("id", dto.getId())
-					.when()
-					.get("{id}")
-				.then()
-					.statusCode(200)
-				.extract()
-					.body()
-						.asString();
+		var content = given().spec(specification).contentType(TestConfigs.CONTENT_TYPE_JSON)
+				.header(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_FRONT).pathParam("id", dto.getId()).when()
+				.get("{id}").then().statusCode(200).extract().body().asString();
 
 		UserDTO persisted = objectMapper.readValue(content, UserDTO.class);
-	    logger.info("dto => " + persisted.toString());
+		logger.info("dto => " + persisted.toString());
+
+		assertNotNull(persisted);
+
+		assertNotNull(persisted.getId());
+		assertNotNull(persisted.getEmail());
+
+		assertTrue(!persisted.getId().toString().isBlank());
+
+		assertEquals("jp.souza@gmail.com", persisted.getEmail());
+		assertEquals(true, persisted.getConfirmedEmail());
+	}
+
+	@Test
+	@Order(10)
+	public void testFindByEmail() throws JsonMappingException, JsonProcessingException {
+		logger.info("testFindByEmail => " + "   /api/v1/user/email/{email}");
+
+		var content = given().spec(specification).contentType(TestConfigs.CONTENT_TYPE_JSON)
+				.header(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_FRONT).pathParam("email", dto.getEmail())
+				.when().get("email/{email}").then().statusCode(200).extract().body().asString();
+
+		logger.info("dto => " + content);
+
+		UserDTO persisted = objectMapper.readValue(content, UserDTO.class);
+		logger.info("dto => " + persisted.toString());
 
 		assertNotNull(persisted);
 

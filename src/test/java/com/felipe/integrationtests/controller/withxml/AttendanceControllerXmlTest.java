@@ -16,7 +16,6 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -27,6 +26,7 @@ import com.felipe.integrationtests.model.dto.AttendanceDTO;
 import com.felipe.integrationtests.model.dto.CreateUserDoctorDTO;
 import com.felipe.integrationtests.model.dto.DoctorDTO;
 import com.felipe.integrationtests.model.dto.PatientDTO;
+import com.felipe.integrationtests.model.dto.wrapper.WrapperAttendanceDTO;
 import com.felipe.integrationtests.testcontainers.AbstractIntegrationTest;
 
 import io.restassured.builder.RequestSpecBuilder;
@@ -196,9 +196,11 @@ public class AttendanceControllerXmlTest extends AbstractIntegrationTest {
 				.extract().body().asString();
 
 		logger.info("testFindAll => " + content.toString());
-
-		List<AttendanceDTO> persisted = objectMapper.readValue(content, new TypeReference<List<AttendanceDTO>>() {
-		});
+		
+		WrapperAttendanceDTO wrapper = objectMapper.readValue(content, WrapperAttendanceDTO.class);
+	    logger.info("wrapper => " + wrapper.toString());
+	    List<AttendanceDTO> persisted = wrapper.getEmbeddedDTO().getDtos();
+	    
 		logger.info("testFindAll => " + persisted.toString());
 
 		assertNotNull(persisted);

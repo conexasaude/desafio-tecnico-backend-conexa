@@ -75,7 +75,7 @@ public class AttendanceController {
 	}
 
 	@GetMapping("/findByDateTimeBetween")
-	@Operation(summary = "Finds all attendance", tags = {
+	@Operation(summary = "Finds attendance by DateTime Between", tags = {
 			"Patient" }, description = "Retrieve a list of all attendance", responses = {
 					@ApiResponse(description = "Success", responseCode = "200", content = {
 							@Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = PatientDTO.class))) }),
