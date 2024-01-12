@@ -149,7 +149,7 @@ public class UserControllerJsonTest extends AbstractIntegrationTest {
 	}
 
 	@Test
-	@Order(3)
+	@Order(4)
 	public void testLoginWithNewPassword() throws JsonMappingException, JsonProcessingException {
 		AccountCredentialsDTO userLogin = new AccountCredentialsDTO(createDto.getEmail(),
 				passwordUpdateDTO.getNewPassword());
@@ -173,7 +173,7 @@ public class UserControllerJsonTest extends AbstractIntegrationTest {
 	}
 
 	@Test
-	@Order(4)
+	@Order(5)
 	public void testFindAllUser() throws JsonMappingException, JsonProcessingException {
 		logger.info("testFindAllUser => " + "   /api/v1/user");
 		mockUser();
@@ -204,7 +204,7 @@ public class UserControllerJsonTest extends AbstractIntegrationTest {
 	}
 
 	@Test
-	@Order(5)
+	@Order(6)
 	public void testFindByIdUser() throws JsonMappingException, JsonProcessingException {
 
 		var content = given().spec(specification).contentType(TestConfigs.CONTENT_TYPE_JSON)
@@ -225,7 +225,7 @@ public class UserControllerJsonTest extends AbstractIntegrationTest {
 	}
 
 	@Test
-	@Order(6)
+	@Order(7)
 	public void testUpdateDisable() throws JsonMappingException, JsonProcessingException {
 		logger.info("testUpdateDisable => " + "   /api/v1/user/{id}/disable");
 
@@ -239,7 +239,7 @@ public class UserControllerJsonTest extends AbstractIntegrationTest {
 	}
 
 	@Test
-	@Order(7)
+	@Order(8)
 	public void testFindByIdUserEnabled() throws JsonMappingException, JsonProcessingException {
 
 		var content = given().spec(specification).contentType(TestConfigs.CONTENT_TYPE_JSON)
@@ -261,7 +261,7 @@ public class UserControllerJsonTest extends AbstractIntegrationTest {
 	}
 
 	@Test
-	@Order(8)
+	@Order(9)
 	public void testUpdateConfirmEmail() throws JsonMappingException, JsonProcessingException {
 		logger.info("testUpdateConfirmEmail => " + "   /api/v1/user/{id}/confirm-email");
 
@@ -275,7 +275,7 @@ public class UserControllerJsonTest extends AbstractIntegrationTest {
 	}
 
 	@Test
-	@Order(9)
+	@Order(10)
 	public void testFindByIdUserConfirmed() throws JsonMappingException, JsonProcessingException {
 		logger.info("testFindByIdUserConfirmed => " + "   /api/v1/user/{id}");
 
@@ -298,7 +298,7 @@ public class UserControllerJsonTest extends AbstractIntegrationTest {
 	}
 
 	@Test
-	@Order(10)
+	@Order(11)
 	public void testFindByEmail() throws JsonMappingException, JsonProcessingException {
 		logger.info("testFindByEmail => " + "   /api/v1/user/email/{email}");
 

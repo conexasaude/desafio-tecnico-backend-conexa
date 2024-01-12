@@ -16,7 +16,6 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -27,6 +26,7 @@ import com.felipe.integrationtests.model.dto.CreateUserDoctorDTO;
 import com.felipe.integrationtests.model.dto.DoctorDTO;
 import com.felipe.integrationtests.model.dto.PasswordUpdateDTO;
 import com.felipe.integrationtests.model.dto.UserDTO;
+import com.felipe.integrationtests.model.dto.wrapper.WrapperUserDTO;
 import com.felipe.integrationtests.testcontainers.AbstractIntegrationTest;
 
 import io.restassured.builder.RequestSpecBuilder;
@@ -164,7 +164,7 @@ public class UserControllerXmlTest extends AbstractIntegrationTest {
 	}
 
 	@Test
-	@Order(3)
+	@Order(4)
 	public void testLoginWithNewPassword() throws JsonMappingException, JsonProcessingException {
 		String xmlDto = xmlMapper.writeValueAsString(new AccountCredentialsDTO(createDto.getEmail(), passwordUpdateDTO.getNewPassword()));
 		logger.info("userLogin:  => " + xmlDto.toString());
@@ -187,7 +187,7 @@ public class UserControllerXmlTest extends AbstractIntegrationTest {
 	}
 
 	@Test
-	@Order(4)
+	@Order(5)
 	public void testFindAllUser() throws JsonMappingException, JsonProcessingException {
 		logger.info("testFindAllUser => " + "   /api/v1/user");
 		mockUser();
@@ -210,13 +210,13 @@ public class UserControllerXmlTest extends AbstractIntegrationTest {
 						.asString();
 		logger.info("testFindAll => " + content.toString());
 
+		WrapperUserDTO wrapper = objectMapper.readValue(content, WrapperUserDTO.class);
+		logger.info("wrapper => " + wrapper.toString());
+		List<UserDTO> persisted = wrapper.getEmbeddedDTO().getDtos();
 
-	    List<UserDTO> persisted = objectMapper.readValue(content, new TypeReference<List<UserDTO>>() {});
-	    logger.info("testFindAll => " + persisted.toString());
-	    logger.info("dto Before => " + dto.toString());
-
-	    dto = persisted.stream().filter(userDTO -> dto.getEmail().equals(userDTO.getEmail())).findFirst().orElse(dto);
-	    logger.info("dto => " + dto.toString());
+		logger.info("testFindAll => " + persisted.toString());
+		dto = persisted.stream().filter(userDTO -> dto.getEmail().equals(userDTO.getEmail())).findFirst().orElse(dto);
+		logger.info("dto => " + dto.toString());
 
 		assertNotNull(persisted);
 		assertTrue(persisted.size() > 0);
@@ -225,7 +225,7 @@ public class UserControllerXmlTest extends AbstractIntegrationTest {
 	}
 
 	@Test
-	@Order(5)
+	@Order(6)
 	public void testFindByIdUser() throws JsonMappingException, JsonProcessingException {
 
 		var content = given().spec(specification)
@@ -254,7 +254,7 @@ public class UserControllerXmlTest extends AbstractIntegrationTest {
 	}
 	
 	@Test
-	@Order(6)
+	@Order(7)
 	public void testUpdateDisable() throws JsonMappingException, JsonProcessingException {
 		logger.info("testUpdatePasswordChange => " + "   /api/v1/user/{id}/disable");
 
@@ -275,7 +275,7 @@ public class UserControllerXmlTest extends AbstractIntegrationTest {
 	}
 	
 	@Test
-	@Order(7)
+	@Order(8)
 	public void testFindByIdUserEnabled() throws JsonMappingException, JsonProcessingException {
 
 		var content = given().spec(specification)
@@ -305,7 +305,7 @@ public class UserControllerXmlTest extends AbstractIntegrationTest {
 	}
 	
 	@Test
-	@Order(8)
+	@Order(9)
 	public void testUpdateConfirmEmail() throws JsonMappingException, JsonProcessingException {
 		logger.info("testUpdateConfirmEmail => " + "   /api/v1/user/{id}/confirm-email");
 
@@ -326,7 +326,7 @@ public class UserControllerXmlTest extends AbstractIntegrationTest {
 	}
 	
 	@Test
-	@Order(9)
+	@Order(10)
 	public void testFindByIdUserConfirmed() throws JsonMappingException, JsonProcessingException {
 		logger.info("testFindByIdUserConfirmed => " + "   /api/v1/user/{id}");
 
@@ -355,6 +355,32 @@ public class UserControllerXmlTest extends AbstractIntegrationTest {
 		assertEquals("jp.souza.santos@gmail.com", persisted.getEmail());
 		assertEquals(true, persisted.getConfirmedEmail());
 	}
+	
+	@Test
+	@Order(11)
+	public void testFindByEmail() throws JsonMappingException, JsonProcessingException {
+		logger.info("testFindByEmail => " + "   /api/v1/user/email/{email}");
+
+		var content = given().spec(specification).contentType(TestConfigs.CONTENT_TYPE_JSON)
+				.header(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_FRONT).pathParam("email", dto.getEmail())
+				.when().get("email/{email}").then().statusCode(200).extract().body().asString();
+
+		logger.info("dto => " + content);
+
+		UserDTO persisted = objectMapper.readValue(content, UserDTO.class);
+		logger.info("dto => " + persisted.toString());
+
+		assertNotNull(persisted);
+
+		assertNotNull(persisted.getId());
+		assertNotNull(persisted.getEmail());
+
+		assertTrue(!persisted.getId().toString().isBlank());
+
+		assertEquals("jp.souza.santos@gmail.com", persisted.getEmail());
+		assertEquals(true, persisted.getConfirmedEmail());
+	}
+
 	
 	private void mockCreateDoctor() {
 		createDto.setFullName("João Paulo Souza");
