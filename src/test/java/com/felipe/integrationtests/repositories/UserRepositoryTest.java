@@ -31,13 +31,13 @@ public class UserRepositoryTest extends AbstractIntegrationTest {
 	@Autowired
 	public UserRepository repository;
 
-	private static User user;
+	private static User entity;
 	private static MockUser inputObject = new MockUser();
 
 	@BeforeAll
 	public static void setup() {
-		user = new User();
-		user = inputObject.mockRandomEntity(false);
+		entity = new User();
+		entity = inputObject.mockRandomEntity(false);
 
 	}
 
@@ -46,20 +46,20 @@ public class UserRepositoryTest extends AbstractIntegrationTest {
 	public void testCreate() throws JsonMappingException, JsonProcessingException {
 		logger.info("testCreate=> ");
 
-		User createdUser = repository.save(user);
-		user = createdUser;
-		logger.info(createdUser.toString());
+		User createdEntity = repository.save(entity);
+		entity = createdEntity;
+		logger.info(createdEntity.toString());
 	}
 
 	@Test
 	@Order(1)
 	public void testFindByEmail() throws JsonMappingException, JsonProcessingException {
 		logger.info("testFindByEmail => " + "   /api/v1/user/email/{email}");
-		String username = user.getUsername();
+		String username = entity.getUsername();
 
 		User entity = repository.findByUsername(username).orElseThrow(() -> new ResourceNotFoundException(
 				MessageUtils.NO_RECORDS_FOUND + ": Email " + username + " not found!"));
-		logger.info("testFindByEmail => " + user.toString());
+		logger.info("testFindByEmail => " + entity.toString());
 
 		assertNotNull(entity);
 
