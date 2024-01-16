@@ -1,5 +1,6 @@
 package com.felipe.integrationtests.repositories;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -22,6 +23,8 @@ import com.felipe.model.User;
 import com.felipe.repositories.UserRepository;
 import com.felipe.unittests.mapper.mocks.MockUser;
 import com.felipe.util.MessageUtils;
+
+import jakarta.transaction.Transactional;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @TestMethodOrder(OrderAnnotation.class)
@@ -57,17 +60,41 @@ public class UserRepositoryTest extends AbstractIntegrationTest {
 		logger.info("testFindByEmail => " + "   /api/v1/user/email/{email}");
 		String username = entity.getUsername();
 
-		User entity = repository.findByUsername(username).orElseThrow(() -> new ResourceNotFoundException(
+		User entityFound = repository.findByUsername(username).orElseThrow(() -> new ResourceNotFoundException(
 				MessageUtils.NO_RECORDS_FOUND + ": Email " + username + " not found!"));
-		logger.info("testFindByEmail => " + entity.toString());
+		logger.info("testFindByEmail => " + entityFound.toString());
+		entity = entityFound;
+		assertNotNull(entityFound);
 
-		assertNotNull(entity);
+		assertNotNull(entityFound.getId());
+		assertNotNull(entityFound.getUsername());
 
-		assertNotNull(entity.getId());
-		assertNotNull(entity.getUsername());
+		assertTrue(!entityFound.getId().toString().isBlank());
 
-		assertTrue(!entity.getId().toString().isBlank());
+		assertEquals(username, entityFound.getUsername());
+	}
+	
+	@Test
+	@Order(2)
+	@Transactional
+	public void testDisableUser() throws JsonMappingException, JsonProcessingException {
+		logger.info("testDisableUser => " + "   ");
+		String username = entity.getUsername();
+		repository.disableUser(entity.getId());
+		
+		User entityFound = repository.findByUsername(username).orElseThrow(() -> new ResourceNotFoundException(
+				MessageUtils.NO_RECORDS_FOUND + ": Email " + username + " not found!"));
+		logger.info("testFindByEmail => " + entityFound.toString());
 
-		assertEquals(username, entity.getUsername());
+		assertNotNull(entityFound);
+
+		assertNotNull(entityFound.getId());
+		assertNotNull(entityFound.getUsername());
+		
+		assertFalse(entityFound.getEnabled());
+		
+		assertTrue(!entityFound.getId().toString().isBlank());
+		
+		assertEquals(username, entityFound.getUsername());
 	}
 }
