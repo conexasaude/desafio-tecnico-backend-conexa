@@ -33,7 +33,7 @@ import jakarta.transaction.Transactional;
 
 @Service
 public class AttendanceService {
-	private Logger logger = Logger.getLogger(DoctorService.class.getName());
+	private Logger logger = Logger.getLogger(AttendanceService.class.getName());
 
 	@Autowired
 	private PatientRepository patientRepository;

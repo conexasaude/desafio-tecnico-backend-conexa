@@ -1,5 +1,7 @@
 cors:
   originPatterns: http://localhost:8080,http://localhost:3000,http://localhost:5000
+file:
+  upload-dir: ../Code/UploadDir
 security:
   jwt:
     token:
@@ -39,11 +41,15 @@ spring:
     redis:
       # Descomentar se for rodar localmente sem ser por docker
       host: localhost
-
      # Comentar se for rodar localmente sem ser por docker
 #      host: redis
-      
       port: 6379
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 2KB
+      max-file-size: 200MB
+      max-request-size: 215MB
 springdoc:
   pathsToMatch: 
     - /auth/**
