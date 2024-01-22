@@ -10,13 +10,17 @@ services:
       MYSQL_USER: docker
       MYSQL_PASSWORD: admin123
       MYSQL_DATABASE: rest-conexa-challenger
+      MYSQL_ROOT_HOST: '%'
+      MYSQL_TCP_PORT: 3308
     ports:
-      - "3308:3306"
+      - 3308:3308
+    expose:
+      - 3308
     networks:
       - conexa-network
 
   rest-conexa-challenger:
-    image: rest-conexa-challenger
+    image: 8841523/rest-conexa-challenger
     restart: always
     build:
       context: .
@@ -24,11 +28,17 @@ services:
     # working_dir: /app
     environment:
       TZ: America/Sao_Paulo
+      SPRING.DATASOURCE.URL: jdbc:mysql://db:3308/rest-conexa-challenger?useTimezone=true&serverTimezone=UTC&useSSL=false
+      SPRING.DATASOURCE.USERNAME: docker
+      SPRING.DATASOURCE.PASSWORD: admin123
+      SPRING.FLYWAY.URL: jdbc:mysql://db:3308
+      SPRING.DATA.REDIS.HOST: redis
     ports:
-      - "8080:8080"
+      - 8080:8080
     command: mvn spring-boot:run
     depends_on:
       - db
+      - redis
     networks:
       - conexa-network
 
