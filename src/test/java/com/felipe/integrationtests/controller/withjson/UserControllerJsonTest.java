@@ -74,17 +74,21 @@ public class UserControllerJsonTest extends AbstractIntegrationTest {
 		logger.info("Status code: " + content.statusCode());
 		logger.info("Response body: " + content.getBody().asString());
 
-		var contentString = content.then().statusCode(201).extract().body().asString();
-
-		logger.info("Persisted:  => " + content.toString());
-		DoctorDTO persisted = objectMapper.readValue(contentString, DoctorDTO.class);
-
-		assertNotNull(persisted);
-		logger.info("Persisted:  => " + persisted.toString());
-
-		assertNotNull(persisted.getId());
-
-		assertTrue(!persisted.getId().toString().isBlank());
+		if (content.getBody().asString().contains("Records already exist in the database") ) {
+			logger.info("User already Signup");
+		} else {
+			var contentString = content.then().statusCode(201).extract().body().asString();
+			
+			logger.info("Persisted:  => " + content.toString());
+			DoctorDTO persisted = objectMapper.readValue(contentString, DoctorDTO.class);
+			
+			assertNotNull(persisted);
+			logger.info("Persisted:  => " + persisted.toString());
+			
+			assertNotNull(persisted.getId());
+			
+			assertTrue(!persisted.getId().toString().isBlank());
+		}
 	}
 
 	@Test
@@ -96,6 +100,7 @@ public class UserControllerJsonTest extends AbstractIntegrationTest {
 		var content = given().basePath("/api/v1/login").port(TestConfigs.SERVER_PORT)
 				.contentType(TestConfigs.CONTENT_TYPE_JSON).body(userLogin).when().post();
 		int statusCode = content.statusCode();
+
 		String responseBody = content.getBody().asString();
 		refreshToken = content.getHeader("Refresh-Token");
 

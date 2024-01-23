@@ -49,6 +49,9 @@ public class AuthService {
 
 	@Autowired
 	private DoctorService doctorService;
+	
+	@Autowired
+	private UserService userService;
 
 	@Autowired
 	private DoctorMapper doctorMapper;
@@ -110,13 +113,13 @@ public class AuthService {
 
 		User user = new User(dto.getEmail(), passwordEncoded, true, true, true, true, createdDoctor);
 
-		User savedUser = userRepository.save(user);
+		User createdUser = userService.create(user);
 		logger.info("User created");
 
-		createdDoctor.setUser(savedUser);
+		createdDoctor.setUser(createdUser);
 		doctorRepository.save(createdDoctor);
 
-		return ResponseEntity.created(new URI("/api/users/" + savedUser.getId())).body(doctorMapper.toDto(createdDoctor));
+		return ResponseEntity.created(new URI("/api/users/" + createdUser.getId())).body(doctorMapper.toDto(createdDoctor));
 	}
 
 	public ResponseEntity<String> logout(String token) {

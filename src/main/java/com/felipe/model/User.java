@@ -10,6 +10,7 @@ import java.util.UUID;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -50,10 +51,10 @@ public class User implements UserDetails, Serializable {
 	@Column(name = "enabled", nullable = false)
 	private Boolean enabled;
 
-	@Column(name = "confirmed_email", columnDefinition = "boolean default false")
-	private Boolean confirmedEmail;
+	@Column(name = "confirmed_email", columnDefinition = "bit DEFAULT b'0'")
+	private Boolean confirmedEmail = false;
 
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user", cascade = CascadeType.REMOVE)
     private Doctor doctor;
 
 	@ManyToMany(fetch = FetchType.EAGER)

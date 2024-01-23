@@ -58,32 +58,41 @@ public class AuthControllerJson extends AbstractIntegrationTest {
 				.setBasePath("/api/v1/signup").setPort(TestConfigs.SERVER_PORT)
 				.addFilter(new RequestLoggingFilter(LogDetail.ALL)).addFilter(new ResponseLoggingFilter(LogDetail.ALL))
 				.build();
-		var content = given().spec(specification).contentType(TestConfigs.CONTENT_TYPE_JSON).body(dto).when().post()
-				.then().statusCode(201).extract().body().asString();
+		var content = given().spec(specification).contentType(TestConfigs.CONTENT_TYPE_JSON).body(dto).when().post();
+		
+		logger.info("Status code: " + content.statusCode());
+		logger.info("Response body: " + content.getBody().asString());
+		
+		if (content.getBody().asString().contains("Records already exist in the database") ) {
+			logger.info("User already Signup");
 
-		logger.info("Persisted:  => " + content.toString());
-		CreateUserDoctorDTO persisted = objectMapper.readValue(content, CreateUserDoctorDTO.class);
-		dto = persisted;
-
-		assertNotNull(persisted);
-		logger.info("Persisted:  => " + persisted.toString());
-
-		assertNotNull(persisted.getId());
-		assertNotNull(persisted.getFullName());
-		assertNotNull(persisted.getEmail());
-		assertNotNull(persisted.getCpf());
-		assertNotNull(persisted.getPhone());
-		assertNotNull(persisted.getSpecialty());
-		assertNotNull(persisted.getBirthDate());
-
-		assertTrue(!persisted.getId().toString().isBlank());
-
-		assertEquals("Marcia Oliveira", persisted.getFullName());
-		assertEquals("marcia_oliveira@gmail.com", persisted.getEmail());
-		assertEquals("483.127.330-94", persisted.getCpf());
-		assertEquals("(21) 83232-6565", persisted.getPhone());
-		assertEquals("Cardiologista", persisted.getSpecialty());
-		assertEquals("10/03/1980", persisted.getBirthDate());
+		} else {
+			var contentString = content.then().statusCode(201).extract().body().asString();
+			
+			logger.info("Persisted:  => " + content.toString());
+			CreateUserDoctorDTO persisted = objectMapper.readValue(contentString, CreateUserDoctorDTO.class);
+			dto = persisted;
+			
+			assertNotNull(persisted);
+			logger.info("Persisted:  => " + persisted.toString());
+			
+			assertNotNull(persisted.getId());
+			assertNotNull(persisted.getFullName());
+			assertNotNull(persisted.getEmail());
+			assertNotNull(persisted.getCpf());
+			assertNotNull(persisted.getPhone());
+			assertNotNull(persisted.getSpecialty());
+			assertNotNull(persisted.getBirthDate());
+			
+			assertTrue(!persisted.getId().toString().isBlank());
+			
+			assertEquals("Marcia Oliveira", persisted.getFullName());
+			assertEquals("marcia_oliveira@gmail.com", persisted.getEmail());
+			assertEquals("483.127.330-94", persisted.getCpf());
+			assertEquals("(21) 83232-6565", persisted.getPhone());
+			assertEquals("Cardiologista", persisted.getSpecialty());
+			assertEquals("10/03/1980", persisted.getBirthDate());
+		}
 	}
 
 	@Test

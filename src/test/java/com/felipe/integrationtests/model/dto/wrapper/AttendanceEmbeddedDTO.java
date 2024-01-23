@@ -12,7 +12,7 @@ public class AttendanceEmbeddedDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	@JsonProperty("attendance_dtolist")
+	@JsonProperty("attendanceDTOList")
 	private List<AttendanceDTO> dtos;
 
 	public AttendanceEmbeddedDTO() {

@@ -9,6 +9,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.felipe.util.StringUtil;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
@@ -47,7 +48,7 @@ public class Doctor implements Serializable  {
 	@Column(name = "specialty")
 	private String specialty;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REMOVE)
     private User user;
 
 //	@CreatedDate

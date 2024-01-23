@@ -60,8 +60,4 @@ public class AccountCredentialsDTO implements Serializable {
 	public String toString() {
 		return "AccountCredentialsDTO [email=" + email + ", password=" + password + "]";
 	}
-
-
-
-
 }

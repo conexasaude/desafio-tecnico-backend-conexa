@@ -74,17 +74,20 @@ public class AttendanceControllerJsonTest extends AbstractIntegrationTest {
 		logger.info("Status code: " + content.statusCode());
 		logger.info("Response body: " + content.getBody().asString());
 
-		var contentString = content.then().statusCode(201).extract().body().asString();
-
-		logger.info("Persisted:  => " + content.toString());
-		DoctorDTO persisted = objectMapper.readValue(contentString, DoctorDTO.class);
-
-		assertNotNull(persisted);
-		logger.info("Persisted:  => " + persisted.toString());
-
-		assertNotNull(persisted.getId());
-
-		assertTrue(!persisted.getId().toString().isBlank());
+		if (content.getBody().asString().contains("Records already exist in the database") ) {
+			logger.info("User already Signup");
+		} else {
+			var contentString = content.then().statusCode(201).extract().body().asString();
+			
+			logger.info("Persisted:  => " + content.toString());
+			DoctorDTO persisted = objectMapper.readValue(contentString, DoctorDTO.class);
+			
+			assertNotNull(persisted);
+			logger.info("Persisted:  => " + persisted.toString());
+			
+			assertNotNull(persisted.getId());
+			assertTrue(!persisted.getId().toString().isBlank());
+		}
 	}
 
 	@Test

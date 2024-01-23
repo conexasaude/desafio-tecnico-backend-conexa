@@ -19,6 +19,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.felipe.controller.UserController;
+import com.felipe.exceptions.BadRequestException;
 import com.felipe.exceptions.ResourceNotFoundException;
 import com.felipe.mapper.UserMapper;
 import com.felipe.model.User;
@@ -51,6 +52,15 @@ public class UserService implements UserDetailsService {
 
 		return repository.findByUsername(username).orElseThrow(() -> new ResourceNotFoundException(
 				MessageUtils.NO_RECORDS_FOUND + ": Email " + username + " not found!"));
+	}
+	
+	public User create(User entity) throws Exception {
+		logger.info("Create one doctor");
+		repository.findByUsername(entity.getUsername()).ifPresent(existingEntity-> {
+			throw new BadRequestException("Email " + MessageUtils.RECORDS_ALREADY_EXIST + ": " + entity.getUsername());
+		});
+
+		return repository.save(entity);
 	}
 
 	public UserDTO findByEmail(String username) throws Exception {

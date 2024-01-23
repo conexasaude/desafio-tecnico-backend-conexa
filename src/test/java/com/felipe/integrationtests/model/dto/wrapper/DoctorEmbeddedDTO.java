@@ -11,7 +11,7 @@ public class DoctorEmbeddedDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	@JsonProperty("doctor_dtolist")
+	@JsonProperty("doctorDTOList")
 	private List<DoctorDTO> dtos;
 
 	public DoctorEmbeddedDTO() {

@@ -11,7 +11,7 @@ public class UserEmbeddedDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	@JsonProperty("user_dtolist")
+	@JsonProperty("userDTOList")
 	private List<UserDTO> dtos;
 
 	public UserEmbeddedDTO() {
