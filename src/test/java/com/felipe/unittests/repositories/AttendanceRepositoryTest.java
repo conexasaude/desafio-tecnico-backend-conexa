@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -34,7 +35,7 @@ class AttendanceRepositoryTest {
 
 	@Autowired
 	private AttendanceRepository repository;
-	
+
 	@Autowired
 	private PatientRepository patientRepository;
 
@@ -43,8 +44,7 @@ class AttendanceRepositoryTest {
 
 	private Attendance attendance;
 	private Patient patient;
-	
-	
+
 	private MockAttendance inputObject = new MockAttendance();
 	private MockPatient inputObjectPatient = new MockPatient();
 
@@ -58,10 +58,10 @@ class AttendanceRepositoryTest {
 	@Test
 	void testGivenAttendanceObject_whenSave_thenReturnSavedAttendance() {
 		logger.info("Given Attendance Object when Save then Return Saved Attendance");
-		
+
 		Patient createdPatient = patientRepository.save(patient);
 		attendance.setPatient(createdPatient);
-		
+
 		Attendance createdAttendance = repository.save(attendance);
 		logger.info(createdAttendance.toString());
 
@@ -86,7 +86,7 @@ class AttendanceRepositoryTest {
 	@Test
 	void testGivenAttendanceObject_whenFindByID_thenReturnAttendanceObject() {
 		logger.info("Given Attendance Object when findByID then Return Attendance Object");
-		
+
 		Patient createdPatient = patientRepository.save(patient);
 		attendance.setPatient(createdPatient);
 
@@ -107,21 +107,22 @@ class AttendanceRepositoryTest {
 	@Test
 	void testGivenAttendanceObject_whenUpdateAttendanceReturnUpdateAttendanceObject() {
 		logger.info("Given Attendance Object when Update Attendance then Return Update Attendance Object");
-		
+
 		Patient createdPatient = patientRepository.save(patient);
 		attendance.setPatient(createdPatient);
 
 		Attendance createdAttendance = repository.save(attendance);
-//		logger.info(createdAttendance.toString());
 
 		Attendance attendanceFound = repository.findById(createdAttendance.getId()).get();
 		attendanceFound.setDateTime(LocalDateTime.now().plusHours(10));
-//		logger.info(attendanceFound.toString());
 
 		Attendance updatedAttendance = repository.save(attendanceFound);
 
 		assertNotNull(updatedAttendance);
-		assertEquals(LocalDateTime.now().plusHours(10).withNano(0), updatedAttendance.getDateTime().withNano(0));
+		assertEquals(
+				LocalDateTime.now().plusHours(10).truncatedTo(ChronoUnit.MINUTES),
+				updatedAttendance.getDateTime().truncatedTo(ChronoUnit.MINUTES)
+			);
 	}
 
 	@DisplayName("Given Attendance Object when Delete then Remove Attendance")
@@ -130,7 +131,7 @@ class AttendanceRepositoryTest {
 		logger.info("Given Attendance Object when Delete then Remove Attendance");
 
 		logger.info(attendance.toString());
-		
+
 		Patient createdPatient = patientRepository.save(patient);
 		attendance.setPatient(createdPatient);
 

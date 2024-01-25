@@ -185,11 +185,11 @@ public class UserControllerXmlTest extends AbstractIntegrationTest {
 		assertNotNull(accessToken);
 		assertNotNull(refreshToken);
 	}
-
+	
 	@Test
 	@Order(5)
-	public void testFindAllUser() throws JsonMappingException, JsonProcessingException {
-		logger.info("testFindAllUser => " + "   /api/v1/user");
+	public void testFindByEmail() throws JsonMappingException, JsonProcessingException {
+		logger.info("testFindByEmail => " + "   /api/v1/user/email/{email}");
 		mockUser();
 
 		specification = new RequestSpecBuilder()
@@ -197,6 +197,31 @@ public class UserControllerXmlTest extends AbstractIntegrationTest {
 				.setBasePath("/api/v1/user").setPort(TestConfigs.SERVER_PORT)
 				.addFilter(new RequestLoggingFilter(LogDetail.ALL)).addFilter(new ResponseLoggingFilter(LogDetail.ALL))
 				.build();
+
+		var content = given().spec(specification).contentType(TestConfigs.CONTENT_TYPE_JSON)
+				.header(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_FRONT).pathParam("email", dto.getEmail())
+				.when().get("email/{email}").then().statusCode(200).extract().body().asString();
+
+		logger.info("dto => " + content);
+
+		UserDTO persisted = objectMapper.readValue(content, UserDTO.class);
+		logger.info("dto => " + persisted.toString());
+
+		assertNotNull(persisted);
+
+		assertNotNull(persisted.getId());
+		assertNotNull(persisted.getEmail());
+
+		assertTrue(!persisted.getId().toString().isBlank());
+
+		assertEquals("jp.souza.santos@gmail.com", persisted.getEmail());
+		dto = persisted;
+	}
+
+	@Test
+	@Order(6)
+	public void testFindAllUser() throws JsonMappingException, JsonProcessingException {
+		logger.info("testFindAllUser => " + "   /api/v1/user");
 
 		var content = given().spec(specification)
 				.contentType(TestConfigs.CONTENT_TYPE_XML)
@@ -215,8 +240,6 @@ public class UserControllerXmlTest extends AbstractIntegrationTest {
 		List<UserDTO> persisted = wrapper.getEmbeddedDTO().getDtos();
 
 		logger.info("testFindAll => " + persisted.toString());
-		dto = persisted.stream().filter(userDTO -> dto.getEmail().equals(userDTO.getEmail())).findFirst().orElse(dto);
-		logger.info("dto => " + dto.toString());
 
 		assertNotNull(persisted);
 		assertTrue(persisted.size() > 0);
@@ -225,7 +248,7 @@ public class UserControllerXmlTest extends AbstractIntegrationTest {
 	}
 
 	@Test
-	@Order(6)
+	@Order(7)
 	public void testFindByIdUser() throws JsonMappingException, JsonProcessingException {
 
 		var content = given().spec(specification)
@@ -254,7 +277,7 @@ public class UserControllerXmlTest extends AbstractIntegrationTest {
 	}
 	
 	@Test
-	@Order(7)
+	@Order(8)
 	public void testUpdateDisable() throws JsonMappingException, JsonProcessingException {
 		logger.info("testUpdatePasswordChange => " + "   /api/v1/user/{id}/disable");
 
@@ -275,7 +298,7 @@ public class UserControllerXmlTest extends AbstractIntegrationTest {
 	}
 	
 	@Test
-	@Order(8)
+	@Order(9)
 	public void testFindByIdUserEnabled() throws JsonMappingException, JsonProcessingException {
 
 		var content = given().spec(specification)
@@ -305,7 +328,7 @@ public class UserControllerXmlTest extends AbstractIntegrationTest {
 	}
 	
 	@Test
-	@Order(9)
+	@Order(10)
 	public void testUpdateConfirmEmail() throws JsonMappingException, JsonProcessingException {
 		logger.info("testUpdateConfirmEmail => " + "   /api/v1/user/{id}/confirm-email");
 
@@ -326,7 +349,7 @@ public class UserControllerXmlTest extends AbstractIntegrationTest {
 	}
 	
 	@Test
-	@Order(10)
+	@Order(11)
 	public void testFindByIdUserConfirmed() throws JsonMappingException, JsonProcessingException {
 		logger.info("testFindByIdUserConfirmed => " + "   /api/v1/user/{id}");
 
@@ -357,8 +380,8 @@ public class UserControllerXmlTest extends AbstractIntegrationTest {
 	}
 	
 	@Test
-	@Order(11)
-	public void testFindByEmail() throws JsonMappingException, JsonProcessingException {
+	@Order(12)
+	public void testFindByEmailConfirmed() throws JsonMappingException, JsonProcessingException {
 		logger.info("testFindByEmail => " + "   /api/v1/user/email/{email}");
 
 		var content = given().spec(specification).contentType(TestConfigs.CONTENT_TYPE_JSON)
@@ -382,7 +405,7 @@ public class UserControllerXmlTest extends AbstractIntegrationTest {
 	}
 	
 	@Test
-	@Order(12)
+	@Order(13)
 	public void testDeleteByEmailDoctor() throws JsonMappingException, JsonProcessingException {
 
 		specification = new RequestSpecBuilder()
