@@ -38,6 +38,6 @@ jobs:
 
     - name: Push to Docker Hub Container Registry
       run: |
-        docker tag ${{ secrets.DOCKER_USERNAME }}/rest-conexa-challenger:latest ${{ secrets.DOCKER_USERNAME }}/rest-conexa-challenger:${{ github.run_id }}
-        docker push ${{ secrets.DOCKER_USERNAME }}/rest-conexa-challenger:${{ github.run_id }}
+        docker tag ${{ secrets.DOCKER_USERNAME }}/rest-conexa-challenger:latest ${{ secrets.DOCKER_USERNAME }}/rest-conexa-challenger:${{ github.sha }}
+        docker push ${{ secrets.DOCKER_USERNAME }}/rest-conexa-challenger:${{ github.sha }}
         docker push ${{ secrets.DOCKER_USERNAME }}/rest-conexa-challenger:latest
