@@ -152,9 +152,9 @@ public class DoctorService {
      * @param id: The ID of the doctor to be deleted.
      * @throws ResourceNotFoundException: If no doctor is found with the given ID.
      */
-	public void delete(String id) {
+	public void delete(String email) {
 		logger.info("Deleting one doctor");
-		Doctor entity = repository.findById(UUID.fromString(id))
+		Doctor entity = repository.findByEmail(email)
 				.orElseThrow(() -> new ResourceNotFoundException(MessageUtils.NO_RECORDS_FOUND));
 		repository.delete(entity);
 	}

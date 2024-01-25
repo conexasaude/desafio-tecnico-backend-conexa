@@ -107,17 +107,17 @@ public class DoctorController {
 		return service.update(doctorDTO);
 	}
 
-	@DeleteMapping("/{id}")
+	@DeleteMapping("/{email}")
 	@Operation(summary = "Delete Doctor", tags = {
-			"Doctor" }, description = "Delete an existing doctor by providing the doctor ID",
+			"Doctor" }, description = "Delete an existing doctor by providing the doctor Email",
 
 			responses = { @ApiResponse(description = "No Content", responseCode = "204", content = @Content),
 					@ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
 					@ApiResponse(description = "Unathorized", responseCode = "401", content = @Content),
 					@ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
 					@ApiResponse(description = "Internal Error", responseCode = "500", content = @Content) })
-	public ResponseEntity<?> delete(@PathVariable(value = "id") String id) throws Exception {
-		service.delete(id);
+	public ResponseEntity<?> delete(@PathVariable(value = "email") String email) throws Exception {
+		service.delete(email);
 		return ResponseEntity.noContent().build();
 	}
 

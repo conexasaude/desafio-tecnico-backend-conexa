@@ -215,15 +215,15 @@ class DoctorServiceTest {
 		assertEquals(newEmail, doctorUpdated.getEmail());
 	}
 
-	@DisplayName("JUnit test for Given DoctorID when Delete Doctor then do Nothing")
+	@DisplayName("JUnit test for Given Doctor Email when Delete Doctor then do Nothing")
 	@Test
 	void testGivenDoctorID_whenDeleteDoctor_thenDoNothing() throws Exception {
-		logger.info("JUnit test for Given DoctorID when Delete Doctor then do Nothing");
+		logger.info("JUnit test for Given Doctor Email when Delete Doctor then do Nothing");
 
-		given(repository.findById(any(UUID.class))).willReturn(Optional.of(doctor));
+		given(repository.findByEmail(doctor.getEmail())).willReturn(Optional.of(doctor));
 		willDoNothing().given(repository).delete(doctor);
 
-		service.delete(doctor.getId().toString());
+		service.delete(doctor.getEmail().toString());
 
 		verify(repository, times(1)).delete(doctor);
 	}

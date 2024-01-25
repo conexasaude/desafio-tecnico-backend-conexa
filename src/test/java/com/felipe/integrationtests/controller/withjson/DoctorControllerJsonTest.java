@@ -315,20 +315,20 @@ public class DoctorControllerJsonTest extends AbstractIntegrationTest {
 
 	@Test
 	@Order(7)
-	public void testDeleteByIdDoctor() throws JsonMappingException, JsonProcessingException {
+	public void testDeleteByEmailDoctor() throws JsonMappingException, JsonProcessingException {
 
 		var content = given().spec(specification)
 				.contentType(TestConfigs.CONTENT_TYPE_JSON)
 				.header(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_FRONT)
-					.pathParam("id", dto.getId())
+					.pathParam("email", dto.getEmail())
 					.when()
-					.delete("{id}")
+					.delete("{email}")
 				.then()
 					.statusCode(204)
 				.extract()
 					.body()
 						.asString();
-		logger.info("testDeleteByIdDoctor => " + content);
+		logger.info("testDeleteByemailDoctor => " + content);
 	}
 
 	@Test

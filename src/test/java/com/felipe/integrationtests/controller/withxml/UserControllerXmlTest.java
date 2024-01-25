@@ -380,6 +380,32 @@ public class UserControllerXmlTest extends AbstractIntegrationTest {
 		assertEquals("jp.souza.santos@gmail.com", persisted.getEmail());
 		assertEquals(true, persisted.getConfirmedEmail());
 	}
+	
+	@Test
+	@Order(12)
+	public void testDeleteByEmailDoctor() throws JsonMappingException, JsonProcessingException {
+
+		specification = new RequestSpecBuilder()
+				.addHeader(TestConfigs.HEADER_PARAM_AUTHORIZATION, "Bearer " + accessToken)
+				.setBasePath("/api/v1/doctor")
+				.setPort(TestConfigs.SERVER_PORT)
+					.addFilter(new RequestLoggingFilter(LogDetail.ALL))
+					.addFilter(new ResponseLoggingFilter(LogDetail.ALL))
+				.build();
+		
+		var content = given().spec(specification)
+				.contentType(TestConfigs.CONTENT_TYPE_JSON)
+				.header(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_FRONT)
+					.pathParam("email", dto.getEmail())
+					.when()
+					.delete("{email}")
+				.then()
+					.statusCode(204)
+				.extract()
+					.body()
+						.asString();
+		logger.info("testDeleteByIdDoctor => " + content);
+	}
 
 	
 	private void mockCreateDoctor() {

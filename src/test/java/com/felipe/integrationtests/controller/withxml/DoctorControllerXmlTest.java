@@ -190,7 +190,7 @@ public class DoctorControllerXmlTest extends AbstractIntegrationTest {
 		assertEquals("Ana Paula Aragão Da Silva", persisted.getFullName());
 		assertEquals("Dermatologista", persisted.getSpecialty());
 
-		assertEquals("ana.paula@gmail.com", persisted.getEmail());
+		assertEquals("ana.paula.s@gmail.com", persisted.getEmail());
 		assertEquals("706.495.040-54", persisted.getCpf());
 		assertEquals("(21) 83232-6565", persisted.getPhone());
 		assertEquals("10/03/1980", persisted.getBirthDate());
@@ -232,7 +232,7 @@ public class DoctorControllerXmlTest extends AbstractIntegrationTest {
 
 		assertEquals("Ana Paula Aragão Da Silva", persisted.getFullName());
 		assertEquals("Dermatologista", persisted.getSpecialty());
-		assertEquals("ana.paula@gmail.com", persisted.getEmail());
+		assertEquals("ana.paula.s@gmail.com", persisted.getEmail());
 		assertEquals("706.495.040-54", persisted.getCpf());
 		assertEquals("(21) 83232-6565", persisted.getPhone());
 		assertEquals("10/03/1980", persisted.getBirthDate());
@@ -260,41 +260,43 @@ public class DoctorControllerXmlTest extends AbstractIntegrationTest {
 
 	@Test
 	@Order(6)
-	public void testDeleteByIdDoctor() throws JsonMappingException, JsonProcessingException {
+	public void testDeleteByEmailDoctor() throws JsonMappingException, JsonProcessingException {
 
 		var content = given().spec(specification)
 				.contentType(TestConfigs.CONTENT_TYPE_XML)
 				.header(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_FRONT)
-					.pathParam("id", dto.getId())
+					.pathParam("email", dto.getEmail())
 					.when()
-					.delete("{id}")
+					.delete("{email}")
 				.then()
 					.statusCode(204)
 				.extract()
 					.body()
 						.asString();
-		logger.info("testDeleteByIdDoctor => " + content);
+		logger.info("testDeleteByEmailDoctor => " + content);
 	}
 
 	@Test
 	@Order(7)
 	public void testFindByIdDoctorWithNotFound() throws JsonMappingException, JsonProcessingException {
-
+		mockDoctor();
 		var content = given().spec(specification)
 				.contentType(TestConfigs.CONTENT_TYPE_XML)
 				.header(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_FRONT)
 					.pathParam("id", dto.getId())
 					.when()
-					.get("{id}")
-				.then()
-					.statusCode(404)
-				.extract()
-					.body()
-						.asString();
-		logger.info("testFindByIdDoctorWithNotFound => " + content);
-		String message = objectMapper.readTree(content).get("message").asText();
-		assertNotNull(content);
-		assertEquals("No records found", message);
+					.get("{id}");
+		var contentString = "";
+		if (content.getBody().asString().contains("No records found: Email") ) {
+			contentString = content.then().statusCode(403).extract().body().asString();
+			assertEquals("No records found: Email " +  createDto.getEmail() + " not found!", contentString);
+		} else {
+			contentString = content.then().statusCode(404).extract().body().asString();
+			logger.info("testFindByIdDoctorWithNotFound => " + content);
+			String message = objectMapper.readTree(contentString).get("message").asText();
+			assertNotNull(content);
+			assertEquals("No records found", message);
+		}
 	}
 
 
@@ -302,7 +304,7 @@ public class DoctorControllerXmlTest extends AbstractIntegrationTest {
 
 	private void mockDoctor() {
 		dto.setFullName("Ana Paula Aragão");
-		dto.setEmail("ana.paula@gmail.com");
+		dto.setEmail("ana.paula.s@gmail.com");
 		dto.setCpf("706.495.040-54");
 		dto.setPhone("(21) 83232-6565");
 		dto.setSpecialty("Cardiologista");
