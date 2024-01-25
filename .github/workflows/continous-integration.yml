@@ -30,7 +30,7 @@ jobs:
         
     - name: Build Application JAR
       
-      run: mvn clean package -DskipTests
+      run: mvn clean package
       # working-directory: ./
     
     - name: Docker Compose Build
