@@ -20,7 +20,7 @@ services:
       - conexa-network
 
   rest-conexa-challenger:
-    image: 8841523/rest-conexa-challenger
+    image: felipebuilder/rest-conexa-challenger
     restart: always
     build:
       context: .
