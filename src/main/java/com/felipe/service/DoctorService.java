@@ -23,7 +23,6 @@ import com.felipe.mapper.DoctorMapper;
 import com.felipe.model.Doctor;
 import com.felipe.model.dto.v1.DoctorDTO;
 import com.felipe.repositories.DoctorRepository;
-import com.felipe.util.DateUtil;
 import com.felipe.util.MessageUtils;
 
 
@@ -139,7 +138,7 @@ public class DoctorService {
 		entity.setEmail(Objects.requireNonNullElse(dto.getEmail(), entity.getEmail()));
 		entity.setSpecialty(Objects.requireNonNullElse(dto.getSpecialty(), entity.getSpecialty()));
 		entity.setCpf(Objects.requireNonNullElse(dto.getCpf(), entity.getCpf()));
-		entity.setBirthDate(Objects.requireNonNullElse(DateUtil.convertStringToLocalDate(dto.getBirthDate()), entity.getBirthDate()));
+		entity.setBirthDate(Objects.requireNonNullElse(dto.getBirthDate(), entity.getBirthDate()));
 		entity.setPhone(Objects.requireNonNullElse(dto.getPhone(), entity.getPhone()));
 
 		DoctorDTO doctor = mapper.toDto(repository.save(entity));

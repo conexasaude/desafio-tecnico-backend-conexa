@@ -1,6 +1,7 @@
 package com.felipe.model.dto.v1;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.UUID;
@@ -38,7 +39,7 @@ public class DoctorDTO extends RepresentationModel<DoctorDTO> implements Seriali
 
 	@NotBlank(message = MessageUtils.CANNOT_BLANK)
 	@JsonProperty("birth_date")
-	private String birthDate;
+	private LocalDate birthDate;
 
 	@Pattern(regexp = "^\\(\\d{2}\\)\\s?\\d{4,5}-\\d{4}$|^\\d{11}$", message = "Invalid phone number format")
 	private String phone;
@@ -57,7 +58,7 @@ public class DoctorDTO extends RepresentationModel<DoctorDTO> implements Seriali
 	public DoctorDTO() {
 	}
 
-	public DoctorDTO(String email, String fullName, String cpf, String birthDate, String phone,
+	public DoctorDTO(String email, String fullName, String cpf, LocalDate birthDate, String phone,
 			String specialty) {
 		this.email = email;
 		this.fullName = fullName;
@@ -67,7 +68,7 @@ public class DoctorDTO extends RepresentationModel<DoctorDTO> implements Seriali
 		this.specialty = specialty;
 	}
 
-	public DoctorDTO(UUID key, String email, String fullName, String cpf, String birthDate,
+	public DoctorDTO(UUID key, String email, String fullName, String cpf, LocalDate birthDate,
 			String phone, String specialty) {
 		this.key = key;
 		this.email = email;
@@ -110,11 +111,11 @@ public class DoctorDTO extends RepresentationModel<DoctorDTO> implements Seriali
 		this.cpf = cpf;
 	}
 
-	public String getBirthDate() {
+	public LocalDate getBirthDate() {
 		return birthDate;
 	}
 
-	public void setBirthDate(String birthDate) {
+	public void setBirthDate(LocalDate birthDate) {
 		this.birthDate = birthDate;
 	}
 

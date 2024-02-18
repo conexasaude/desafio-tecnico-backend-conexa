@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 import com.felipe.model.Doctor;
 import com.felipe.model.dto.v1.DoctorDTO;
 import com.felipe.util.CpfUtil;
-import com.felipe.util.DateUtil;
 import com.felipe.util.PhoneNumberUtil;
 
 
@@ -23,7 +22,7 @@ public class DoctorMapper {
 		entity.setFullName(dto.getFullName());
 		entity.setSpecialty(dto.getSpecialty());
 		entity.setCpf(CpfUtil.formatCPF(dto.getCpf()));
-		entity.setBirthDate(DateUtil.convertStringToLocalDate(dto.getBirthDate()));
+		entity.setBirthDate(dto.getBirthDate());
 		entity.setPhone(PhoneNumberUtil.formatPhoneNumber(dto.getPhone()));
 //        entity.setCreatedAt(dto.getCreatedAt());
 //        entity.setUpdatedAt(dto.getUpdatedAt());
@@ -37,7 +36,7 @@ public class DoctorMapper {
 		dto.setFullName(entity.getFullName());
 		dto.setSpecialty(entity.getSpecialty());
 		dto.setCpf(CpfUtil.formatCPF(entity.getCpf()));
-		dto.setBirthDate(DateUtil.convertLocalDateToString(entity.getBirthDate()));
+		dto.setBirthDate(entity.getBirthDate());
 		dto.setPhone(entity.getPhone());
 //        dto.setCreatedAt(entity.getCreatedAt());
 //        dto.setUpdatedAt(entity.getUpdatedAt());

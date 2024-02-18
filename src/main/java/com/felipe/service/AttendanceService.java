@@ -26,7 +26,6 @@ import com.felipe.model.Patient;
 import com.felipe.model.dto.v1.AttendanceDTO;
 import com.felipe.repositories.AttendanceRepository;
 import com.felipe.repositories.PatientRepository;
-import com.felipe.util.DateUtil;
 import com.felipe.util.MessageUtils;
 
 import jakarta.transaction.Transactional;
@@ -57,6 +56,7 @@ public class AttendanceService {
 			Patient newPatient = new Patient();
 			newPatient.setFullName(attendanceDTO.getPatient().getFullName());
 			newPatient.setCpf(attendanceDTO.getPatient().getCpf());
+			newPatient.setHealthInsurance(attendanceDTO.getPatient().getHealthInsurance());
 
 			// Salve o novo paciente no banco de dados
 			return patientRepository.save(newPatient);
@@ -64,7 +64,7 @@ public class AttendanceService {
 
 		// Agora que temos um paciente (existente ou recém-criado), crie o atendimento
 		Attendance newAttendance = new Attendance();
-		newAttendance.setDateTime(DateUtil.convertStringToLocalDateTime(attendanceDTO.getDateTime()));
+		newAttendance.setDateTime((attendanceDTO.getDateTime()));
 		newAttendance.setPatient(existingPatient);
 
 		return mapper.toDto(attendanceRepository.save(newAttendance));
@@ -124,7 +124,7 @@ public class AttendanceService {
 		Attendance entity = attendanceRepository.findById(dto.getKey())
 				.orElseThrow(() -> new ResourceNotFoundException(MessageUtils.NO_RECORDS_FOUND));
 
-		entity.setDateTime(Objects.requireNonNullElse(DateUtil.convertStringToLocalDateTime(dto.getDateTime()),
+		entity.setDateTime(Objects.requireNonNullElse((dto.getDateTime()),
 				entity.getDateTime()));
 
 		AttendanceDTO dtoUpdated = mapper.toDto(attendanceRepository.save(entity));

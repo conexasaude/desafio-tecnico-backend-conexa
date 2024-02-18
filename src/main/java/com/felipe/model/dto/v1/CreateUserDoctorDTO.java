@@ -1,6 +1,7 @@
 package com.felipe.model.dto.v1;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Objects;
 
 import org.hibernate.validator.constraints.br.CPF;
@@ -40,9 +41,8 @@ public class CreateUserDoctorDTO implements Serializable {
 	@CPF(message = "CPF invalid")
 	private String cpf;
 
-	@NotBlank(message = MessageUtils.CANNOT_BLANK)
 	@JsonProperty("birth_date")
-	private String birthDate;
+	private LocalDate birthDate;
 
 	/**
 	 * Formats:
@@ -55,7 +55,7 @@ public class CreateUserDoctorDTO implements Serializable {
 	}
 
 	public CreateUserDoctorDTO(String email, String fullName, String password, String confirmPassword, String cpf,
-			String birthDate, String phone, String specialty) {
+			LocalDate birthDate, String phone, String specialty) {
 		this.email = email;
 		this.fullName = fullName;
 		this.password = password;
@@ -106,11 +106,11 @@ public class CreateUserDoctorDTO implements Serializable {
 		this.cpf = cpf;
 	}
 
-	public String getBirthDate() {
+	public LocalDate getBirthDate() {
 		return birthDate;
 	}
 
-	public void setBirthDate(String birthDate) {
+	public void setBirthDate(LocalDate birthDate) {
 		this.birthDate = birthDate;
 	}
 

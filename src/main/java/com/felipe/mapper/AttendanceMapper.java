@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 
 import com.felipe.model.Attendance;
 import com.felipe.model.dto.v1.AttendanceDTO;
-import com.felipe.util.DateUtil;
 
 @Component
 public class AttendanceMapper {
@@ -19,7 +18,7 @@ public class AttendanceMapper {
 	public Attendance toEntity(AttendanceDTO dto) {
 		Attendance entity = new Attendance();
 		entity.setId(dto.getKey());
-		entity.setDateTime(DateUtil.convertStringToLocalDateTime(dto.getDateTime()));
+		entity.setDateTime((dto.getDateTime()));
 		entity.setPatient(patientMapper.toEntity(dto.getPatient()));
 		return entity;
 	}
@@ -27,7 +26,7 @@ public class AttendanceMapper {
 	public AttendanceDTO toDto(Attendance entity) {
 		AttendanceDTO dto = new AttendanceDTO();
 		dto.setKey(entity.getId());
-		dto.setDateTime(DateUtil.convertLocalDateTimeToString(entity.getDateTime()));
+		dto.setDateTime((entity.getDateTime()));
 		dto.setPatient(patientMapper.toDto(entity.getPatient()));
 		return dto;
 	}

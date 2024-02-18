@@ -1,6 +1,7 @@
 package com.felipe.model.dto.v1;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -9,10 +10,8 @@ import org.springframework.hateoas.RepresentationModel;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.felipe.model.validation.FutureDateTime;
-import com.felipe.util.MessageUtils;
 
 import io.micrometer.common.lang.NonNull;
-import jakarta.validation.constraints.NotBlank;
 
 @JsonPropertyOrder({ "id", "date_time", "patient" })
 public class AttendanceDTO extends RepresentationModel<AttendanceDTO> implements Serializable {
@@ -22,11 +21,10 @@ public class AttendanceDTO extends RepresentationModel<AttendanceDTO> implements
 	@JsonProperty("id")
 	private UUID key;
 
-	@NotBlank(message = MessageUtils.CANNOT_BLANK)
+//	@NotBlank(message = MessageUtils.CANNOT_BLANK)
 	@FutureDateTime(message = "The date and time must be in the future")
 	@JsonProperty("date_time")
-	private String dateTime;
-
+	private LocalDateTime dateTime;
 
 	@NonNull
 	private PatientDTO patient;
@@ -42,11 +40,11 @@ public class AttendanceDTO extends RepresentationModel<AttendanceDTO> implements
 		this.key = key;
 	}
 
-	public String getDateTime() {
+	public LocalDateTime getDateTime() {
 		return dateTime;
 	}
 
-	public void setDateTime(String dateTime) {
+	public void setDateTime(LocalDateTime dateTime) {
 		this.dateTime = dateTime;
 	}
 

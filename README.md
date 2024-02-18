@@ -4,6 +4,9 @@ Construir uma API REST para que nossos médicos de plantão consigam se logar na
 
 Para mais informações e dúvidas do contruido acesse => https://github.com/Felipe-builder/desafio-tecnico-backend-conexa/wiki
 
+## Documentação
+Inicie o projeto e acesse o url http://localhost:8080/swagger-ui/index.html para mais detalhes da documentação
+
 ## Autenticação
 
 ### Signup
