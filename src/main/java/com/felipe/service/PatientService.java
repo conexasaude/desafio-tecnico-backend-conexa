@@ -89,6 +89,15 @@ public class PatientService {
 		return assembler.toModel(dtoPage, link);
 	}
 	
+	
+	public PatientDTO findByCpf(String cpf) throws Exception {
+		logger.info("Finding one Patient by CPF");
+
+		PatientDTO user = repository.findByCpf(cpf).map(mapper::toDto)
+				.orElseThrow(() -> new ResourceNotFoundException(MessageUtils.NO_RECORDS_FOUND));
+		return addSelfRel(user);
+	}
+	
     /**
      * Retrieves a user by their ID.
      *
@@ -97,7 +106,7 @@ public class PatientService {
      * @throws ResourceNotFoundException: If no user is found with the given ID.
      */
 	public PatientDTO findById(String id) throws Exception {
-		logger.info("Finding one user");
+		logger.info("Finding one Patient");
 
 		PatientDTO user = repository.findById(UUID.fromString(id)).map(mapper::toDto)
 				.orElseThrow(() -> new ResourceNotFoundException(MessageUtils.NO_RECORDS_FOUND));
@@ -112,7 +121,7 @@ public class PatientService {
      * @throws BadRequestException: If the email provided already exists.
      */
 	public PatientDTO create(PatientDTO dto) throws Exception {
-		logger.info("Create one user");
+		logger.info("Create one Patient");
 
 		repository.findByCpf(StringUtil.removeNonNumeric(dto.getCpf())).ifPresent(existingPatient -> {
 			throw new BadRequestException("CPF " + MessageUtils.RECORDS_ALREADY_EXIST + ": " + dto.getCpf() + " or " + StringUtil.removeNonNumeric(dto.getCpf()));
@@ -132,7 +141,7 @@ public class PatientService {
      * @throws ResourceNotFoundException: If no user is found with the given ID.
      */
 	public PatientDTO update(PatientDTO dto) throws Exception {
-		logger.info("Update one user");
+		logger.info("Update one Patient");
 
 		Patient entity = repository.findById(dto.getKey())
 				.orElseThrow(() -> new ResourceNotFoundException(MessageUtils.NO_RECORDS_FOUND));
@@ -151,7 +160,7 @@ public class PatientService {
      * @throws ResourceNotFoundException: If no user is found with the given ID.
      */
 	public void delete(String id) {
-		logger.info("Deleting one user");
+		logger.info("Deleting one Patient");
 		Patient entity = repository.findById(UUID.fromString(id))
 				.orElseThrow(() -> new ResourceNotFoundException(MessageUtils.NO_RECORDS_FOUND));
 		repository.delete(entity);

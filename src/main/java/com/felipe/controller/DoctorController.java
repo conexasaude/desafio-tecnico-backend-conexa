@@ -92,6 +92,21 @@ public class DoctorController {
 	public ResponseEntity<DoctorDTO> findById(@PathVariable(value = "id") String id) throws Exception {
 		return new ResponseEntity<>(service.findById(id), HttpStatus.OK);
 	}
+	
+	@GetMapping("/email/{email}")
+	@Operation(summary = "Find Doctor by Email", tags = {
+			"Doctor" }, description = "Retrieve doctor details by providing a valid doctor Email",
+
+			responses = { @ApiResponse(description = "Success", responseCode = "200", content = {
+					@Content(mediaType = "application/json", schema = @Schema(implementation = DoctorDTO.class)) }),
+					@ApiResponse(description = "No Content", responseCode = "204", content = @Content),
+					@ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
+					@ApiResponse(description = "Unathorized", responseCode = "401", content = @Content),
+					@ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
+					@ApiResponse(description = "Internal Error", responseCode = "500", content = @Content) })
+	public ResponseEntity<DoctorDTO> findByEmail(@PathVariable(value = "email") String email) throws Exception {
+		return new ResponseEntity<>(service.findByEmail(email), HttpStatus.OK);
+	}
 
 	@PutMapping
 	@Operation(summary = "Update Doctor", tags = {

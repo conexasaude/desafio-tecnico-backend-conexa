@@ -22,6 +22,7 @@ import com.felipe.controller.AttendanceController;
 import com.felipe.exceptions.ResourceNotFoundException;
 import com.felipe.mapper.AttendanceMapper;
 import com.felipe.model.Attendance;
+import com.felipe.model.Doctor;
 import com.felipe.model.Patient;
 import com.felipe.model.dto.v1.AttendanceDTO;
 import com.felipe.repositories.AttendanceRepository;
@@ -71,7 +72,7 @@ public class AttendanceService {
 	}
 
 	public PagedModel<EntityModel<AttendanceDTO>> findAll(Pageable pageable) throws Exception {
-		logger.info("Finding All Doctor");
+		logger.info("Finding All Attendances");
 
 		Page<Attendance> entityPage = attendanceRepository.findAll(pageable);
 		Page<AttendanceDTO> dtoPage = entityPage.map(entity -> mapper.toDto(entity));
@@ -91,7 +92,7 @@ public class AttendanceService {
 	}
 	
 	public PagedModel<EntityModel<AttendanceDTO>> findByDateTimeBetween(LocalDateTime initialDate, LocalDateTime endDate, Pageable pageable) throws Exception {
-		logger.info("Finding All Doctor ByName");
+		logger.info("Finding All Attendances ByName");
 
 		Page<Attendance> entityPage = attendanceRepository.findByDateTimeBetween(initialDate, endDate, pageable);
 		Page<AttendanceDTO> dtoPage = entityPage.map(entity -> mapper.toDto(entity));
@@ -126,7 +127,11 @@ public class AttendanceService {
 
 		entity.setDateTime(Objects.requireNonNullElse((dto.getDateTime()),
 				entity.getDateTime()));
-
+		
+		Patient patientEntity = patientRepository.findByCpf(dto.getPatient().getCpf())
+				.orElseThrow(() -> new ResourceNotFoundException(MessageUtils.NO_RECORDS_FOUND));
+		entity.setPatient(patientEntity);
+		
 		AttendanceDTO dtoUpdated = mapper.toDto(attendanceRepository.save(entity));
 		return addSelfRel(dtoUpdated);
 	}

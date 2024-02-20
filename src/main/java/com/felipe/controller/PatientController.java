@@ -75,6 +75,19 @@ public class PatientController {
 		Pageable pageable = PageRequest.of(page, size, Sort.by(sortDirection, "fullName"));
 		return ResponseEntity.ok(service.findAllByFullName(fullName, pageable));
 	}
+	
+	@GetMapping("/findByCpf/{cpf}")
+	@Operation(summary = "Finds by pcf", tags = {
+			"Patient" }, description = "Retrieve a patient by CPF", responses = {
+					@ApiResponse(description = "Success", responseCode = "200", content = {
+							@Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = PatientDTO.class))) }),
+					@ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
+					@ApiResponse(description = "Unathorized", responseCode = "401", content = @Content),
+					@ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
+					@ApiResponse(description = "Internal Error", responseCode = "500", content = @Content) })
+	public ResponseEntity<PatientDTO> findByCpf(@PathVariable(value = "cpf") String cpf) throws Exception {
+		return ResponseEntity.ok(service.findByCpf(cpf));
+	}
 
 	@GetMapping("/{id}")
 	@Operation(summary = "Find Patient by ID", tags = {

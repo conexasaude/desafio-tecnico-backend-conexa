@@ -101,6 +101,15 @@ public class DoctorService {
 		return addSelfRel(doctor);
 
 	}
+	
+	public DoctorDTO findByEmail(String email) throws Exception {
+		logger.info("Finding one doctor");
+
+		DoctorDTO doctor = repository.findByEmail(email).map(mapper::toDto)
+				.orElseThrow(() -> new ResourceNotFoundException(MessageUtils.NO_RECORDS_FOUND));
+		return addSelfRel(doctor);
+
+	}
 
     /**
      * Creates a new doctor.
